@@ -1,0 +1,7 @@
+.h1
+  - if messages
+    #{messages}
+  - else
+    Created
+    - params.each do |k,v|
+      %h3 #{k} - #{v}

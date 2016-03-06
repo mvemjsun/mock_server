@@ -1,0 +1,70 @@
+D, [2016-03-04T15:59:17.272530 #21881] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2016-03-04T15:59:17.278361 #21881] DEBUG -- :   [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+I, [2016-03-04T15:59:17.278506 #21881]  INFO -- : Migrating to CreateMockdata (1)
+D, [2016-03-04T15:59:17.278937 #21881] DEBUG -- :   [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+D, [2016-03-04T15:59:17.279510 #21881] DEBUG -- :   [1m[35m (0.4ms)[0m  DROP TABLE "mockdata"
+D, [2016-03-04T15:59:17.285016 #21881] DEBUG -- :   [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "1"]]
+D, [2016-03-04T15:59:17.288469 #21881] DEBUG -- :   [1m[35m (3.3ms)[0m  commit transaction
+D, [2016-03-04T16:04:13.006266 #21960] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+I, [2016-03-04T16:04:13.009824 #21960]  INFO -- : Migrating to CreateMockdata (1)
+D, [2016-03-04T16:04:13.010325 #21960] DEBUG -- :   [1m[35m (0.1ms)[0m  begin transaction
+D, [2016-03-04T16:04:13.011777 #21960] DEBUG -- :   [1m[36m (0.4ms)[0m  [1mCREATE TABLE "mockdata" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mock_name" varchar, "mock_http_status" varchar, "mock_request_url" varchar, "mock_data_response_headers" varchar, "mock_data_response" text(1000000), "mock_state" boolean, "mock_environment" varchar, "created_at" datetime, "updated_at" datetime) [0m
+D, [2016-03-04T16:04:13.011982 #21960] DEBUG -- :   [1m[35m (0.0ms)[0m  select sqlite_version(*)
+D, [2016-03-04T16:04:13.012658 #21960] DEBUG -- :   [1m[36m (0.4ms)[0m  [1mCREATE UNIQUE INDEX "index_mockdata_on_mock_name_and_mock_environment" ON "mockdata" ("mock_name", "mock_environment")[0m
+D, [2016-03-04T16:04:13.013018 #21960] DEBUG -- :   [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_mockdata_on_mock_name_and_mock_environment' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_mockdata_on_mock_name_and_mock_environment' AND type='index'
+
+D, [2016-03-04T16:04:13.013282 #21960] DEBUG -- :   [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_mockdata_on_mock_request_url_and_mock_environment" ON "mockdata" ("mock_request_url", "mock_environment")[0m
+D, [2016-03-04T16:04:13.018593 #21960] DEBUG -- :   [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "1"]]
+D, [2016-03-04T16:04:13.022761 #21960] DEBUG -- :   [1m[36m (3.9ms)[0m  [1mcommit transaction[0m
+D, [2016-03-06T10:34:28.574273 #71640] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2016-03-06T10:34:28.578007 #71640] DEBUG -- :   [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+I, [2016-03-06T10:34:28.578083 #71640]  INFO -- : Migrating to CreateMockdata (1)
+D, [2016-03-06T10:34:28.578466 #71640] DEBUG -- :   [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+D, [2016-03-06T10:34:28.579807 #71640] DEBUG -- :   [1m[35m (1.1ms)[0m  DROP TABLE "mockdata"
+D, [2016-03-06T10:34:28.583599 #71640] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "1"]]
+D, [2016-03-06T10:34:28.587760 #71640] DEBUG -- :   [1m[35m (4.1ms)[0m  commit transaction
+D, [2016-03-06T10:34:51.581633 #71688] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+I, [2016-03-06T10:34:51.584034 #71688]  INFO -- : Migrating to CreateMockdata (1)
+D, [2016-03-06T10:34:51.584389 #71688] DEBUG -- :   [1m[35m (0.0ms)[0m  begin transaction
+D, [2016-03-06T10:34:51.585886 #71688] DEBUG -- :   [1m[36m (0.3ms)[0m  [1mCREATE TABLE "mockdata" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mock_name" varchar, "mock_http_status" varchar, "mock_request_url" text, "mock_data_response_headers" varchar, "mock_data_response" text(1000000), "mock_state" boolean, "mock_environment" varchar, "mock_content_type" varchar, "created_at" datetime, "updated_at" datetime) [0m
+D, [2016-03-06T10:34:51.586095 #71688] DEBUG -- :   [1m[35m (0.1ms)[0m  select sqlite_version(*)
+D, [2016-03-06T10:34:51.588210 #71688] DEBUG -- :   [1m[36m (0.9ms)[0m  [1mCREATE UNIQUE INDEX "index_mockdata_on_mock_name_and_mock_environment" ON "mockdata" ("mock_name", "mock_environment")[0m
+D, [2016-03-06T10:34:51.588701 #71688] DEBUG -- :   [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_mockdata_on_mock_name_and_mock_environment' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_mockdata_on_mock_name_and_mock_environment' AND type='index'
+
+D, [2016-03-06T10:34:51.588958 #71688] DEBUG -- :   [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_mockdata_on_mock_request_url_and_mock_environment" ON "mockdata" ("mock_request_url", "mock_environment")[0m
+D, [2016-03-06T10:34:51.594034 #71688] DEBUG -- :   [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "1"]]
+D, [2016-03-06T10:34:51.598327 #71688] DEBUG -- :   [1m[36m (4.1ms)[0m  [1mcommit transaction[0m
+D, [2016-03-06T15:41:54.478079 #16530] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2016-03-06T15:41:54.482988 #16530] DEBUG -- :   [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+I, [2016-03-06T15:41:54.483132 #16530]  INFO -- : Migrating to CreateMockdata (1)
+D, [2016-03-06T15:41:54.483533 #16530] DEBUG -- :   [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+D, [2016-03-06T15:41:54.484124 #16530] DEBUG -- :   [1m[35m (0.4ms)[0m  DROP TABLE "mockdata"
+D, [2016-03-06T15:41:54.489097 #16530] DEBUG -- :   [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "1"]]
+D, [2016-03-06T15:41:54.492466 #16530] DEBUG -- :   [1m[35m (3.3ms)[0m  commit transaction
+D, [2016-03-06T15:42:06.033749 #16553] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+I, [2016-03-06T15:42:06.036282 #16553]  INFO -- : Migrating to CreateMockdata (1)
+D, [2016-03-06T15:42:06.036670 #16553] DEBUG -- :   [1m[35m (0.0ms)[0m  begin transaction
+D, [2016-03-06T15:42:06.038092 #16553] DEBUG -- :   [1m[36m (0.4ms)[0m  [1mCREATE TABLE "mockdata" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mock_name" varchar, "mock_http_status" varchar, "mock_request_url" text, "mock_data_response_headers" varchar, "mock_data_response" text(1000000), "mock_state" boolean, "mock_environment" varchar, "mock_content_type" varchar, "created_at" datetime, "updated_at" datetime) [0m
+D, [2016-03-06T15:42:06.038271 #16553] DEBUG -- :   [1m[35m (0.0ms)[0m  select sqlite_version(*)
+D, [2016-03-06T15:42:06.039177 #16553] DEBUG -- :   [1m[36m (0.7ms)[0m  [1mCREATE UNIQUE INDEX "index_mockdata_on_mock_name_and_mock_environment" ON "mockdata" ("mock_name", "mock_environment")[0m
+D, [2016-03-06T15:42:06.044001 #16553] DEBUG -- :   [1m[35m (4.6ms)[0m  rollback transaction
+D, [2016-03-06T15:44:41.207917 #16875] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+I, [2016-03-06T15:44:41.210333 #16875]  INFO -- : Migrating to CreateMockdata (1)
+D, [2016-03-06T15:44:41.210697 #16875] DEBUG -- :   [1m[35m (0.0ms)[0m  begin transaction
+D, [2016-03-06T15:44:41.212029 #16875] DEBUG -- :   [1m[36m (0.3ms)[0m  [1mCREATE TABLE "mockdata" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mock_name" varchar, "mock_http_status" varchar, "mock_request_url" text, "mock_data_response_headers" varchar, "mock_data_response" text(1000000), "mock_state" boolean, "mock_environment" varchar, "mock_content_type" varchar, "created_at" datetime, "updated_at" datetime) [0m
+D, [2016-03-06T15:44:41.212261 #16875] DEBUG -- :   [1m[35m (0.1ms)[0m  select sqlite_version(*)
+D, [2016-03-06T15:44:41.212783 #16875] DEBUG -- :   [1m[36m (0.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_data" ON "mockdata" ("mock_name", "mock_request_url", "mock_environment", "mock_state")[0m
+D, [2016-03-06T15:44:41.218772 #16875] DEBUG -- :   [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "1"]]
+D, [2016-03-06T15:44:41.222895 #16875] DEBUG -- :   [1m[36m (3.9ms)[0m  [1mcommit transaction[0m

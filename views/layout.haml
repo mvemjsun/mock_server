@@ -1,0 +1,19 @@
+!!! 5
+%html
+    %head
+        %title= @title
+        %meta{name: "viewport" ,content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
+        %link{ :href => "/bootstrap/css/bootstrap.min.css", :type => "text/css", :rel => "stylesheet" }
+        %script{src: 'https://code.jquery.com/jquery-2.2.1.min.js'}
+        %script{src: "/bootstrap/js/bootstrap.js"}
+        %script
+            $.noConflict();
+
+    %body
+        %div{class: 'container col-md-11 col-lg-11'}
+            %ul{class: "nav nav-tabs"}
+                %li{role: 'presentation'}
+                    %a{href: '/mock/create'} Home
+                %li{role: 'presentation'}
+                    %a{href: '/environment'} Test Env
+                =yield

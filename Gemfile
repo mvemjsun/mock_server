@@ -1,0 +1,6 @@
+gem 'sinatra'
+gem 'sqlite3'
+gem 'activerecord'
+gem 'activesupport'
+gem 'activemodel'
+gem 'haml'
