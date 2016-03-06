@@ -8,7 +8,7 @@ class Mockdata < ActiveRecord::Base
   validates :mock_request_url,   presence: true
   validates :mock_data_response_headers,   presence: true
   validates :mock_data_response,   presence: true
-  validates :mock_state,   presence: true
+  # validates :mock_state ,   presence: true
   validates :mock_content_type,   presence: true
   validates :mock_environment, presence: true #,  inclusion: { in: %w(production, integration, quality)}
 

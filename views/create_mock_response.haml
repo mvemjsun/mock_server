@@ -10,4 +10,8 @@
     %dt Mock Environment
     %dd #{mock_environment}
     %dt Mock State
-    %dd #{mock_state}
+    %dd
+      - if mock_state
+        ON
+      - else
+        OFF
