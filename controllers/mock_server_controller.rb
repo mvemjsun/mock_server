@@ -48,10 +48,14 @@ class MockServerController < ApplicationController
 
     if errors
       messages = errors
-      p errors
       haml :create_mock_response, locals: {messages: messages}
     else
-      haml :create_mock_response, locals: {messages: false}
+      haml :create_mock_response, locals: {messages: false,
+                                           mock_name: params[:mock_name],
+                                           mock_request_url: url,
+                                           mock_environment: params[:mock_environment],
+                                           mock_state: params[:mock_state]
+                                          }
     end
 
   end

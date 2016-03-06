@@ -1,7 +1,13 @@
-.h1
-  - if messages
-    %h3 #{messages}
-  - else
-    Created
-    - params.each do |k,v|
-      %h3 #{k} - #{v}
+- if messages
+  %h3{class: 'text-center bg-danger'} #{messages}
+- else
+  %h3{class: 'text-center bg-success'} Created Mock Data
+  %dl{class: 'dl-horizontal'}
+    %dt Mock Name
+    %dd #{mock_name}
+    %dt Mock URL
+    %dd #{mock_request_url}
+    %dt Mock Environment
+    %dd #{mock_environment}
+    %dt Mock State
+    %dd #{mock_state}
