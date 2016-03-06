@@ -12,11 +12,4 @@ class Mockdata < ActiveRecord::Base
   validates :mock_content_type,   presence: true
   validates :mock_environment, presence: true #,  inclusion: { in: %w(production, integration, quality)}
 
-  before_save do
-    self.mock_request_url = self.mock_request_url.sub!(/^\//, '')
-  end
-
-  before_update do
-    self.mock_request_url = self.mock_request_url.sub!(/^\//, '')
-  end
  end

@@ -4,6 +4,7 @@ require 'active_record'
 require 'sqlite3'
 require 'tilt/haml'
 
+ENV['RACK_ENV']='production'
 ENV['TEST_ENV']='quality'
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger.level = Logger::DEBUG
