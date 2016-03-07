@@ -15,9 +15,7 @@ class MockServerController < ApplicationController
   get "/update/:id" do
     @title = "Mock Update"
     mock_data = Mockdata.where(id: params[:id].to_i)
-    p ">>>> Selected data"
-    p mock_data
-    haml :create_mock_request, locals: {mock_data: mock_data}
+    haml :create_mock_request, locals: {mock_data: mock_data.first}
   end
 
   get "/create" do
