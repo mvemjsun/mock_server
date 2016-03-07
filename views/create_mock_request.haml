@@ -4,10 +4,10 @@
 
 %form{action: '/mock/create', method: 'post'}
     %div{class: 'row'}
-        %div{class: 'form-group col-md-6 has-error'}
+        %div{class: 'form-group col-md-6'}
             %label{class: 'control-label', for: 'mock_name'} Mock Request Name
             %input{type: 'text', class: 'form-control', id: 'autocomplete', name: 'mock_name', placeholder: 'Mock request name', value: "#{mock_data.nil? ? nil : mock_data.mock_name }"}
-            %label{class: 'control-label label-error'}
+            %label{class: 'control-label'}
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_http_status'} Response HTTP Status Code
             %input{class: 'form-control', name: 'mock_http_status', placeholder: 'HTTP Status code', value: "#{mock_data.nil? ? nil : mock_data.mock_http_status }"}
@@ -36,10 +36,10 @@
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label',for: 'mock_data_response_headers'} Other Response Header(s)
             %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? nil : mock_data.mock_data_response_headers}
-    %div{class: 'row col-md-12'}
-        %div{class: 'form-group'}
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-12'}
             %label{class: 'control-label',for: 'mock_data_response'} Response Body
-            %textarea{class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 30}#{mock_data.nil? ? nil : mock_data.mock_data_response }
+            %textarea{id: 'json_body', class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 30}#{mock_data.nil? ? nil : mock_data.mock_data_response }
     %button(type="submit" class="btn btn-primary btn-lg btn-block")Create/Update Mock Data
 
     :javascript
