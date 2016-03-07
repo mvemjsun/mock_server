@@ -15,7 +15,7 @@
             %label{class: 'control-label',for: 'mock_state'} Mock State
             %div{class: 'checkbox'}
                 %label
-                    %input{type: 'checkbox', name: 'mock_state', value: "#{mock_data.nil? ? nil : mock_data.mock_state }"}
+                    %input{type: 'checkbox', id: 'chk_mock_state',name: 'mock_state', value: "#{mock_data.nil? ? nil : (mock_data.mock_state == true ? '1' : '0') }"}
                     Enable/Disable Mock Response
     %div{class: 'form-group'}
         %label{class: 'control-label',for: 'mock_request_url'} Request URL To mock
@@ -23,21 +23,46 @@
     %div{class: 'row'}
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_environment'} Test Environment
-            %select{class: 'form-control', name: 'mock_environment', value: "#{mock_data.nil? ? nil : mock_data.mock_environment }"}
-                %option integration
-                %option production
-                %option quality
+            %select{class: 'form-control', id: 'sl_mock_environment',name: 'mock_environment', value: "#{mock_data.nil? ? nil : mock_data.mock_environment }"}
+                %option{id: 'integration'} integration
+                %option{id: 'production'} production
+                %option{id: 'quality'} quality
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_content_type'} Response Content Type
-            %select{class: 'form-control', name: 'mock_content_type', value: "#{mock_data.nil? ? nil : mock_data.mock_content_type }"}
-                %option application/json;charset=UTF-8
-                %option text/xml
-                %option text/html
+            %select{class: 'form-control', id: 'id_mock_content_type',name: 'mock_content_type', value: "#{mock_data.nil? ? nil : mock_data.mock_content_type }"}
+                %option{id: 'app_json'} application/json;charset=UTF-8
+                %option{id: 'text_xml'} text/xml
+                %option{id: 'text_html'} text/html
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label',for: 'mock_data_response_headers'} Other Response Header(s)
             %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? nil : mock_data.mock_data_response_headers}
     %div{class: 'row col-md-12'}
         %div{class: 'form-group'}
             %label{class: 'control-label',for: 'mock_data_response'} Response Body
-            %textarea{class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 50}#{mock_data.nil? ? nil : mock_data.mock_data_response }
+            %textarea{class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 30}#{mock_data.nil? ? nil : mock_data.mock_data_response }
     %button(type="submit" class="btn btn-primary btn-lg btn-block")Create/Update Mock Data
+
+    :javascript
+        var mockStatuscheckbox = document.getElementById("chk_mock_state");
+        if (mockStatuscheckbox.value == '1') {
+            document.getElementById('chk_mock_state').checked = true;
+        }
+
+        var slEnv = document.getElementById('sl_mock_environment').getAttribute('value');
+        var slOption = document.getElementById(slEnv);
+        slOption.setAttribute("selected", "selected");
+
+        var slContentType = document.getElementById('id_mock_content_type').getAttribute('value');
+        var slcType = ''
+        switch(slContentType) {
+            case 'application/json;charset=UTF-8':
+                slcType = document.getElementById('app_json');
+                break;
+            case 'text/xml':
+                slcType = document.getElementById('text_xml');
+                break;
+            case 'text/html':
+                slcType = document.getElementById('text_html');
+                break;
+        }
+        slcType.setAttribute("selected", "selected");

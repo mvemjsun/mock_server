@@ -20,7 +20,7 @@ class MockServerController < ApplicationController
 
   get "/create" do
     @title = "Create mock response"
-    haml :create_mock_request
+    haml :create_mock_request, locals: {mock_data: nil}
   end
 
   post "/create" do
