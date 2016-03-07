@@ -1,5 +1,25 @@
 class MockServerController < ApplicationController
 
+  get '/search' do
+    @title = 'Search'
+    haml :search_mock
+  end
+
+  get '/search/result' do
+    @title = 'Search Result(s)'
+    search_data = search_mock_data({mock_name: params[:search_mock_name].upcase})
+
+    haml :search_results, locals: {search_data: search_data}
+  end
+
+  get "/update/:id" do
+    @title = "Mock Update"
+    mock_data = Mockdata.where(id: params[:id].to_i)
+    p ">>>> Selected data"
+    p mock_data
+    haml :create_mock_request, locals: {mock_data: mock_data}
+  end
+
   get "/create" do
     @title = "Create mock response"
     haml :create_mock_request

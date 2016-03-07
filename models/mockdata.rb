@@ -12,4 +12,8 @@ class Mockdata < ActiveRecord::Base
   validates :mock_content_type,   presence: true
   validates :mock_environment, presence: true #,  inclusion: { in: %w(production, integration, quality)}
 
+  before_save do
+    self.mock_name = self.mock_name.upcase
+  end
+
  end

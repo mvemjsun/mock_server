@@ -5,9 +5,7 @@
         %meta{name: "viewport" ,content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}
         %link{ :href => "/bootstrap/css/bootstrap.min.css", :type => "text/css", :rel => "stylesheet" }
         %script{src: 'https://code.jquery.com/jquery-2.2.1.min.js'}
-        %script{src: "/bootstrap/js/bootstrap.js"}
-        %script
-            $.noConflict();
+        %script{src: 'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js'}
 
     %body
         %div{class: 'container col-md-11 col-lg-11'}
@@ -16,4 +14,6 @@
                     %a{href: '/mock/create'} Home
                 %li{role: 'presentation'}
                     %a{href: '/environment'} Test Env
+                %li{role: 'presentation'}
+                    %a{href: '/mock/search'} Search
             =yield

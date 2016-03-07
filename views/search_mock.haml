@@ -1,0 +1,12 @@
+%div{class: 'page-header'}
+    %h1 Mock Server - Search
+    %p{class: "lead"} Search an existing mock
+
+%form{action: '/mock/search/result', method: 'get'}
+
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-3'}
+            %label{class: 'control-label',for: 'search_mock_name'} Mock Name
+            %input{class: 'form-control', name: 'search_mock_name', placeholder: 'Enter Mock Name'}
+    %div{class: 'row col-md-3'}
+    %button(type="submit" class="btn btn-primary btn-lg btn-block")Search

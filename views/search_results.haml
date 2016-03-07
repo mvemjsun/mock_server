@@ -1,0 +1,23 @@
+%div{class: 'page-header'}
+    %h1 Mock Server - Search Results
+    -if search_data
+        %table{class: "table table-striped"}
+            %thead
+                %tr
+                    %th #
+                    %th Mock Name
+                    %th Mock URL
+                    %th Mock Environment
+                    %th Status
+                %tbody
+            - search_data.each do |row|
+                %tr
+                    %td
+                        %a{:href => "/mock/update/#{row.id}"}
+                            #{row.id}
+                    %td #{row.mock_name}
+                    %td #{row.mock_request_url}
+                    %td #{row.mock_environment}
+                    %td #{row.mock_state}
+    -else
+        %h2{class: 'bg-warning text-center'} Search returned no results !

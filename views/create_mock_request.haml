@@ -1,12 +1,12 @@
 %div{class: 'page-header'}
-    %h1 Mock Server - Create Data
+    %h1 Mock Server - Create/Update Data
     %p{class: "lead"} Create mock responses by specifying the request URL's, response headers, status code and response body !
 
 %form{action: '/mock/create', method: 'post'}
     %div{class: 'row'}
         %div{class: 'form-group col-md-6 has-error'}
             %label{class: 'control-label', for: 'mock_name'} Mock Request Name
-            %input{type: 'text', class: 'form-control', name: 'mock_name', placeholder: 'Mock request name', value: "#{@title}"}
+            %input{type: 'text', class: 'form-control', id: 'autocomplete', name: 'mock_name', placeholder: 'Mock request name', value: "#{@title}"}
             %label{class: 'control-label label-error'}
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_http_status'} Response HTTP Status Code
