@@ -41,7 +41,15 @@ class MockServerController < ApplicationController
     errors = nil
     begin
 
-      url = params[:mock_request_url].sub(/^\//, '')
+      # url = params[:mock_request_url].sub(/^\//, '')
+      url_path = URI::parse(params[:mock_request_url]).path.sub(/^\//, '')
+      url_query = URI::parse(params[:mock_request_url]).query
+
+      if url_query
+        url = url_path + '?' + url_query
+      else
+        url = url_path
+      end
       mockdata = Mockdata.where(mock_name: params[:mock_name],
                                 mock_request_url: url,
                                 mock_environment: params[:mock_environment],

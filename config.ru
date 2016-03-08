@@ -3,9 +3,10 @@ require 'sinatra/base'
 require 'active_record'
 require 'sqlite3'
 require 'tilt/haml'
+require 'uri'
 
 ENV['RACK_ENV']='production'
-ENV['TEST_ENV']='quality'
+ENV['TEST_ENV']='integration'
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger.level = Logger::DEBUG
 Dir.glob('./{helpers,controllers,models}/*.rb').each do |file|

@@ -6,7 +6,8 @@
 
     %div{class: 'row'}
         %div{class: 'form-group col-md-3'}
-            %label{class: 'control-label',for: 'mock_environment'} Test Environment
+            %h5 Current test environment is #{ENV['TEST_ENV']}
+            %label{class: 'control-label',for: 'mock_environment'} Set test Environment
             %select{class: 'form-control', name: 'mock_environment'}
                 %option integration
                 %option production
