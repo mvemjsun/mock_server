@@ -8,6 +8,7 @@ class ApplicationController < Sinatra::Base
 
   configure :production, :development do
     enable :logging
+    enable :session
     set :session_secret, 'av3rys3cr3tk3y'
   end
 
@@ -38,10 +39,22 @@ class ApplicationController < Sinatra::Base
     # Process the URL
     url = request.fullpath.sub!(/^\//, '')
     response = process_url(url, ENV['TEST_ENV'])
+    p ENV['TEST_ENV']
+    p response
     if  response.has_key? :error
-      haml :mock_response_test, :locals => {body: 'Not Found'}
+      content_type 'application/text'
+      status 404
+      body 'Not Found'
     else
-      haml :mock_response_test, :locals => {body: h(response[:mock_data_response])}
+      status response[:mock_http_status].to_i
+      content_type response[:mock_content_type]
+      headers response[:mock_data_response_headers]
+      body response[:mock_data_response]
+      # haml :mock_response_test, :locals => {body: h(response[:mock_data_response])}
+      # [response[:mock_http_status].to_i,
+      #  response[:mock_data_response_headers],
+      #  response[:mock_data_response]
+      # ]
     end
   end
 end

@@ -20,7 +20,9 @@ module ApplicationHelper
       row = data.first
       return_data[:mock_http_status] = row[:mock_http_status]
       return_data[:mock_data_response] = row[:mock_data_response]
-      return_data[:mock_data_response_headers] = row[:mock_data_response_headers]
+      return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
+
+      return_data[:mock_content_type] = row[:mock_content_type]
     else
       return_data[:error] = "Not Found"
     end
@@ -35,12 +37,33 @@ module ApplicationHelper
     # data = Mockdata.where(mock_name: options[:mock_name])
     data = Mockdata.where("mock_name LIKE ?", "%#{options[:mock_name]}%")
     if data.any?
-      p '>>>>>>>>> Search Result'
-      p data
       return data
     else
       return nil
     end
+  end
+
+  #
+  #
+  #
+  def flash_message
+    session[:errors]
+  end
+
+  #
+  # Build headers hash
+  # @param [String] the headers string
+  # @return [Hash] The headers hash
+  #
+
+  def build_headers(headers_string)
+    headers_hash = {}
+    headers_array = headers_string.split(/\r\n/)
+    headers_array.each do |header_row|
+      k,v = header_row.split(':')
+      headers_hash[k] = v
+    end
+    return headers_hash
   end
 
 end
