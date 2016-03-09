@@ -1,5 +1,16 @@
+input[type="text"]  {
+    background-color: #ffffff;
+    color: #D2691E;
+}
+
+textarea {
+    color: #D2691E;
+    resize: none;
+}
+
 #json_body {
     background-color: #ffffff;
     font-family: Courier;
-    font-size: 70%;
+    font-size: 90%;
+    color: #D2691E;
 }
