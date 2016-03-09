@@ -70,10 +70,10 @@ module ApplicationHelper
   # Extract the HTTParty response for cloning the mock data set response hash to include all table columns.
   # The clone will only provide the body and the headers, rest set to nil. Assumes a valid HTTP response with success
   #
-  def extract_clone_response(response,url)
+  def extract_clone_response(response,url,mock_name)
 
     mock_data = ClonedData.new
-    mock_data.mock_name = ''
+    mock_data.mock_name = mock_name
     mock_data.mock_http_status = response.code
     mock_data.mock_state = true
     mock_data.mock_environment = ENV['TEST_ENV']

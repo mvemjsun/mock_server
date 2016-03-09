@@ -17,9 +17,13 @@ GEM
     builder (3.2.2)
     haml (4.0.7)
       tilt
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.3)
     minitest (5.8.4)
+    multi_xml (0.5.5)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -41,6 +45,7 @@ DEPENDENCIES
   activerecord
   activesupport
   haml
+  httparty
   sinatra
   sqlite3
 

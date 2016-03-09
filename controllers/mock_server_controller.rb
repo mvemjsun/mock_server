@@ -41,7 +41,6 @@ class MockServerController < ApplicationController
     errors = nil
     begin
 
-      # url = params[:mock_request_url].sub(/^\//, '')
       url_path = URI::parse(params[:mock_request_url]).path.sub(/^\//, '')
       url_query = URI::parse(params[:mock_request_url]).query
 
@@ -103,11 +102,14 @@ class MockServerController < ApplicationController
   # will preset the mock body and headers.Build the 'mockdata' object with all columns if data found
   #
   get '/clone' do
+    @title = 'Clone data'
     mock_data = {}
     if params[:mock_request_url].length > 0
       response = HTTParty.get(params[:mock_request_url])
       if response.code.to_i == 200
-        mock_data = extract_clone_response(response,params[:mock_request_url])
+        mock_data = extract_clone_response(response,
+                                           params[:mock_request_url],
+                                           params[:mock_name])
         p mock_data.mock_content_type
         haml :create_mock_request, locals: {mock_data: mock_data}
       else

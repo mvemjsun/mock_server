@@ -1,9 +1,7 @@
 class ApplicationController < Sinatra::Base
   helpers ApplicationHelper
   set :views, File.expand_path('../../views', __FILE__)
-  p File.expand_path('../../views', __FILE__)
   set :public_folder, File.expand_path('../../public', __FILE__)
-  p File.expand_path('../../public', __FILE__)
   set :bind, '0.0.0.0'
 
   configure :production, :development do
@@ -18,10 +16,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/environment' do
+    @title = 'Set mock environment'
     haml :set_mock_environment
   end
 
   post '/environment' do
+    @title = 'Mock set successfully'
     env = %w{integration quality production}
     supplied_env = params[:mock_environment].downcase
     if env.include? supplied_env
@@ -35,7 +35,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/*" do
-    @title = "Mock Server in action"
+    @title = 'Mock Server in action'
     # Process the URL
     url = request.fullpath.sub!(/^\//, '')
     response = process_url(url, ENV['TEST_ENV'])
