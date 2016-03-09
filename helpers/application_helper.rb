@@ -60,10 +60,32 @@ module ApplicationHelper
     headers_hash = {}
     headers_array = headers_string.split(/\r\n/)
     headers_array.each do |header_row|
-      k,v = header_row.split(':')
+      k,v = header_row.split(ENV['HEADER_DELIMITER'])
       headers_hash[k] = v
     end
     return headers_hash
+  end
+
+  #
+  # Extract the HTTParty response for cloning the mock data set response hash to include all table columns.
+  # The clone will only provide the body and the headers, rest set to nil. Assumes a valid HTTP response with success
+  #
+  def extract_clone_response(response,url)
+
+    mock_data = ClonedData.new
+    mock_data.mock_name = ''
+    mock_data.mock_http_status = response.code
+    mock_data.mock_state = true
+    mock_data.mock_environment = ENV['TEST_ENV']
+    mock_data.mock_content_type = ENV['DEFAULT_CONTENT_TYPE']
+    mock_data.mock_request_url = url
+    hdr_string = 'X-Mock'+ENV['HEADER_DELIMITER']+'True'
+    response.headers.each do |header,hdr_value|
+      hdr_string = hdr_string + "\r\n" + header + ENV['HEADER_DELIMITER'] + hdr_value
+    end
+    mock_data.mock_data_response_headers = hdr_string
+    mock_data.mock_data_response = response.body
+    return mock_data
   end
 
 end

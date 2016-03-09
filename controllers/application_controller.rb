@@ -7,7 +7,7 @@ class ApplicationController < Sinatra::Base
   set :bind, '0.0.0.0'
 
   configure :production, :development do
-    enable :logging
+    # enable :logging
     enable :session
     set :session_secret, 'av3rys3cr3tk3y'
   end
@@ -50,11 +50,6 @@ class ApplicationController < Sinatra::Base
       content_type response[:mock_content_type]
       headers response[:mock_data_response_headers]
       body response[:mock_data_response]
-      # haml :mock_response_test, :locals => {body: h(response[:mock_data_response])}
-      # [response[:mock_http_status].to_i,
-      #  response[:mock_data_response_headers],
-      #  response[:mock_data_response]
-      # ]
     end
   end
 end

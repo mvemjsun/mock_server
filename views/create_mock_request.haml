@@ -2,7 +2,7 @@
     %h1 Mock Server - Create/Update Data
     %p{class: "lead"} Create mock responses by specifying the request URL's, response headers, status code and response body !
 
-%form{action: '/mock/create', method: 'post'}
+%form{action: '/mock/create', method: 'post', id: 'form_form'}
     %div{class: 'row'}
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label', for: 'mock_name'} Mock Request Name
@@ -17,13 +17,14 @@
                 %label
                     %input{type: 'checkbox', id: 'chk_mock_state',name: 'mock_state', value: "#{mock_data.nil? ? nil : (mock_data.mock_state == true ? '1' : '0') }"}
                     Enable/Disable Mock Response
-    %div{class: 'form-group'}
-        %row{class: 'col-md-11'}
-            %label{class: 'control-label', for: 'mock_request_url'} Request URL To mock
-            %input{type: 'text', class: 'form-control',id: 'mock_request_url', name: 'mock_request_url', placeholder: 'Request URL', onchange: 'urlChanged()', value: "#{mock_data.nil? ? nil : mock_data.mock_request_url }"}
-        %row{class: 'col-md-1'}
-            %label{class: 'control-label'} Clone Data
-            %button{type: 'button', id: 'get_button' ,class: 'btn btn-primary', onclick: "httpGet()"} GET
+    %div{class: 'row'}
+        %div{class: 'form-group'}
+            %div{class: 'col-md-10'}
+                %label{class: 'control-label', for: 'mock_request_url'} Request URL To mock
+                %input{type: 'text', class: 'form-control',id: 'mock_request_url', name: 'mock_request_url', placeholder: 'Request URL', onchange: 'urlChanged()', value: "#{mock_data.nil? ? nil : mock_data.mock_request_url }"}
+            %div{class: 'col-md-2'}
+                %label{class: 'control-label'} Clone Catalogue Data
+                %button{type: 'button', id: 'get_button' ,class: 'btn btn-primary', onclick: "getCloningData()"} GET
     %div{class: 'row'}
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_environment'} Test Environment
@@ -38,12 +39,12 @@
                 %option{id: 'text_xml'} text/xml
                 %option{id: 'text_html'} text/html
         %div{class: 'form-group col-md-6'}
-            %label{class: 'control-label',for: 'mock_data_response_headers'} Other Response Header(s)
-            %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? nil : mock_data.mock_data_response_headers}
+            %label{class: 'control-label',for: 'mock_data_response_headers'} Other Delimited (#{ENV['HEADER_DELIMITER']})Response Header(s)
+            %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? 'X-mocked'+ENV['HEADER_DELIMITER']+'True' : mock_data.mock_data_response_headers}
     %div{class: 'row'}
         %div{class: 'form-group col-md-12'}
             %label{class: 'control-label',for: 'mock_data_response'} Response Body
-            %textarea{id: 'json_body', class: 'form-control',id: 'mock_data_response', name: 'mock_data_response', placeholder: 'Response Body', rows: 30}#{mock_data.nil? ? nil : mock_data.mock_data_response }
+            %textarea{id: 'json_body', class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 30}#{mock_data.nil? ? nil : mock_data.mock_data_response }
     %button(type="submit" class="btn btn-primary btn-lg btn-block")Create/Update Mock Data
 
     :javascript
