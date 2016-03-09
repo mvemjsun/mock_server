@@ -66,6 +66,7 @@ class MockServerController < ApplicationController
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
         data.save!
+        state = :updated
       else
         # errors = "Not Found record"
         data = Mockdata.new
@@ -78,10 +79,22 @@ class MockServerController < ApplicationController
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
         data.save!
+        state = :created
       end
     rescue ActiveRecord::ActiveRecordError => errors
     end
 
+    #
+    # Validate JSON
+    #
+    json_state = :valid
+    if params[:mock_content_type] == 'application/json;charset=UTF-8'
+      if valid_json?(params[:mock_data_response])
+        json_state = :valid
+      else
+        json_state = :invalid
+      end
+    end
 
     if errors
       messages = errors
@@ -91,7 +104,12 @@ class MockServerController < ApplicationController
                                            mock_name: params[:mock_name],
                                            mock_request_url: url,
                                            mock_environment: params[:mock_environment],
-                                           mock_state: params[:mock_state]
+                                           mock_content_type: params[:mock_content_type],
+                                           mock_data_response_headers: params[:mock_data_response_headers],
+                                           mock_http_status: params[:mock_http_status],
+                                           mock_state: params[:mock_state],
+                                           mock_record_state: state,
+                                           json_state: json_state
       }
     end
 

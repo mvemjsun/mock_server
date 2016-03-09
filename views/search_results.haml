@@ -18,6 +18,6 @@
                     %td #{row.mock_name}
                     %td #{row.mock_environment}
                     %td #{row.mock_request_url}
-                    %td #{row.mock_state}
+                    %td #{row.mock_state == true ? 'ON' : 'OFF'}
     -else
         %h2{class: 'bg-warning text-center'} Search returned no results !

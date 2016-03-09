@@ -1,7 +1,7 @@
 - if messages
   %h3{class: 'text-center bg-danger'} #{messages}
 - else
-  %h3{class: 'text-center bg-success'} Created Mock Data
+  %h3{class: 'text-center bg-success'} Mock Data - #{mock_record_state == :created ? 'CREATED' : 'UPDATED'}
   %dl{class: 'dl-horizontal'}
     %dt Mock Name
     %dd #{mock_name}
@@ -9,9 +9,17 @@
     %dd #{mock_request_url}
     %dt Mock Environment
     %dd #{mock_environment}
+    %dt Mock Content Type
+    %dd #{mock_content_type}
+    %dt Mock HTTP Status
+    %dd #{mock_http_status}
+    %dt Mock Response Headers
+    %dd #{mock_data_response_headers}
     %dt Mock State
     %dd
       - if mock_state
         ON
       - else
         OFF
+  -if params[:mock_content_type] == 'application/json;charset=UTF-8' && json_state == :invalid
+    %h3{class: "alert alert-warning" , role: "alert"} Response Body is not a Valid JSON. Please Check mock response body.
