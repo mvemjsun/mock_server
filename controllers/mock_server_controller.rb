@@ -52,7 +52,7 @@ class MockServerController < ApplicationController
       mockdata = Mockdata.where(mock_name: params[:mock_name],
                                 mock_request_url: url,
                                 mock_environment: params[:mock_environment] #,
-                                # mock_state: params[:mock_state].nil? ? false : true
+      # mock_state: params[:mock_state].nil? ? false : true
       )
       if mockdata.any?
         # errors = "Found record"
@@ -126,8 +126,13 @@ class MockServerController < ApplicationController
     @title = 'Clone data'
     mock_data = {}
     if params[:mock_request_url].length > 0
-      response = HTTParty.get(params[:mock_request_url])
-      if response.code.to_i == 200
+      begin
+        response = HTTParty.get(params[:mock_request_url])
+      rescue => e
+        # Ignore fatal URL responses
+      end
+      if (response) &&
+          (response.code.to_s.match(/^[1,2,3,404]/))
         mock_data = extract_clone_response(response,
                                            params[:mock_request_url],
                                            params[:mock_name])
