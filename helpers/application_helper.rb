@@ -48,7 +48,7 @@ module ApplicationHelper
   #
   #
   #
-  def flash_message
+  def flash_messages
     session[:errors]
   end
 

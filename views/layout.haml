@@ -19,6 +19,9 @@
                 %li{role: 'presentation'}
                     %a{href: '/mock/search'} Search
             - if session.has_key? :errors
-                %div{class: "alert alert-danger" , role: "alert"}
-                    =flash_message
+                %div{class: "alert alert-danger alert-dismissible" , role: "alert"}
+                    - flash_messages.each do |field, error_msg|
+                        %li
+                            %strong #{field.to_s.gsub('_',' ').upcase}
+                            #{error_msg}
             =yield

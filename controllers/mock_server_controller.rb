@@ -51,8 +51,8 @@ class MockServerController < ApplicationController
       end
       mockdata = Mockdata.where(mock_name: params[:mock_name],
                                 mock_request_url: url,
-                                mock_environment: params[:mock_environment],
-                                mock_state: params[:mock_state].nil? ? false : true
+                                mock_environment: params[:mock_environment] #,
+                                # mock_state: params[:mock_state].nil? ? false : true
       )
       if mockdata.any?
         # errors = "Found record"
@@ -83,6 +83,7 @@ class MockServerController < ApplicationController
         state = :created
       end
     rescue ActiveRecord::ActiveRecordError => errors
+      session[:errors] = errors.record.errors
     end
 
     #
@@ -99,7 +100,8 @@ class MockServerController < ApplicationController
 
     if errors
       messages = errors
-      haml :create_mock_response, locals: {messages: messages}
+      # haml :create_mock_response, locals: {messages: messages}
+      haml :create_mock_request, locals: {mock_data: data}
     else
       haml :create_mock_response, locals: {messages: false,
                                            mock_name: params[:mock_name],
