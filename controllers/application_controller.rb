@@ -34,6 +34,11 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  get '/bird' do
+    @title = 'Mocking bird'
+    haml :mocking_bird
+  end
+
   get "/*" do
     @title = 'Mock Server in action'
     # Process the URL

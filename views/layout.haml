@@ -18,6 +18,8 @@
                     %a{href: '/environment'} Mock Env
                 %li{role: 'presentation'}
                     %a{href: '/mock/search'} Search
+                %li{role: 'presentation'}
+                    %a{href: '/mock/bird'} Bird
             - if session.has_key? :errors
                 %div{class: "alert alert-danger alert-dismissible" , role: "alert"}
                     - flash_messages.each do |field, error_msg|
