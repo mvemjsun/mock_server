@@ -11,6 +11,7 @@ class CreateMockdata < ActiveRecord::Migration
       t.boolean :mock_state
       t.string :mock_environment
       t.string :mock_content_type
+      t.integer :mock_served_times
       t.timestamps
     end
 

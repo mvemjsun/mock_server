@@ -12,6 +12,7 @@ class Mockdata < ActiveRecord::Base
 
   before_save do
     self.mock_name = self.mock_name.upcase
+    self.mock_served_times = 0 if self.mock_served_times.nil?
   end
 
  end

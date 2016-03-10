@@ -9,6 +9,7 @@
                     %th Mock Environment
                     %th Mock URL
                     %th Status
+                    %th Served
                 %tbody
             - search_data.each do |row|
                 %tr
@@ -19,5 +20,6 @@
                     %td #{row.mock_environment}
                     %td #{row.mock_request_url}
                     %td #{row.mock_state == true ? 'ON' : 'OFF'}
+                    %td #{row.mock_served_times}
     -else
         %h2{class: 'bg-warning text-center'} Search returned no results !

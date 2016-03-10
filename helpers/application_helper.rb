@@ -23,6 +23,8 @@ module ApplicationHelper
       return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
 
       return_data[:mock_content_type] = row[:mock_content_type]
+      row.mock_served_times = row.mock_served_times + 1
+      row.save!
     else
       return_data[:error] = "Not Found"
     end

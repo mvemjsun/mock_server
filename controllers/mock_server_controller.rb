@@ -78,6 +78,7 @@ class MockServerController < ApplicationController
         data.mock_data_response= params[:mock_data_response]
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
+        data.mock_served_times= 0
         data.save!
         state = :created
       end
