@@ -44,8 +44,6 @@ class ApplicationController < Sinatra::Base
     # Process the URL
     url = request.fullpath.sub!(/^\//, '')
     response = process_url(url, ENV['TEST_ENV'])
-    p ENV['TEST_ENV']
-    p response
     if  response.has_key? :error
       content_type 'application/text'
       status 404

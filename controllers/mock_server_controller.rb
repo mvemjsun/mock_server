@@ -136,7 +136,6 @@ class MockServerController < ApplicationController
         mock_data = extract_clone_response(response,
                                            params[:mock_request_url],
                                            params[:mock_name])
-        p mock_data.mock_content_type
         haml :create_mock_request, locals: {mock_data: mock_data}
       else
         haml :create_mock_request, locals: {mock_data: nil}
