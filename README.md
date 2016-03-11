@@ -38,4 +38,5 @@ Navigate to the search option and supply part of the mock name to search.
 #### Update Mock
 Edit an existing mock (search for it first).
 
-### Nice to Haves
+### Home Screen
+![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
