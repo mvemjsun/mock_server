@@ -31,3 +31,39 @@ function getCloningData() {
     $("#form_form").attr("method","get");
     document.getElementById("form_form").submit();
 }
+
+function addMoreRow() {
+    var new_row =
+    "\
+    <div class='row col-md-12' id='row_xx'>\
+          <div class='form-group'>\
+            <label class='control-label' for='mock_name_xx'>Mock Request Name</label>\
+            <input class='form-control' name='mock_name_xx' placeholder='Mock name' type='text'>\
+          </div>\
+          <div class='form-group'>\
+            <label class='control-label' for='mock_url_xx'>Mock URL</label>\
+            <input class='form-control' name='mock_url_xx' placeholder='Mock URL' type='url'>\
+          </div>\
+          <div class='form-group'>\
+            <label class='control-label' for='mock_environment_xx'>Test Env</label>\
+            <select class='form-control' name='mock_environment_xx'>\
+              <option id='integration'>integration</option>\
+              <option id='production'>production</option>\
+              <option id='quality'>quality</option>\
+            </select>\
+          </div>\
+          <button class='btn btn-primary' type = 'button' row='xx' id= 'delete_button_xx' onclick= 'deleteRow(this)'> Delete</button><br/><br/>"
+    var first_row=$('div[id^="row_"]').last().attr('id');
+    var row_name_split_arr = (first_row.split("_"));
+    var current_row_number = parseInt(row_name_split_arr[row_name_split_arr.length - 1]) + 1;
+    var row = new_row.replace(/xx/g,current_row_number);
+
+    $("#row_1").append(row)
+}
+
+function deleteRow(row) {
+    var button_row = $(row).attr('row');
+    var row = parseInt(button_row);
+    $("#row_"+row).empty();
+    $("#row_"+row).remove();
+}

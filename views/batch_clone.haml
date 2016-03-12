@@ -1,0 +1,21 @@
+%div{class: 'page-header'}
+    %h1 Mock Server - Clone multiple requests
+    %p{class: "lead"} Supply Name, URL and Environment to clone into the mock server
+
+%form{action: '/mock/clone/batch', method: 'post', id: 'form_clone_batch', class: 'form-inline'}
+    %div{class: 'row col-md-12', id: 'row_1'}
+        %div{class: 'form-group'}
+            %label{class: 'control-label', for: 'mock_name_1'} Mock Request Name
+            %input{type: 'text', class: 'form-control', name: 'mock_name_1', placeholder: 'Mock name'}
+        %div{class: 'form-group'}
+            %label{class: 'control-label', for: 'mock_url_1'} Mock URL
+            %input{type: 'url', class: 'form-control', name: 'mock_url_1', placeholder: 'Mock URL'}
+        %div{class: 'form-group'}
+            %label{class: 'control-label',for: 'mock_environment_1'} Test Env
+            %select{class: 'form-control',name: 'mock_environment_1'}
+                %option{id: 'integration'} integration
+                %option{id: 'production'} production
+                %option{id: 'quality'} quality
+        %button{class: "btn btn-primary", type: 'button', id: 'more_button_1', onclick: 'addMoreRow()'} More
+        %br
+        %br

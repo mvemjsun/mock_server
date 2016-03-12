@@ -144,4 +144,9 @@ class MockServerController < ApplicationController
       haml :create_mock_request, locals: {mock_data: nil}
     end
   end
+
+  get '/clone/batch' do
+    @title = 'Clone in batch'
+    haml :batch_clone
+  end
 end
