@@ -16,6 +16,9 @@
                 %option{id: 'integration'} integration
                 %option{id: 'production'} production
                 %option{id: 'quality'} quality
-        %button{class: "btn btn-primary", type: 'button', id: 'more_button_1', onclick: 'addMoreRow()'} More
+        %button{class: "btn btn-primary", type: 'button', id: 'more_button_1', onclick: 'addMoreRow()'} +
+        %div{class: 'form-group'}
+            %label{class: 'control-label', for: 'status_row_1', id: 'status_row_1'} Pending
         %br
         %br
+    %button(type="button" class="btn btn-primary btn-lg btn-block" onclick="cloneRowOnSubmit()" )Create/Update Mock Data

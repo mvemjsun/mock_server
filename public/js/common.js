@@ -51,8 +51,11 @@ function addMoreRow() {
               <option id='production'>production</option>\
               <option id='quality'>quality</option>\
             </select>\
-          </div>\
-          <button class='btn btn-primary' type = 'button' row='xx' id= 'delete_button_xx' onclick= 'deleteRow(this)'> Delete</button><br/><br/>"
+          </div class='form-group'>\
+            <button class='btn btn-primary' type = 'button' row='xx' id= 'delete_button_xx' onclick= 'deleteRow(this)'> Delete</button>\
+            <label id='status_row_xx' for='status_row_xx'>Pending</label><br/><br/>\
+          <div>"
+
     var first_row=$('div[id^="row_"]').last().attr('id');
     var row_name_split_arr = (first_row.split("_"));
     var current_row_number = parseInt(row_name_split_arr[row_name_split_arr.length - 1]) + 1;
@@ -66,4 +69,75 @@ function deleteRow(row) {
     var row = parseInt(button_row);
     $("#row_"+row).empty();
     $("#row_"+row).remove();
+}
+
+function validateBatchCloneData() {
+    mock_names = $('input[name^="mock_name_"]');
+    mock_urls = $('input[name^="mock_url_"]');
+    mock_envs = $('select[name^="mock_environment_"]');
+    var stateOK = true;
+
+    mock_names.each(function(index) {
+            if ($(this).val().trim().length == 0) {
+                stateOK = false
+            }
+    });
+
+    mock_urls.each(function(index) {
+        if ($(this).val().trim().length == 0) {
+            stateOK = false
+        }
+    });
+
+    mock_envs.each(function(index) {
+        if ($(this).val().trim().length == 0) {
+            stateOK = false
+        }
+    });
+
+    var mock_row_states = $('label[id^="status_row_"]');
+    mock_row_states.each(function (index) {
+        $(this).text('Processing ...');
+    });
+    $(':button').prop('disabled', true);
+    return stateOK;
+}
+
+function cloneRowOnSubmit(row) {
+    if (validateBatchCloneData()) {
+
+        mock_names = $('input[name^="mock_name_"]');
+        mock_urls = $('input[name^="mock_url_"]');
+        mock_envs = $('select[name^="mock_environment_"]');
+        mock_row_states = $('label[id^="status_row_"]');
+
+        var total_rows = mock_row_states.length;
+        var count = 0;
+
+        mock_names.each(function(index) {
+
+            var mock_name = $(this).val();
+            var mock_url= mock_urls[index].value;
+            var mock_env= mock_envs[index].value;
+            var mock_row_status= mock_row_states[index];
+
+            $.ajax({
+                method: "POST",
+                url: "/mock/clone/batch",
+                data: { name: mock_name, url: mock_url, mock_test_environment: mock_env}
+            })
+                .done(function (msg) {
+//                    alert("Data processed: " + msg);
+                    mock_row_status.textContent = 'Done';
+                    count = count + 1;
+                    if (total_rows == count) {
+                        $(':button').prop('disabled', false);
+                    }
+                });
+        });
+
+
+    } else {
+        alert("Please supply all data. Mock Name and URL are required.");
+    }
 }

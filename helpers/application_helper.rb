@@ -102,4 +102,11 @@ module ApplicationHelper
     end
   end
 
+  #
+  #
+  #
+  def process_batch_clone_request(params)
+
+  end
+
 end

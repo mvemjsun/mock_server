@@ -149,4 +149,15 @@ class MockServerController < ApplicationController
     @title = 'Clone in batch'
     haml :batch_clone
   end
+
+  post '/clone/batch' do
+    @title = 'Clone in batch'
+    # response = process_batch_clone_request(params)
+    p params
+    sleep 5
+    content_type 'application/text'
+    status 200
+    body 'Done'
+  end
+
 end
