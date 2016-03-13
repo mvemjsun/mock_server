@@ -132,6 +132,24 @@ function cloneRowOnSubmit(row) {
 //                    alert("Data processed: " + msg);
 //                    mock_row_status.textContent = 'Done';
                     mock_row_status.textContent = msg;
+                    switch (msg) {
+                        case 'Updated':
+                            mock_row_status.setAttribute('class','label label-info');
+                            break;
+
+                        case 'Error Updating':
+                            mock_row_status.setAttribute('class','label label-warning');
+                            break;
+
+                        case 'Created':
+                            mock_row_status.setAttribute('class','label label-success');
+                            break;
+
+                        case 'Error Creating':
+                            mock_row_status.setAttribute('class','label label-danger');
+                            break;
+
+                    }
                     count = count + 1;
                     if (total_rows == count) {
                         $(':button').prop('disabled', false);

@@ -161,7 +161,7 @@ class MockServerController < ApplicationController
       when :created
         'Created'
       when :error_creating
-        'Error creating'
+        'Error Creating'
     end
     content_type 'application/text'
     status 200
