@@ -130,7 +130,8 @@ function cloneRowOnSubmit(row) {
             })
                 .done(function (msg) {
 //                    alert("Data processed: " + msg);
-                    mock_row_status.textContent = 'Done';
+//                    mock_row_status.textContent = 'Done';
+                    mock_row_status.textContent = msg;
                     count = count + 1;
                     if (total_rows == count) {
                         $(':button').prop('disabled', false);

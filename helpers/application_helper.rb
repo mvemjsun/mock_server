@@ -1,9 +1,9 @@
-
 module ApplicationHelper
 
   def h(text)
     Rack::Utils.escape_html(text)
   end
+
   #
   # The main processing function that server the mock responses
   # Read the model for the given url in a test environment and serve it as a HTTP response
@@ -62,7 +62,7 @@ module ApplicationHelper
     headers_hash = {}
     headers_array = headers_string.split(/\r\n/)
     headers_array.each do |header_row|
-      k,v = header_row.split(ENV['HEADER_DELIMITER'])
+      k, v = header_row.split(ENV['HEADER_DELIMITER'])
       headers_hash[k] = v
     end
     return headers_hash
@@ -72,7 +72,7 @@ module ApplicationHelper
   # Extract the HTTParty response for cloning the mock data set response hash to include all table columns.
   # The clone will only provide the body and the headers, rest set to nil. Assumes a valid HTTP response with success
   #
-  def extract_clone_response(response,url,mock_name)
+  def extract_clone_response(response, url, mock_name)
 
     mock_data = ClonedData.new
     mock_data.mock_name = mock_name
@@ -82,7 +82,7 @@ module ApplicationHelper
     mock_data.mock_content_type = ENV['DEFAULT_CONTENT_TYPE']
     mock_data.mock_request_url = url
     hdr_string = 'X-Mock'+ENV['HEADER_DELIMITER']+'True'
-    response.headers.each do |header,hdr_value|
+    response.headers.each do |header, hdr_value|
       hdr_string = hdr_string + "\r\n" + header + ENV['HEADER_DELIMITER'] + hdr_value
     end
     mock_data.mock_data_response_headers = hdr_string
@@ -103,10 +103,79 @@ module ApplicationHelper
   end
 
   #
-  #
+  # When part of a batch clone request arrives it supplies the Mock Name, URL and Test environment
+  # Check of the Mock name, URL, Environment has an active record, if so then update it else create
+  # a new record in the mocking database
+  # @params [Hash] params hash with keys :name, :url & :mock_request_environment
+  # @return [Symbol] state with values :created, :error_creating, :updated, :error_updating
   #
   def process_batch_clone_request(params)
+    p "Processing clone request for #{params} ..."
 
+    url_path = URI::parse(params[:url]).path.sub(/^\//, '')
+    url_query = URI::parse(params[:url]).query
+
+    if url_query
+      url = url_path + '?' + url_query
+    else
+      url = url_path
+    end
+
+    state = :created
+    mockdata = Mockdata.where(mock_request_url: url,
+                              mock_name: params[:name].upcase,
+                              mock_environment: params[:mock_test_environment])
+    if mockdata.any?
+      # errors = "Found record", then get new data to clone
+      begin
+        response = HTTParty.get(params[:url])
+      rescue => e
+        # Ignore fatal URL responses
+      end
+      p '>>> Found existing record'
+      if (response) &&
+          (response.code.to_s.match(/^[1,2,3]/))
+        data = mockdata.first
+        data.mock_name= params[:name]
+        data.mock_request_url= url
+        data.mock_http_status= response.code
+        data.mock_data_response_headers= extract_clone_response(response, params[:url], params[:name]).mock_data_response_headers
+        data.mock_data_response= response.body
+        data.mock_environment= params[:mock_test_environment]
+        data.mock_content_type= 'application/json;charset=UTF8'
+        data.save!
+        state = :updated
+
+      else
+        state = :error_updating
+      end
+    else
+      # New record need to be created
+      p ">>>> Attempting to create a new record"
+      begin
+        response = HTTParty.get(params[:url])
+      rescue => e
+        # Ignore fatal URL responses
+      end
+
+      if (response) &&
+          (response.code.to_s.match(/^[1,2,3]/))
+        data = Mockdata.new
+        data.mock_name= params[:name]
+        data.mock_request_url= url
+        data.mock_http_status= response.code
+        data.mock_data_response_headers= extract_clone_response(response, params[:url], params[:name]).mock_data_response_headers
+        data.mock_data_response= response.body
+        data.mock_environment= params[:mock_test_environment]
+        data.mock_content_type= 'application/json;charset=UTF8'
+        data.mock_state = true
+        data.save!
+        state = :created
+      else
+        state = :error_creating
+      end
+    end
+    return state
   end
 
 end

@@ -152,12 +152,20 @@ class MockServerController < ApplicationController
 
   post '/clone/batch' do
     @title = 'Clone in batch'
-    # response = process_batch_clone_request(params)
-    p params
-    sleep 5
+    response = process_batch_clone_request(params)
+    bd = case response
+      when :updated
+        'Updated'
+      when :error_updating
+        'Error Updating'
+      when :created
+        'Created'
+      when :error_creating
+        'Error creating'
+    end
     content_type 'application/text'
     status 200
-    body 'Done'
+    body bd
   end
 
 end
