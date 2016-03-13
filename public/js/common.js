@@ -95,11 +95,13 @@ function validateBatchCloneData() {
         }
     });
 
-    var mock_row_states = $('label[id^="status_row_"]');
-    mock_row_states.each(function (index) {
-        $(this).text('Processing ...');
-    });
-    $(':button').prop('disabled', true);
+    if (stateOK) {
+        var mock_row_states = $('label[id^="status_row_"]');
+        mock_row_states.each(function (index) {
+            $(this).text('Processing ...');
+        });
+        $(':button').prop('disabled', true);
+    }
     return stateOK;
 }
 
