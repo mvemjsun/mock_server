@@ -1,0 +1,17 @@
+%div{class: 'page-header'}
+    %h1 Mock Server - Missed Requests
+    -if missed_data
+        %table{class: "table table-striped"}
+            %thead
+                %tr
+                    %th Mock Environment
+                    %th Mock URL
+                    %th Date
+                %tbody
+            - missed_data.each do |row|
+                %tr
+                    %td #{row.mock_environment}
+                    %td #{row.url}
+                    %td #{row.updated_at}
+    -else
+        %h2{class: 'bg-warning text-center'} No Missed data. Well done !

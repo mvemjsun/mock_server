@@ -24,7 +24,7 @@ class CreateMockdata < ActiveRecord::Migration
     end
 
     end
-   
+
   def self.down
     drop_table :mockdata
     drop_table :missed_requests

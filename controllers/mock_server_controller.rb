@@ -5,6 +5,12 @@ class MockServerController < ApplicationController
     haml :search_mock
   end
 
+  get '/search/misses' do
+    @title = 'Missed requests'
+    missed_data = MissedRequest.order('created_at DESC').all
+    haml :missed_requests, locals: {missed_data: missed_data}
+  end
+
   get '/search/result' do
     @title = 'Search Result(s)'
     search_data = search_mock_data({mock_name: params[:search_mock_name].upcase})
@@ -18,7 +24,7 @@ class MockServerController < ApplicationController
     haml :create_mock_request, locals: {mock_data: mock_data.first}
   end
 
-  delete "/mock/:id" do
+  delete "/delete/:id" do
     @title = "Mock Deleted"
     mock_data = Mockdata.where(id: params[:id].to_i)
     data = mock_data.first
@@ -167,5 +173,6 @@ class MockServerController < ApplicationController
     status 200
     body bd
   end
+
 
 end
