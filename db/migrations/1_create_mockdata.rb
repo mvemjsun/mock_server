@@ -16,9 +16,17 @@ class CreateMockdata < ActiveRecord::Migration
     end
 
     add_index :mockdata, [:mock_name,:mock_request_url, :mock_environment, :mock_state], :unique => true, name: 'unique_data'
-  end
 
+    create_table :missed_requests do |t|
+      t.string :url
+      t.string :mock_environment
+      t.timestamps
+    end
+
+    end
+   
   def self.down
     drop_table :mockdata
+    drop_table :missed_requests
   end
 end

@@ -45,6 +45,7 @@ class ApplicationController < Sinatra::Base
     url = request.fullpath.sub!(/^\//, '')
     response = process_url(url, ENV['TEST_ENV'])
     if  response.has_key? :error
+      log_missed_requests(request)
       content_type 'application/text'
       status 404
       body 'Not Found'

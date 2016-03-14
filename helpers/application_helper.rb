@@ -178,4 +178,23 @@ module ApplicationHelper
     return state
   end
 
+  #
+  # Log the missed requests that could not be served
+  #
+  def log_missed_requests(request_object)
+    missed_request = MissedRequest.new
+
+    url_path = URI::parse(request_object.url).path.sub(/^\//, '')
+    url_query = URI::parse(request_object.url).query
+
+    if url_query
+      url = url_path + '?' + url_query
+    else
+      url = url_path
+    end
+    missed_request.url = url
+    missed_request.mock_environment = ENV['TEST_ENV']
+    missed_request.save
+  end
+
 end
