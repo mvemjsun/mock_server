@@ -13,17 +13,17 @@
     %body{onload: ' urlChanged()'}
         %div{class: 'container col-md-11 col-lg-11'}
             %ul{class: "nav nav-tabs"}
-                %li{role: 'presentation'}
+                %li{role: 'presentation', id: 'tab-home', class: 'active'}
                     %a{href: '/mock/create'} Home
-                %li{role: 'presentation'}
+                %li{role: 'presentation', id: 'tab-env'}
                     %a{href: '/environment'} Mock Env
-                %li{role: 'presentation'}
+                %li{role: 'presentation', id: 'tab-search'}
                     %a{href: '/mock/search'} Search
-                %li{role: 'presentation'}
+                %li{role: 'presentation', id: 'tab-clone'}
                     %a{href: '/mock/clone/batch'} Clone Many
-                %li{role: 'presentation'}
+                %li{role: 'presentation', id: 'tab-misses'}
                     %a{href: '/mock/search/misses'} Misses
-                %li{role: 'presentation'}
+                %li{role: 'presentation', id: 'tab-bird'}
                     %a{href: '/mock/bird'} Bird
             - if session.has_key? :errors
                 %div{class: "alert alert-danger alert-dismissible" , role: "alert"}
