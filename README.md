@@ -1,4 +1,4 @@
-## Mocking Bird
+## Relax
 > An easy way to setup mock responses by specifying mock URL, Response headers and Response body.
 
 ### Summary
