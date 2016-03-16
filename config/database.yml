@@ -3,3 +3,11 @@ development:
   database: db/mockserver.db
   pool: 5
   timeout: 5000
+
+example_mysql:
+  adapter: mysql2
+  encoding: utf8
+  database: my_db_name
+  username: root
+  password: my_password
+  host: mysql://127.0.0.1:3306

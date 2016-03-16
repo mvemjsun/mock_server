@@ -16,6 +16,5 @@ Dir.glob('./{helpers,controllers,models}/*.rb').each do |file|
   require file
 end
 
-map('/mock') { run MockServerController}
-map('/rt') { run ReleaseTrainController}
 map('/') { run ApplicationController}
+map('/mock') { run MockServerController}

@@ -39,14 +39,6 @@ class ApplicationController < Sinatra::Base
     haml :mocking_bird
   end
 
-  # get '/' do
-  #   if ! URI::parse(request.url).query
-  #     redirect '/mock/create'
-  #   else
-  #     redirect "/?#{URI::parse(request.url).query}"
-  #   end
-  # end
-
   get "/*" do
     @title = 'Mock Server in action'
     # Process the URL
