@@ -55,13 +55,14 @@ class MockServerController < ApplicationController
       else
         url = url_path
       end
-      mockdata = Mockdata.where(mock_name: params[:mock_name],
+      mockdata = Mockdata.where(mock_name: params[:mock_name].upcase,
                                 mock_request_url: url,
                                 mock_environment: params[:mock_environment] #,
       # mock_state: params[:mock_state].nil? ? false : true
       )
       if mockdata.any?
         # errors = "Found record"
+
         data = mockdata.first
         data.mock_name= params[:mock_name]
         data.mock_request_url= url
@@ -71,8 +72,10 @@ class MockServerController < ApplicationController
         data.mock_data_response= params[:mock_data_response]
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
-        data.save!
-        state = :updated
+        raise ActiveRecord::RecordNotUnique, "Record not unique"
+        errors = true
+        # data.save!
+        # state = :updated
       else
         # errors = "Not Found record"
         data = Mockdata.new
@@ -88,6 +91,8 @@ class MockServerController < ApplicationController
         data.save!
         state = :created
       end
+    rescue ActiveRecord::RecordNotUnique => errors
+      session[:errors] = ['Mock URL with this state already exists for this test environment. Try to search and edit.']
     rescue ActiveRecord::ActiveRecordError => errors
       session[:errors] = errors.record.errors
     end
