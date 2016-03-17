@@ -15,7 +15,7 @@ module ApplicationHelper
 
   def process_url(url, env=ENV['TEST_ENV'])
     return_data={}
-    data = Mockdata.where(mock_request_url: url, mock_environment: env)
+    data = Mockdata.where(mock_request_url: url, mock_environment: env, mock_state: true)
     if data.any?
       row = data.first
       return_data[:mock_http_status] = row[:mock_http_status]
