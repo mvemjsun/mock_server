@@ -99,9 +99,10 @@ class MockServerController < ApplicationController
         state = :created
       end
     rescue ActiveRecord::RecordNotUnique => errors
-      session[:errors] = ["Mock URL with this STATE already exists for this test environment with name '#{(mockdata_exist.first.mock_name).upcase}'.  Try to search and edit."]
+      session[:errors] = ["Only one URL can be active at a time. URL with name '#{(mockdata_exist.first.mock_name).upcase}' is already active."]
     rescue ActiveRecord::ActiveRecordError => errors
-      session[:errors] = errors.record.errors
+      # session[:errors] = errors.record.errors
+      session[:errors] = [errors.message]
     end
 
     #

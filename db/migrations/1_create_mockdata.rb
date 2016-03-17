@@ -15,7 +15,12 @@ class CreateMockdata < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :mockdata, [:mock_request_url, :mock_environment, :mock_state], :unique => true, name: 'unique_data'
+    # add_index :mockdata, [:mock_request_url, :mock_environment, :mock_state], :unique => true, name: 'unique_data'
+    execute <<-SQL
+      CREATE UNIQUE INDEX "unique_mock_data"
+      ON "MOCKDATA" ("mock_request_url", "mock_environment", "mock_state")
+      WHERE "mock_state" = 't'
+    SQL
 
     create_table :missed_requests do |t|
       t.string :url
