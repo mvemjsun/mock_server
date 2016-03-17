@@ -29,6 +29,6 @@
                 %div{class: "alert alert-danger alert-dismissible" , role: "alert"}
                     - flash_messages.each do |field, error_msg|
                         %li
-                            %strong #{field.to_s.gsub('_',' ').upcase}
+                            %strong #{field.to_s.gsub('_',' ')}
                             #{error_msg}
             =yield

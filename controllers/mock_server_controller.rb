@@ -60,6 +60,13 @@ class MockServerController < ApplicationController
                                 mock_environment: params[:mock_environment] #,
       # mock_state: params[:mock_state].nil? ? false : true
       )
+
+      mockdata_exist = Mockdata.where(
+                                mock_request_url: url,
+                                mock_environment: params[:mock_environment] ,
+                                mock_state: params[:mock_state].nil? ? false : true
+      )
+
       if mockdata.any?
         # errors = "Found record"
 
@@ -72,10 +79,10 @@ class MockServerController < ApplicationController
         data.mock_data_response= params[:mock_data_response]
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
-        raise ActiveRecord::RecordNotUnique, "Record not unique"
-        errors = true
-        # data.save!
-        # state = :updated
+        # raise ActiveRecord::RecordNotUnique, "Record not unique"
+        # errors = true
+        data.save!
+        state = :updated
       else
         # errors = "Not Found record"
         data = Mockdata.new
@@ -92,7 +99,7 @@ class MockServerController < ApplicationController
         state = :created
       end
     rescue ActiveRecord::RecordNotUnique => errors
-      session[:errors] = ['Mock URL with this state already exists for this test environment. Try to search and edit.']
+      session[:errors] = ["Mock URL with this STATE already exists for this test environment with name '#{(mockdata_exist.first.mock_name).upcase}'.  Try to search and edit."]
     rescue ActiveRecord::ActiveRecordError => errors
       session[:errors] = errors.record.errors
     end
@@ -165,15 +172,15 @@ class MockServerController < ApplicationController
     @title = 'Clone in batch'
     response = process_batch_clone_request(params)
     bd = case response
-      when :updated
-        'Updated'
-      when :error_updating
-        'Error Updating'
-      when :created
-        'Created'
-      when :error_creating
-        'Error Creating'
-    end
+           when :updated
+             'Updated'
+           when :error_updating
+             'Error Updating'
+           when :created
+             'Created'
+           when :error_creating
+             'Error Creating'
+         end
     content_type 'application/text'
     status 200
     body bd
