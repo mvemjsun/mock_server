@@ -4,19 +4,27 @@ function validateJsonBody(input_area) {
     if (contentType == "application/json;charset=UTF-8") {
         var jsonInput = $("#json_body");
 
-        jsonInput.validateJSON({
-            compress: false,
-            reformat: true,
-            'onSuccess': function (json) {
-                jsonInput.parent().removeClass('has-error').addClass('has-success');
-            },
-            'onError': function (error) {
-                jsonInput.parent().addClass('has-error');
-                xx = input_area.selectionStart;
-                yy = input_area.selectionEnd = xx + 100
-                jsonInput.selectRange(xx, yy);
-            }
-        });
+        if (jsonInput.val().length > 0) {
+            jsonInput.validateJSON({
+                compress: false,
+                reformat: true,
+                'onSuccess': function (json) {
+                    jsonInput.parent().removeClass('has-error').addClass('has-success');
+                },
+                'onError': function (error) {
+                    jsonInput.parent().addClass('has-error');
+                    xx = input_area.selectionStart;
+                    yy = input_area.selectionEnd = xx + 100
+                    jsonInput.selectRange(xx, yy);
+                }
+            });
+        }
+    }
+    if (contentType == "text/xml") {
+
+    }
+    if (contentType == "text/html") {
+
     }
 }
 
