@@ -29,8 +29,8 @@ class MockServerController < ApplicationController
     mock_data = Mockdata.where(id: params[:id].to_i)
     data = mock_data.first
     if mock_data.any?
-      mock_data.delete
-      haml :mock_deleted_ack, locals: {mock_data: data.first, success: true}
+      mock_data.destroy(params[:id].to_i)
+      haml :mock_deleted_ack, locals: {message: "Record deleted successfully", success: true}
     else
       haml :mock_deleted_ack, locals: {message: "Not Found", success: false}
     end
