@@ -1,3 +1,25 @@
+function validateJsonBody(input_area) {
+    var contentType = $("#id_mock_content_type").val();
+
+    if (contentType == "application/json;charset=UTF-8") {
+        var jsonInput = $("#json_body");
+
+        jsonInput.validateJSON({
+            compress: false,
+            reformat: true,
+            'onSuccess': function (json) {
+                jsonInput.parent().removeClass('has-error').addClass('has-success');
+            },
+            'onError': function (error) {
+                jsonInput.parent().addClass('has-error');
+                xx = input_area.selectionStart;
+                yy = input_area.selectionEnd = xx + 100
+                jsonInput.selectRange(xx, yy);
+            }
+        });
+    }
+}
+
 function httpGet()
 {
     var theUrl = document.getElementById('mock_request_url');
