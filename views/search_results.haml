@@ -24,7 +24,7 @@
                                 #{row.id}
                         %td #{row.mock_name}
                         %td #{row.mock_environment}
-                        %td #{row.mock_request_url}
+                        %td #{row.mock_request_url.length > 100 ? row.mock_request_url[0..100]+'...' : row.mock_request_url}
                         %td #{row.mock_state == true ? 'ON' : 'OFF'}
                         %td #{row.updated_at}
                         %td #{row.mock_served_times}
@@ -36,7 +36,7 @@
                                 #{row.id}
                         %td #{row.mock_name}
                         %td #{row.mock_environment}
-                        %td #{row.mock_request_url}
+                        %td #{row.mock_request_url.length > 100 ? row.mock_request_url[0..100]+'...' : row.mock_request_url}
                         %td #{row.mock_state == true ? 'ON' : 'OFF'}
                         %td #{row.updated_at}
                         %td #{row.mock_served_times}
