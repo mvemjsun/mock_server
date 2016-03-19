@@ -11,8 +11,10 @@ class ApplicationController < Sinatra::Base
   end
 
   before do
-    db = YAML.load_file(File.expand_path('./config/database.yml'))['development']
-    ActiveRecord::Base.establish_connection db
+  end
+
+  after do
+    ActiveRecord::Base.clear_active_connections!
   end
 
   get '/environment' do

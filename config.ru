@@ -12,6 +12,10 @@ ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
 ENV['HEADER_DELIMITER'] = ":==:"
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger.level = Logger::DEBUG
+
+db = YAML.load_file(File.expand_path('./config/database.yml'))['development']
+ActiveRecord::Base.establish_connection db
+
 Dir.glob('./{helpers,controllers,models}/*.rb').each do |file|
   require file
 end
