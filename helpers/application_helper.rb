@@ -87,6 +87,7 @@ module ApplicationHelper
     end
     mock_data.mock_data_response_headers = hdr_string
     mock_data.mock_data_response = response.body
+    mock_data.id = nil
     return mock_data
   end
 

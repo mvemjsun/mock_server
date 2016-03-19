@@ -1,0 +1,3 @@
+class DuplicateNameAndURL < StandardError
+
+end

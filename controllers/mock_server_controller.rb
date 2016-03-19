@@ -55,16 +55,28 @@ class MockServerController < ApplicationController
       else
         url = url_path
       end
-      mockdata = Mockdata.where(mock_name: params[:mock_name].upcase,
-                                mock_request_url: url,
-                                mock_environment: params[:mock_environment] #,
-      # mock_state: params[:mock_state].nil? ? false : true
-      )
+
+      if params[:id].length == 0
+        # If New record being attempted to be created and a duplicate name/url/env is found
+        mockdata = Mockdata.where(mock_name: params[:mock_name].upcase,
+                                  mock_request_url: url,
+                                  mock_environment: params[:mock_environment]
+        )
+        if mockdata.any?
+          data = mockdata.first
+          # Set id to nil so that the request is treated as a new record
+          data.id = nil
+          raise DuplicateNameAndURL, "Mock name and URL already exist with the name #{data.mock_name}. Search and edit or provide a different name."
+          errors = true
+        end
+      else
+        mockdata = Mockdata.where(id: params[:id].to_i)
+      end
 
       mockdata_exist = Mockdata.where(
-                                mock_request_url: url,
-                                mock_environment: params[:mock_environment] ,
-                                mock_state: params[:mock_state].nil? ? false : true
+          mock_request_url: url,
+          mock_environment: params[:mock_environment],
+          mock_state: params[:mock_state].nil? ? false : true
       )
 
       if mockdata.any?
@@ -79,8 +91,6 @@ class MockServerController < ApplicationController
         data.mock_data_response= params[:mock_data_response]
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
-        # raise ActiveRecord::RecordNotUnique, "Record not unique"
-        # errors = true
         data.save!
         state = :updated
       else
@@ -98,10 +108,11 @@ class MockServerController < ApplicationController
         data.save!
         state = :created
       end
+    rescue DuplicateNameAndURL => errors
+      session[:errors] = [errors.message]
     rescue ActiveRecord::RecordNotUnique => errors
-      session[:errors] = ["Only one URL can be active at a time. URL with name '#{(mockdata_exist.first.mock_name).upcase}' is already active."]
+      session[:errors] = ["Only one URL can be active at a time. This URL is already ACTIVE with the name '#{(mockdata_exist.first.mock_name).upcase}' ."]
     rescue ActiveRecord::ActiveRecordError => errors
-      # session[:errors] = errors.record.errors
       session[:errors] = [errors.message]
     end
 
@@ -119,7 +130,6 @@ class MockServerController < ApplicationController
 
     if errors
       messages = errors
-      # haml :create_mock_response, locals: {messages: messages}
       haml :create_mock_request, locals: {mock_data: data}
     else
       haml :create_mock_response, locals: {messages: false,
