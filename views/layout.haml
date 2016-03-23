@@ -26,7 +26,7 @@
                 %li{role: 'presentation', id: 'tab-misses'}
                     %a{href: '/mock/search/misses'} Misses
                 %li{role: 'presentation', id: 'tab-bird'}
-                    %a{href: '/mock/bird'} Relax
+                    %a{href: '/mock/bird'} Design
             - if session.has_key? :errors
                 %div{class: "alert alert-danger alert-dismissible" , role: "alert"}
                     - flash_messages.each do |field, error_msg|
