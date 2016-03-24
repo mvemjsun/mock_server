@@ -111,7 +111,6 @@ module ApplicationHelper
   # @return [Symbol] state with values :created, :error_creating, :updated, :error_updating
   #
   def process_batch_clone_request(params)
-    p "Processing clone request for #{params} ..."
 
     url_path = URI::parse(params[:url]).path.sub(/^\//, '')
     url_query = URI::parse(params[:url]).query
@@ -133,7 +132,6 @@ module ApplicationHelper
       rescue => e
         # Ignore fatal URL responses
       end
-      p '>>> Found existing record'
       if (response) &&
           (response.code.to_s.match(/^[1,2,3]/))
         data = mockdata.first
@@ -152,7 +150,6 @@ module ApplicationHelper
       end
     else
       # New record need to be created
-      p ">>>> Attempting to create a new record"
       begin
         response = HTTParty.get(params[:url])
       rescue => e
