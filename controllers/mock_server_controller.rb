@@ -197,5 +197,41 @@ class MockServerController < ApplicationController
     body bd
   end
 
+  get '/replace/search' do
+    @title = 'Maintain search strings'
+    haml :search_replace, locals: {search_data: nil, search_message: nil}
+  end
+
+  get '/replace/search/results' do
+    @title = 'Intelli replace - search results'
+    search_data = search_replace_data({replace_name: params[:replace_name].upcase})
+
+    search_message = 'No data found' unless search_data
+    haml :search_replace, locals: {search_data: search_data, search_message: search_message}
+  end
+
+  get '/replace/create_update' do
+    @title = 'Create update replace data'
+    haml :create_update_replace_data, locals: {replace_data: nil}
+  end
+
+  post '/replace/create_update' do
+    @title = 'Updated replace data'
+    if params[:id].length == 0
+      # Create
+      response = create_update_replace_data({create: true})
+    else
+      # Update
+      response = create_update_replace_data({create: false})
+    end
+
+    if response[:error]
+      session[:errors] = response[:message]
+      haml :create_update_replace_data, locals: {replace_data: response[:replace_data]}
+    else
+      haml :create_update_replace_data_ack
+    end
+  end
+
 
 end

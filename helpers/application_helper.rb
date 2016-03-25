@@ -46,6 +46,18 @@ module ApplicationHelper
   end
 
   #
+  # Search the replace data table and return results
+  #
+  def search_replace_data(options)
+    data = Replacedata.where("replace_name LIKE ?", "%#{options[:replace_name]}%")
+    if data.any?
+      return data
+    else
+      return nil
+    end
+  end
+
+  #
   #
   #
   def flash_messages
@@ -193,6 +205,55 @@ module ApplicationHelper
     missed_request.url = url
     missed_request.mock_environment = ENV['TEST_ENV']
     missed_request.save
+  end
+
+  #
+  # Create or update the replace data.
+  # @params [Hash] keys :create with value true or false
+  # @return [Hash] keys :error, :message, :replace_data
+  #
+  def create_update_replace_data(options)
+    error = false
+    return_data = {}
+    if options[:create]
+      p '>>> Creating'
+      p params
+      if params[:replace_state]
+        data = Replacedata.where(replaced_string: options[:replaced_string],
+                                 mock_environment: params[:mock_environment],
+                                 replace_state: true)
+        if data.any?
+          error = true
+          message = "ACTIVE replace data already exists with name #{data.first.replace_name} for this environment."
+        end
+      end
+      replaceData = Replacedata.new
+      replaceData.replace_name = params[:replace_name].upcase
+      replaceData.replaced_string = params[:replaced_string]
+      replaceData.replacing_string = params[:replacing_string]
+      replaceData.replace_state = params[:replace_state].nil? ? false : true
+      replaceData.is_regexp = params[:is_regexp].nil? ? false : true
+      replaceData.mock_environment = params[:mock_environment]
+      p replaceData
+      replaceData.save!
+    else
+      p '>>> Update'
+      p params
+      replaceData = Replacedata.where(id: params[:id])
+      replaceData.replace_name = params[:replace_name].upcase
+      replaceData.replaced_string = params[:replaced_string]
+      replaceData.replacing_string = params[:replacing_string]
+      replaceData.replace_state = params[:replace_state].nil? ? false : true
+      replaceData.is_regexp = params[:is_regexp].nil? ? false : true
+      replaceData.mock_environment = params[:mock_environment]
+      p replaceData
+      replaceData.save!
+    end
+    return_data[:error] = error
+    return_data[:message] = message
+    return_data[:replace_data] = replaceData
+    p return_data
+    return return_data
   end
 
 end

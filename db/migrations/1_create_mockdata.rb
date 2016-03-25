@@ -27,10 +27,26 @@ class CreateMockdata < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :replacedata do |t|
+      t.string :replace_name
+      t.string :replaced_string
+      t.string :replacing_string
+      t.boolean :is_regexp
+      t.string :mock_environment
+      t.boolean :replace_state
+    end
+
+    execute <<-SQL
+      CREATE UNIQUE INDEX "unique_replace_data"
+      ON "REPLACEDATA" ("replaced_string", "mock_environment", "replace_state")
+      WHERE "replace_state" = 't'
+    SQL
+
     end
 
   def self.down
     drop_table :mockdata
     drop_table :missed_requests
+    drop_table :replacedata
   end
 end

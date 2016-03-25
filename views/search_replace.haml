@@ -1,0 +1,57 @@
+:javascript
+    $('li').removeClass('active');
+    $('#tab-replace-search').addClass('active');
+%div{class: 'page-header'}
+    %h1 Mock Server - Intelli Replace
+    %p{class: "lead"} Replace mock response contents with string that you specify. Search and edit the replace strings. When the mock server responds to a mock request it will silently replace any matching strings in the response with what the replacement is.
+
+%form{action: '/mock/replace/search/results', method: 'get'}
+
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-3'}
+            %label{class: 'control-label',for: 'replace_name'} Replace Name
+            %input{class: 'form-control', name: 'replace_name', placeholder: 'Enter Part of Name'}
+    %div{class: 'row col-md-3'}
+    %button(type="submit" class="btn btn-primary btn-lg btn-block")Search
+    %br
+    %br
+
+-if search_data
+    %table{class: "table table-striped"}
+        %thead
+            %tr
+                %th #
+                %th Replace Name
+                %th Replaced String
+                %th Replace String
+                %th Environment
+                %th Status
+                %th Regexp
+            %tbody
+        - search_data.each do |row|
+            -if row.replace_state == true
+                %tr{class: 'success'}
+                    %td
+                        %span{class: "glyphicon glyphicon-edit"}
+                        %a{:href => "/mock/replace/update/#{row.id}"}
+                            #{row.id}
+                    %td #{row.replace_name}
+                    %td #{row.replaced_string}
+                    %td #{row.replacing_string}
+                    %td #{row.mock_environment}
+                    %td #{row.replace_state == true ? 'ON' : 'OFF'}
+                    %td #{row.is_regexp == true ? 'YES' : 'NO'}
+            -else
+                %tr
+                    %td
+                        %span{class: "glyphicon glyphicon-edit"}
+                        %a{:href => "/mock/replace/update/#{row.id}"}
+                            #{row.id}
+                    %td #{row.replace_name}
+                    %td #{row.replaced_string}
+                    %td #{row.replacing_string}
+                    %td #{row.mock_environment}
+                    %td #{row.replace_state == true ? 'ON' : 'OFF'}
+                    %td #{row.is_regexp == true ? 'YES' : 'NO'}
+-else
+    %h2{class: 'bg-warning text-center'} #{search_message if search_message}

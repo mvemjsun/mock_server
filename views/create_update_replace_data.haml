@@ -1,0 +1,43 @@
+%div{class: 'page-header'}
+    %h1 Mock Server - Create/Update replace Data
+    %p{class: "lead"} Replace mock response data silently with matching string.
+
+%form{action: '/mock/replace/create_update', method: 'post', id: 'form_replace'}
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-6'}
+            %label{class: 'control-label', for: 'replace_name'} Replace Name
+            %input{type: 'text', class: 'form-control', name: 'replace_name', placeholder: 'Replace name is required', value: "#{replace_data.nil? ? nil : replace_data.replace_name }", autocomplete: 'off'}
+            %label{class: 'control-label'}
+
+        %div{class: 'form-group col-md-6'}
+            %label{class: 'control-label', for: 'replaced_string'} Text to be replaced
+            %input{type: 'text', class: 'form-control', name: 'replaced_string', placeholder: 'Text required', value: "#{replace_data.nil? ? nil : replace_data.replace_name }", autocomplete: 'off'}
+            %label{class: 'control-label'}
+
+        %div{class: 'form-group col-md-6'}
+            %label{class: 'control-label', for: 'replacing_string'} Replaced text
+            %input{type: 'text', class: 'form-control', name: 'replacing_string', placeholder: 'Text required', value: "#{replace_data.nil? ? nil : replace_data.replace_name }", autocomplete: 'off'}
+            %label{class: 'control-label'}
+
+        %div{class: 'form-group col-md-3'}
+            %label{class: 'control-label',for: 'replace_state'} Enabled
+            %div{class: 'checkbox'}
+                %label
+                    %input{type: 'checkbox', id: 'chk_replace_state',name: 'replace_state', value: "#{replace_data.nil? ? nil : (replace_data.replace_state == true ? '1' : '0') }"}
+
+        %div{class: 'form-group col-md-3'}
+            %label{class: 'control-label',for: 'is_regexp'} Text to be replaced a Regular Expression
+            %div{class: 'checkbox'}
+                %label
+                    %input{type: 'checkbox', id: 'chk_is_regexp',name: 'is_regexp', value: "#{replace_data.nil? ? nil : (replace_data.is_regexp == true ? '1' : '0') }"}
+
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-3'}
+            %label{class: 'control-label',for: 'mock_environment'} Test Environment
+            %select{class: 'form-control', id: 'sl_mock_environment',name: 'mock_environment', value: "#{replace_data.nil? ? nil : replace_data.mock_environment }"}
+                %option{id: 'integration'} integration
+                %option{id: 'production'} production
+                %option{id: 'quality'} quality
+    %div{class: 'row hidden'}
+        %input{type: 'text', name: 'id', value: "#{replace_data.nil? ? nil : (replace_data.id) }"}
+    %button(type="submit" class="btn btn-primary btn-lg btn-block")Create/Update replace Data

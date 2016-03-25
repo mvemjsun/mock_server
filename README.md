@@ -7,6 +7,7 @@ The core idea behind this tool is having the ability to quickly and easily creat
 achieved by a easy user interface that allows the user to Specify a URL to mock, set the return HTTP status, headers and last 
 but not the least the response body. All this can be achieved relatively fast if the ReST APIs require minimal client 
 configuration (headers etc). The API's that require client configuration can still be mocked by manually entering the relevant details.
+This version does not have HTTPs support or serving any BLOB data. Images can be however served if they are placed in the `public` folder.
 
 The Mocking framework is especially useful if the test data creation requires a lot of effort.
 
