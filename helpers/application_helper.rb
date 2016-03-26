@@ -208,7 +208,7 @@ module ApplicationHelper
   end
 
   #
-  # Create or update the replace data.
+  # Create or update the replace data strings and their replacements.
   # @params [Hash] keys :create with value true or false
   # @return [Hash] keys :error, :message, :replace_data
   #
@@ -216,38 +216,42 @@ module ApplicationHelper
     error = false
     return_data = {}
     if options[:create]
-      p '>>> Creating'
-      p params
       if params[:replace_state]
-        data = Replacedata.where(replaced_string: options[:replaced_string],
+        data = Replacedata.where(replaced_string: params[:replaced_string],
                                  mock_environment: params[:mock_environment],
                                  replace_state: true)
         if data.any?
           error = true
           message = "ACTIVE replace data already exists with name #{data.first.replace_name} for this environment."
+        else
+          replaceData = Replacedata.new
+          replaceData.replace_name = params[:replace_name].upcase
+          replaceData.replaced_string = params[:replaced_string]
+          replaceData.replacing_string = params[:replacing_string]
+          replaceData.replace_state = params[:replace_state].nil? ? false : true
+          replaceData.is_regexp = params[:is_regexp].nil? ? false : true
+          replaceData.mock_environment = params[:mock_environment]
+          p replaceData
+          replaceData.save!
         end
       end
-      replaceData = Replacedata.new
-      replaceData.replace_name = params[:replace_name].upcase
-      replaceData.replaced_string = params[:replaced_string]
-      replaceData.replacing_string = params[:replacing_string]
-      replaceData.replace_state = params[:replace_state].nil? ? false : true
-      replaceData.is_regexp = params[:is_regexp].nil? ? false : true
-      replaceData.mock_environment = params[:mock_environment]
-      p replaceData
-      replaceData.save!
     else
-      p '>>> Update'
-      p params
-      replaceData = Replacedata.where(id: params[:id])
-      replaceData.replace_name = params[:replace_name].upcase
-      replaceData.replaced_string = params[:replaced_string]
-      replaceData.replacing_string = params[:replacing_string]
-      replaceData.replace_state = params[:replace_state].nil? ? false : true
-      replaceData.is_regexp = params[:is_regexp].nil? ? false : true
-      replaceData.mock_environment = params[:mock_environment]
-      p replaceData
-      replaceData.save!
+      data = Replacedata.where(id: params[:id])
+      if data.any?
+        replaceData = data.first
+        replaceData.replace_name = params[:replace_name].upcase
+        replaceData.replaced_string = params[:replaced_string]
+        replaceData.replacing_string = params[:replacing_string]
+        replaceData.replace_state = params[:replace_state].nil? ? false : true
+        replaceData.is_regexp = params[:is_regexp].nil? ? false : true
+        replaceData.mock_environment = params[:mock_environment]
+        p replaceData
+        replaceData.save!
+      else
+        error = true
+        message = "Replace data with id #{params[:id]} not found."
+      end
+
     end
     return_data[:error] = error
     return_data[:message] = message

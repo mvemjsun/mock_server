@@ -25,6 +25,10 @@
                     %a{href: '/mock/clone/batch'} Clone Many
                 %li{role: 'presentation', id: 'tab-misses'}
                     %a{href: '/mock/search/misses'} Misses
+                %li{role: 'presentation', id: 'tab-replace'}
+                    %a{href: '/mock/replace/create_update'} Replace
+                %li{role: 'presentation', id: 'tab-replace-search'}
+                    %a{href: '/mock/replace/search'} Replace Search
                 %li{role: 'presentation', id: 'tab-bird'}
                     %a{href: '/mock/bird'} Design
             - if session.has_key? :errors

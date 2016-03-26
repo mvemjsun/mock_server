@@ -1,6 +1,9 @@
+:javascript
+    $('li').removeClass('active');
+    $('#tab-replace').addClass('active');
 %div{class: 'page-header'}
     %h1 Mock Server - Create/Update replace Data
-    %p{class: "lead"} Replace mock response data silently with matching string.
+    %p{class: "lead"} Replace mock response contents with string that you specify. Search and edit the replace strings. When the mock server responds to a mock request it will silently replace any matching strings in the response with what the replacement is.
 
 %form{action: '/mock/replace/create_update', method: 'post', id: 'form_replace'}
     %div{class: 'row'}
@@ -11,12 +14,12 @@
 
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label', for: 'replaced_string'} Text to be replaced
-            %input{type: 'text', class: 'form-control', name: 'replaced_string', placeholder: 'Text required', value: "#{replace_data.nil? ? nil : replace_data.replace_name }", autocomplete: 'off'}
+            %input{type: 'text', class: 'form-control', name: 'replaced_string', placeholder: 'Text required', value: "#{replace_data.nil? ? nil : replace_data.replaced_string }", autocomplete: 'off'}
             %label{class: 'control-label'}
 
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label', for: 'replacing_string'} Replaced text
-            %input{type: 'text', class: 'form-control', name: 'replacing_string', placeholder: 'Text required', value: "#{replace_data.nil? ? nil : replace_data.replace_name }", autocomplete: 'off'}
+            %input{type: 'text', class: 'form-control', name: 'replacing_string', placeholder: 'Text required', value: "#{replace_data.nil? ? nil : replace_data.replacing_string }", autocomplete: 'off'}
             %label{class: 'control-label'}
 
         %div{class: 'form-group col-md-3'}

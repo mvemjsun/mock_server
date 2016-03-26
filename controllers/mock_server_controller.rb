@@ -217,6 +217,7 @@ class MockServerController < ApplicationController
 
   post '/replace/create_update' do
     @title = 'Updated replace data'
+
     if params[:id].length == 0
       # Create
       response = create_update_replace_data({create: true})
@@ -226,11 +227,23 @@ class MockServerController < ApplicationController
     end
 
     if response[:error]
-      session[:errors] = response[:message]
+      session[:errors] = [response[:message]]
       haml :create_update_replace_data, locals: {replace_data: response[:replace_data]}
     else
       haml :create_update_replace_data_ack
     end
+  end
+
+  get '/replace/update/:id' do
+    @title = "Replace string Update"
+    replace_data = Replacedata.where(id: params[:id].to_i)
+    if replace_data.any?
+      haml :create_update_replace_data, locals: {replace_data: replace_data.first}
+    else
+      session[:errors] = [response[:message]]
+      redirect '/replace/search'
+    end
+
   end
 
 
