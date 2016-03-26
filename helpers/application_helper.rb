@@ -19,10 +19,10 @@ module ApplicationHelper
     if data.any?
       row = data.first
       return_data[:mock_http_status] = row[:mock_http_status]
+      response_body = row[:mock_data_response]
 
       if ENV['REPLACE']
-        p intelligent_response_replace('X')
-        return_data[:mock_data_response] = row[:mock_data_response]
+        return_data[:mock_data_response] = intelligent_response_replace(response_body)
       else
         return_data[:mock_data_response] = row[:mock_data_response]
       end
@@ -37,14 +37,19 @@ module ApplicationHelper
     return return_data
   end
 
-  def intelligent_response_replace(response)
+  def intelligent_response_replace(response_to_be_replaced)
     replace_data = Replacedata.where(mock_environment: ENV['TEST_ENV'], replace_state: true)
-    '>>> Replace data'
+    replaced_response = nil
     replace_data.each do |row|
-      p row.replace_name
-      p row.replaced_string
-      p row.replacing_string
+      replaced_response ||= response_to_be_replaced.dup
+      if row.is_regexp
+        re = Regexp.new(row.replaced_string)
+        replaced_response.gsub!(re,row.replacing_string)
+      else
+        replaced_response.gsub!(row.replaced_string,row.replacing_string)
+      end
     end
+    return replaced_response
   end
 
   #
@@ -232,7 +237,6 @@ module ApplicationHelper
     error = false
     return_data = {}
     if options[:create]
-      p '>> Create'
       data = Replacedata.where(replaced_string: params[:replaced_string],
                                mock_environment: params[:mock_environment],
                                replace_state: true)
@@ -254,7 +258,6 @@ module ApplicationHelper
         message = [errors.message]
       end
     else
-      p '>> Update'
       data = Replacedata.where(id: params[:id])
       if data.any?
         replaceData = data.first

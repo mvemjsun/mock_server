@@ -47,8 +47,8 @@ class MockServerController < ApplicationController
     errors = nil
     begin
 
-      url_path = URI::parse(params[:mock_request_url]).path.sub(/^\//, '')
-      url_query = URI::parse(params[:mock_request_url]).query
+      url_path = URI::parse(params[:mock_request_url].strip).path.sub(/^\//, '')
+      url_query = URI::parse(params[:mock_request_url].strip).query
 
       if url_query
         url = url_path + '?' + url_query
