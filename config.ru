@@ -10,6 +10,7 @@ ENV['RACK_ENV']='production'
 ENV['TEST_ENV']='integration'
 ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
 ENV['HEADER_DELIMITER'] = ":==:"
+ENV['REPLACE'] = "1"
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger.level = Logger::DEBUG
 

@@ -19,7 +19,13 @@ module ApplicationHelper
     if data.any?
       row = data.first
       return_data[:mock_http_status] = row[:mock_http_status]
-      return_data[:mock_data_response] = row[:mock_data_response]
+
+      if ENV['REPLACE']
+        p intelligent_response_replace('X')
+        return_data[:mock_data_response] = row[:mock_data_response]
+      else
+        return_data[:mock_data_response] = row[:mock_data_response]
+      end
       return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
 
       return_data[:mock_content_type] = row[:mock_content_type]
@@ -29,6 +35,16 @@ module ApplicationHelper
       return_data[:error] = "Not Found"
     end
     return return_data
+  end
+
+  def intelligent_response_replace(response)
+    replace_data = Replacedata.where(mock_environment: ENV['TEST_ENV'], replace_state: true)
+    '>>> Replace data'
+    replace_data.each do |row|
+      p row.replace_name
+      p row.replaced_string
+      p row.replacing_string
+    end
   end
 
   #
