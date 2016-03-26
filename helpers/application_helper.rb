@@ -216,26 +216,29 @@ module ApplicationHelper
     error = false
     return_data = {}
     if options[:create]
-      if params[:replace_state]
-        data = Replacedata.where(replaced_string: params[:replaced_string],
-                                 mock_environment: params[:mock_environment],
-                                 replace_state: true)
-        if data.any?
-          error = true
-          message = "ACTIVE replace data already exists with name #{data.first.replace_name} for this environment."
-        else
-          replaceData = Replacedata.new
-          replaceData.replace_name = params[:replace_name].upcase
-          replaceData.replaced_string = params[:replaced_string]
-          replaceData.replacing_string = params[:replacing_string]
-          replaceData.replace_state = params[:replace_state].nil? ? false : true
-          replaceData.is_regexp = params[:is_regexp].nil? ? false : true
-          replaceData.mock_environment = params[:mock_environment]
-          p replaceData
-          replaceData.save!
-        end
+      p '>> Create'
+      data = Replacedata.where(replaced_string: params[:replaced_string],
+                               mock_environment: params[:mock_environment],
+                               replace_state: true)
+      begin
+        replaceData = Replacedata.new
+        replaceData.replace_name = params[:replace_name].upcase
+        replaceData.replaced_string = params[:replaced_string]
+        replaceData.replacing_string = params[:replacing_string]
+        replaceData.replace_state = params[:replace_state].nil? ? false : true
+        replaceData.is_regexp = params[:is_regexp].nil? ? false : true
+        replaceData.mock_environment = params[:mock_environment]
+        p replaceData
+        replaceData.save!
+      rescue ActiveRecord::RecordNotUnique => errors
+        message = ["This replace is already ACTIVE with name '#{(data.first.replace_name).upcase}'."]
+        error = true
+      rescue ActiveRecord::ActiveRecordError => errors
+        error = true
+        message = [errors.message]
       end
     else
+      p '>> Update'
       data = Replacedata.where(id: params[:id])
       if data.any?
         replaceData = data.first
