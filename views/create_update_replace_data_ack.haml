@@ -1,4 +1,22 @@
 :javascript
   $('li').removeClass('active');
   $('#tab-home').addClass('active');
-%h3{class: 'text-center bg-success'} Replace created
+- if messages
+  %h3{class: 'text-center bg-danger'} #{messages}
+- else
+  %h3{class: 'text-center bg-success'} Replace Data - #{replace_record_state == :created ? 'CREATED' : 'UPDATED'}
+  %dl{class: 'dl-horizontal'}
+    %dt Replace Name
+    %dd #{replace_data.replace_name}
+    %dt Replaced String
+    %dd #{replace_data.replaced_string}
+    %dt Replacing String
+    %dd #{replace_data.replacing_string}
+    %dt Environment
+    %dd #{replace_data.mock_environment}
+    %dt Regular Expression
+    %dd
+      - if replace_data.is_regexp
+        ON
+      - else
+        OFF

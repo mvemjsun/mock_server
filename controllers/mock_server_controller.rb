@@ -221,16 +221,18 @@ class MockServerController < ApplicationController
     if params[:id].length == 0
       # Create
       response = create_update_replace_data({create: true})
+      state = :created
     else
       # Update
       response = create_update_replace_data({create: false})
+      state = :updated
     end
 
     if response[:error]
       session[:errors] = [response[:message]]
       haml :create_update_replace_data, locals: {replace_data: response[:replace_data]}
     else
-      haml :create_update_replace_data_ack
+      haml :create_update_replace_data_ack, locals: {replace_data: response[:replace_data], replace_record_state: state, messages: nil}
     end
   end
 
@@ -241,7 +243,7 @@ class MockServerController < ApplicationController
       haml :create_update_replace_data, locals: {replace_data: replace_data.first}
     else
       session[:errors] = [response[:message]]
-      redirect '/replace/search'
+      redirect '/mock/replace/search'
     end
 
   end

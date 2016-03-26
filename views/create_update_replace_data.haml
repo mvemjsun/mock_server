@@ -23,17 +23,17 @@
             %label{class: 'control-label'}
 
         %div{class: 'form-group col-md-3'}
-            %label{class: 'control-label',for: 'replace_state'} Enabled
+            %label{class: 'control-label',for: 'replace_state'} Enable
             %div{class: 'checkbox'}
                 %label
                     %input{type: 'checkbox', id: 'chk_replace_state',name: 'replace_state', value: "#{replace_data.nil? ? nil : (replace_data.replace_state == true ? '1' : '0') }"}
-
+                    Enable/Disable
         %div{class: 'form-group col-md-3'}
-            %label{class: 'control-label',for: 'is_regexp'} Text to be replaced a Regular Expression
+            %label{class: 'control-label',for: 'is_regexp'} Regular Expression
             %div{class: 'checkbox'}
                 %label
                     %input{type: 'checkbox', id: 'chk_is_regexp',name: 'is_regexp', value: "#{replace_data.nil? ? nil : (replace_data.is_regexp == true ? '1' : '0') }"}
-
+                    Regexp On/Off
     %div{class: 'row'}
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_environment'} Test Environment
@@ -44,3 +44,13 @@
     %div{class: 'row hidden'}
         %input{type: 'text', name: 'id', value: "#{replace_data.nil? ? nil : (replace_data.id) }"}
     %button(type="submit" class="btn btn-primary btn-lg btn-block")Create/Update replace Data
+
+    :javascript
+        var replaceEnabled = document.getElementById("chk_replace_state");
+        var replaceRegexp = document.getElementById("chk_is_regexp");
+        if (replaceEnabled.value == '1') {
+            document.getElementById('chk_replace_state').checked = true;
+        }
+        if (replaceRegexp.value == '1') {
+            document.getElementById('chk_is_regexp').checked = true;
+        }
