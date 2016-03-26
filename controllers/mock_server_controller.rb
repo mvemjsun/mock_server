@@ -154,11 +154,13 @@ class MockServerController < ApplicationController
   get '/clone' do
     @title = 'Clone data'
     mock_data = {}
+    msg = nil
     if params[:mock_request_url].length > 0
       begin
         response = HTTParty.get(params[:mock_request_url])
       rescue => e
         # Ignore fatal URL responses
+        msg = e.message
       end
       if (response) &&
           (response.code.to_s.match(/^[1,2,3,404]/))
@@ -167,10 +169,16 @@ class MockServerController < ApplicationController
                                            params[:mock_name])
         haml :create_mock_request, locals: {mock_data: mock_data}
       else
-        haml :create_mock_request, locals: {mock_data: nil}
+        mock_data = ClonedData.new
+        mock_data.mock_data_response = msg if msg
+        mock_data.mock_request_url = params[:mock_request_url]
+        haml :create_mock_request, locals: {mock_data: mock_data}
       end
     else
-      haml :create_mock_request, locals: {mock_data: nil}
+      mock_data = Mockdata.new
+      mock_data.mock_data_response = msg if msg
+      mock_data.mock_request_url = params[:mock_request_url] if params[:mock_request_url].length > 0
+      haml :create_mock_request, locals: {mock_data: mock_data}
     end
   end
 
