@@ -39,9 +39,9 @@ module ApplicationHelper
 
   def intelligent_response_replace(response_to_be_replaced)
     replace_data = Replacedata.where(mock_environment: ENV['TEST_ENV'], replace_state: true)
-    replaced_response = nil
+    replaced_response = response_to_be_replaced.dup
     replace_data.each do |row|
-      replaced_response ||= response_to_be_replaced.dup
+      # replaced_response ||= response_to_be_replaced.dup
       if row.is_regexp
         re = Regexp.new(row.replaced_string)
         replaced_response.gsub!(re,row.replacing_string)
@@ -49,6 +49,7 @@ module ApplicationHelper
         replaced_response.gsub!(row.replaced_string,row.replacing_string)
       end
     end
+    p replaced_response
     return replaced_response
   end
 

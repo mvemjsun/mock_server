@@ -41,10 +41,10 @@ class ApplicationController < Sinatra::Base
     haml :mocking_bird
   end
 
-  get '/' do
-    @title = 'Home'
-    redirect '/mock/create'
-  end
+  # get '/' do
+  #   @title = 'Home'
+  #   redirect '/mock/create'
+  # end
 
   get "/*" do
     @title = 'Mock Server in action'
