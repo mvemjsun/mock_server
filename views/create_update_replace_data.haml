@@ -2,8 +2,9 @@
     $('li').removeClass('active');
     $('#tab-replace').addClass('active');
 %div{class: 'page-header'}
-    %h1 Mock Server - Create/Update replace Data
-    %p{class: "lead"} Replace mock response contents with string that you specify. Search and edit the replace strings. When the mock server responds to a mock request it will silently replace any matching strings in the response with what the replacement is.
+    %h2 Mock Server - Create/Update replace Data
+    %blockquote
+        %p{class: "lead text-info"} Replace mock response contents with string that you specify. Search and edit the replace strings. When the mock server responds to a mock request it will silently replace any matching strings in the response with what the replacement is.
 
 %form{action: '/mock/replace/create_update', method: 'post', id: 'form_replace'}
     %div{class: 'row'}

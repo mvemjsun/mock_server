@@ -2,8 +2,9 @@
     $('li').removeClass('active');
     $('#tab-env').addClass('active');
 %div{class: 'page-header'}
-    %h1 Mock Server - Set Test environment
-    %p{class: "lead"} Mock server can respond to mock request for a specific test environment
+    %h2 Mock Server - Set Test environment
+    %blockquote
+        %p{class: "lead text-info"} Mock server can respond to mock request for a specific test environment
 
 %form{action: '/environment', method: 'post'}
 

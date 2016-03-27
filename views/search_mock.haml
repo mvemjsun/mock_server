@@ -2,8 +2,9 @@
     $('li').removeClass('active');
     $('#tab-search').addClass('active');
 %div{class: 'page-header'}
-    %h1 Mock Server - Search
-    %p{class: "lead"} Search an existing mock
+    %h2 Mock Server - Search
+    %blockquote
+        %p{class: "lead text-info"} Search an existing mock
 
 %form{action: '/mock/search/result', method: 'get'}
 

@@ -2,8 +2,9 @@
     $('li').removeClass('active');
     $('#tab-replace-search').addClass('active');
 %div{class: 'page-header'}
-    %h1 Mock Server - Intelli Replace search
-    %p{class: "lead"} Search replace strings
+    %h2 Mock Server - Intelli Replace search
+    %blockquote
+        %p{class: "lead text-info"} Search replace strings
 
 %form{action: '/mock/replace/search/results', method: 'get'}
 
@@ -22,8 +23,8 @@
             %tr
                 %th #
                 %th Replace Name
-                %th Replaced String
-                %th Replace String
+                %th Text to replace
+                %th Replaced with
                 %th Environment
                 %th Status
                 %th Regexp
