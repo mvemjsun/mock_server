@@ -3,18 +3,24 @@
     $('#tab-misses').addClass('active');
 %div{class: 'page-header'}
     %h2 Mock Server - Missed Requests
-    -if missed_data
+    -if missed_data.any?
         %table{class: "table table-striped"}
             %thead
                 %tr
+                    %th #
                     %th Mock Environment
                     %th Mock URL
                     %th Date
                 %tbody
             - missed_data.each do |row|
                 %tr
+                    %td
+                        %form{action: "/mock/misses/delete/#{row.id}", method: 'post', id: "missed_id_#{row.id}"}
+                            %span{class: "glyphicon glyphicon-trash"}
+                            %a{:onclick => "document.getElementById('missed_id_#{row.id}').submit();"}
+                                #{row.id}
                     %td #{row.mock_environment}
                     %td #{row.url}
                     %td #{row.updated_at}
     -else
-        %h2{class: 'bg-warning text-center'} No Missed data. Well done !
+        %h2{class: 'bg-warning text-center'} No Missed requests so far. Well done !

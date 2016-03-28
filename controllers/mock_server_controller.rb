@@ -36,6 +36,21 @@ class MockServerController < ApplicationController
     end
   end
 
+  #
+  # TODO Hack to delete a missed row, change to delete
+  #
+  post "/misses/delete/:id" do
+    @title = "Mock misses Deleted"
+    missed_data = MissedRequest.where(id: params[:id].to_i)
+    data = missed_data.first
+    if missed_data.any?
+      missed_data.destroy(params[:id].to_i)
+      haml :mock_deleted_ack, locals: {message: "Record deleted successfully", success: true}
+    else
+      haml :mock_deleted_ack, locals: {message: "Not Found", success: false}
+    end
+  end
+
   get "/create" do
     @title = "Create mock response"
     haml :create_mock_request, locals: {mock_data: nil}
