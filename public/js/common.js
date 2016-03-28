@@ -59,6 +59,7 @@ function isURL(textval) {
 function getCloningData() {
     $("#form_form").attr("action","/mock/clone");
     $("#form_form").attr("method","get");
+    $("textarea#json_body").val('');
     document.getElementById("form_form").submit();
 }
 
