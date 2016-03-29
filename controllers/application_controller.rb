@@ -41,27 +41,28 @@ class ApplicationController < Sinatra::Base
     haml :mocking_bird
   end
 
-  # get '/' do
-  #   @title = 'Home'
-  #   redirect '/mock/create'
-  # end
-
   get "/*" do
-    @title = 'Mock Server in action'
+    @title = 'Mock GET'
     # Process the URL
-    url = request.fullpath.sub!(/^\//, '')
-    response = process_url(url, ENV['TEST_ENV'])
-    if  response.has_key? :error
-      log_missed_requests(request)
-      content_type 'application/text'
-      status 404
-      body 'Not Found'
-    else
-      status response[:mock_http_status].to_i
-      content_type response[:mock_content_type]
-      headers response[:mock_data_response_headers]
-      body response[:mock_data_response]
-    end
+    process_http_verb
+  end
+
+  post "/*" do
+    @title = 'Mock POST'
+    # Process the URL
+    process_http_verb
+  end
+
+  put "/*" do
+    @title = 'Mock PUT'
+    # Process the URL
+    process_http_verb
+  end
+
+  delete "/*" do
+    @title = 'Mock DELETE'
+    # Process the URL
+    process_http_verb
   end
 end
 

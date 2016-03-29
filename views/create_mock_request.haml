@@ -27,13 +27,20 @@
                 %label{class: 'control-label'} Clone Catalogue Data
                 %button{type: 'button', id: 'get_button' ,class: 'btn btn-primary', onclick: "getCloningData()"} GET
     %div{class: 'row'}
-        %div{class: 'form-group col-md-3'}
+        %div{class: 'form-group col-md-2'}
+            %label{class: 'control-label',for: 'mock_http_verb'} HTTP Verb
+            %select{class: 'form-control', id: 'sl_mock_http_verb',name: 'mock_http_verb', value: "#{mock_data.nil? ? nil : mock_data.mock_http_verb }"}
+                %option{id: 'GET'} GET
+                %option{id: 'POST'} POST
+                %option{id: 'PUT'} PUT
+                %option{id: 'DELETE'} DELETE
+        %div{class: 'form-group col-md-2'}
             %label{class: 'control-label',for: 'mock_environment'} Test Environment
             %select{class: 'form-control', id: 'sl_mock_environment',name: 'mock_environment', value: "#{mock_data.nil? ? nil : mock_data.mock_environment }"}
                 %option{id: 'integration'} integration
                 %option{id: 'production'} production
                 %option{id: 'quality'} quality
-        %div{class: 'form-group col-md-3'}
+        %div{class: 'form-group col-md-2'}
             %label{class: 'control-label',for: 'mock_content_type'} Response Content Type
             %select{class: 'form-control', id: 'id_mock_content_type',name: 'mock_content_type', value: "#{mock_data.nil? ? nil : mock_data.mock_content_type }"}
                 %option{id: 'app_json'} application/json;charset=UTF-8
@@ -55,6 +62,9 @@
         if (mockStatuscheckbox.value == '1') {
             document.getElementById('chk_mock_state').checked = true;
         }
+        var slVerb = document.getElementById('sl_mock_http_verb').getAttribute('value');
+        var slVerbOption = document.getElementById(slVerb);
+        slVerbOption.setAttribute("selected", "selected");
 
         var slEnv = document.getElementById('sl_mock_environment').getAttribute('value');
         var slOption = document.getElementById(slEnv);

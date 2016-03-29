@@ -51,9 +51,11 @@ class MockServerController < ApplicationController
     end
   end
 
-  get "/create" do
-    @title = "Create mock response"
-    haml :create_mock_request, locals: {mock_data: nil}
+  ['/create','/home'].each do |path|
+    get path do
+      @title = "Create mock response"
+      haml :create_mock_request, locals: {mock_data: nil}
+    end
   end
 
   post "/create" do
@@ -75,6 +77,7 @@ class MockServerController < ApplicationController
         # If New record being attempted to be created and a duplicate name/url/env is found
         mockdata = Mockdata.where(mock_name: params[:mock_name].upcase,
                                   mock_request_url: url,
+                                  mock_http_verb: params[:mock_http_verb],
                                   mock_environment: params[:mock_environment]
         )
         if mockdata.any?
@@ -100,6 +103,7 @@ class MockServerController < ApplicationController
         data = mockdata.first
         data.mock_name= params[:mock_name]
         data.mock_request_url= url
+        data.mock_http_verb= params[:mock_http_verb]
         data.mock_state= params[:mock_state].nil? ? false : true
         data.mock_http_status= params[:mock_http_status]
         data.mock_data_response_headers= params[:mock_data_response_headers]
@@ -113,6 +117,7 @@ class MockServerController < ApplicationController
         data = Mockdata.new
         data.mock_name= params[:mock_name]
         data.mock_request_url= url
+        data.mock_http_verb= params[:mock_http_verb]
         data.mock_state= params[:mock_state].nil? ? false : true
         data.mock_http_status= params[:mock_http_status]
         data.mock_data_response_headers= params[:mock_data_response_headers]
@@ -150,6 +155,7 @@ class MockServerController < ApplicationController
       haml :create_mock_response, locals: {messages: false,
                                            mock_name: params[:mock_name],
                                            mock_request_url: url,
+                                           mock_http_verb: params[:mock_http_verb],
                                            mock_environment: params[:mock_environment],
                                            mock_content_type: params[:mock_content_type],
                                            mock_data_response_headers: params[:mock_data_response_headers],

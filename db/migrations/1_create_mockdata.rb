@@ -6,6 +6,7 @@ class CreateMockdata < ActiveRecord::Migration
       t.string :mock_name
       t.string :mock_http_status
       t.text :mock_request_url
+      t.text :mock_http_verb
       t.string :mock_data_response_headers
       t.text   :mock_data_response, limit: 1000000
       t.boolean :mock_state
@@ -17,12 +18,13 @@ class CreateMockdata < ActiveRecord::Migration
 
     execute <<-SQL
       CREATE UNIQUE INDEX "unique_mock_data"
-      ON "MOCKDATA" ("mock_request_url", "mock_environment", "mock_state")
+      ON "MOCKDATA" ("mock_request_url","mock_http_verb", "mock_environment", "mock_state")
       WHERE "mock_state" = 't'
     SQL
 
     create_table :missed_requests do |t|
       t.string :url
+      t.string :mock_http_verb
       t.string :mock_environment
       t.timestamps
     end

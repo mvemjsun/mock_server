@@ -13,9 +13,9 @@ module ApplicationHelper
   # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error]
   #
 
-  def process_url(url, env=ENV['TEST_ENV'])
+  def process_url(url, method='GET',env=ENV['TEST_ENV'])
     return_data={}
-    data = Mockdata.where(mock_request_url: url, mock_environment: env, mock_state: true)
+    data = Mockdata.where(mock_request_url: url, mock_http_verb: method, mock_environment: env, mock_state: true)
     if data.any?
       row = data.first
       return_data[:mock_http_status] = row[:mock_http_status]
@@ -281,6 +281,22 @@ module ApplicationHelper
     return_data[:replace_data] = replaceData
     p return_data
     return return_data
+  end
+
+  def process_http_verb
+    url = request.fullpath.sub!(/^\//, '')
+    response = process_url(url,request.request_method, ENV['TEST_ENV'])
+    if  response.has_key? :error
+      log_missed_requests(request)
+      content_type 'application/text'
+      status 404
+      body 'Not Found'
+    else
+      status response[:mock_http_status].to_i
+      content_type response[:mock_content_type]
+      headers response[:mock_data_response_headers]
+      body response[:mock_data_response]
+    end
   end
 
 end
