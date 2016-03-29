@@ -1,5 +1,5 @@
-## Relax
-> An easy way to setup mock responses by specifying mock URL, Response headers and Response body.
+## Mock Server
+> An easy way to setup mock responses by specifying mock URL, HTTP verb, Response headers and Response body.
 
 ### Summary
 
@@ -64,3 +64,6 @@ batch clone option.
 
 ### Clone Many
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/batch_clone.png?raw=true)
+
+### Replace Strings
+![](https://github.com/mvemjsun/mock_server/blob/master/public/img/replace_screen.png?raw=true)
