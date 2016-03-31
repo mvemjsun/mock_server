@@ -4,7 +4,7 @@
 %div{class: 'page-header'}
     %h2 Mock Server - Create/Update replace Data
     %blockquote
-        %p{class: "lead text-info"} Replace mock response contents with string that you specify. Search and edit the replace strings. When the mock server responds to a mock request it will silently replace any matching strings in the response with what the replacement is.
+        %p{class: "lead text-info"} Replace matching strings in the mock response silently. Search and edit the 'match' strings. When the mock server responds to a mock request it will silently 'replace any matching strings' in the response with the replacement string.
 
 %form{action: '/mock/replace/create_update', method: 'post', id: 'form_replace'}
     %div{class: 'row'}
