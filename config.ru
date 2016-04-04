@@ -1,4 +1,4 @@
-#\ -p 9292 --host 0.0.0.0
+#\ -p 9293 --host 0.0.0.0
 require 'sinatra/base'
 require 'active_record'
 require 'sqlite3'
