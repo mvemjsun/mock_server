@@ -226,7 +226,8 @@ module ApplicationHelper
     end
     missed_request.url = url
     missed_request.mock_environment = ENV['TEST_ENV']
-    missed_request.save
+    missed_request.mock_http_verb = request_object.request_method
+    missed_request.save!
   end
 
   #

@@ -8,6 +8,7 @@ class ApplicationController < Sinatra::Base
     # enable :logging
     enable :session
     set :session_secret, 'av3rys3cr3tk3y'
+    use Rack::CommonLogger, $logger
   end
 
   before do

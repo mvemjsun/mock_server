@@ -6,12 +6,15 @@ require 'tilt/haml'
 require 'uri'
 require 'HTTParty'
 
-ENV['RACK_ENV']='production'
+require 'logger'
+Logger.class_eval { alias :write :'<<' }
+$logger = ::Logger.new(::File.new("logs/app.log","a+"))
+
 ENV['TEST_ENV']='integration'
 ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
 ENV['HEADER_DELIMITER'] = ":==:"
 ENV['REPLACE'] = "1"
-ActiveRecord::Base.logger = Logger.new(STDOUT)
+ActiveRecord::Base.logger = Logger.new('logs/app.log')
 ActiveRecord::Base.logger.level = Logger::DEBUG
 
 db = YAML.load_file(File.expand_path('./config/database.yml'))['development']

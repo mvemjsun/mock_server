@@ -9,6 +9,7 @@
                 %tr
                     %th #
                     %th Mock Environment
+                    %th HTTP Request
                     %th Mock URL
                     %th Date
                 %tbody
@@ -20,6 +21,7 @@
                             %a{:onclick => "document.getElementById('missed_id_#{row.id}').submit();"}
                                 #{row.id}
                     %td #{row.mock_environment}
+                    %td #{row.mock_http_verb}
                     %td #{row.url}
                     %td #{row.updated_at}
     -else
