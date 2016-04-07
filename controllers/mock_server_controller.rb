@@ -45,7 +45,8 @@ class MockServerController < ApplicationController
     data = missed_data.first
     if missed_data.any?
       missed_data.destroy(params[:id].to_i)
-      haml :mock_deleted_ack, locals: {message: "Record deleted successfully", success: true}
+      missed_data = MissedRequest.order('created_at DESC').all
+      haml :missed_requests, locals: {missed_data: missed_data}
     else
       haml :mock_deleted_ack, locals: {message: "Not Found", success: false}
     end
