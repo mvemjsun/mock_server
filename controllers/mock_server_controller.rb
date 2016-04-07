@@ -1,16 +1,25 @@
 class MockServerController < ApplicationController
 
+  #
+  # Display the mock data search form for the user to enter the part of the mock name
+  #
   get '/search' do
     @title = 'Search'
     haml :search_mock
   end
 
+  #
+  # Display the missed requests log
+  #
   get '/search/misses' do
     @title = 'Missed requests'
     missed_data = MissedRequest.order('created_at DESC').all
     haml :missed_requests, locals: {missed_data: missed_data}
   end
 
+  #
+  # Display the search results for a mock name (part)
+  #
   get '/search/result' do
     @title = 'Search Result(s)'
     search_data = search_mock_data({mock_name: params[:search_mock_name].upcase})
@@ -18,12 +27,19 @@ class MockServerController < ApplicationController
     haml :search_results, locals: {search_data: search_data}
   end
 
+  #
+  # Display the data for an existing mock. The data is retrieved using the mock internal database id. This is transferred
+  # from the search results page
+  #
   get "/update/:id" do
     @title = "Mock Update"
     mock_data = Mockdata.where(id: params[:id].to_i)
     haml :create_mock_request, locals: {mock_data: mock_data.first}
   end
 
+  #
+  # Delete a mock data, not available via a web form or page. Needs to be called via command line.
+  #
   delete "/delete/:id" do
     @title = "Mock Deleted"
     mock_data = Mockdata.where(id: params[:id].to_i)
@@ -38,6 +54,7 @@ class MockServerController < ApplicationController
 
   #
   # TODO Hack to delete a missed row, change to delete
+  # Delete a missed request log data
   #
   post "/misses/delete/:id" do
     @title = "Mock misses Deleted"
@@ -52,6 +69,9 @@ class MockServerController < ApplicationController
     end
   end
 
+  #
+  # Display the mock create page for a user to create a new mock data for a URL.
+  #
   ['/create','/home'].each do |path|
     get path do
       @title = "Create mock response"
@@ -59,6 +79,10 @@ class MockServerController < ApplicationController
     end
   end
 
+  #
+  # Create the mock data when a form the create form is submit. Some validations are applied directly via the model for
+  # mandatory fields. Only one URL of the same time can be active at the same time for a test environment.
+  #
   post "/create" do
     @title = "Create mock - Acknowledge"
 
@@ -170,7 +194,7 @@ class MockServerController < ApplicationController
   end
 
   #
-  # Clone the mock data if URL is reachable, supports only GET requests
+  # Clone the mock data if URL is reachable already, supports only GET requests
   # will preset the mock body and headers.Build the 'mockdata' object with all columns if data found
   #
   get '/clone' do
@@ -204,11 +228,17 @@ class MockServerController < ApplicationController
     end
   end
 
+  #
+  # Display the form to create multiple mocks in one go, Supports only URLs that are GET type.
+  #
   get '/clone/batch' do
     @title = 'Clone in batch'
     haml :batch_clone
   end
 
+  #
+  # Process the URLs to be cloned into the mock database. These can then be searched by name and modified.
+  #
   post '/clone/batch' do
     @title = 'Clone in batch'
     response = process_batch_clone_request(params)
@@ -227,6 +257,9 @@ class MockServerController < ApplicationController
     body bd
   end
 
+  #
+  # Search any available replace data.
+  #
   get '/replace/search' do
     @title = 'Maintain search strings'
     haml :search_replace, locals: {search_data: nil, search_message: nil}
@@ -245,6 +278,10 @@ class MockServerController < ApplicationController
     haml :create_update_replace_data, locals: {replace_data: nil}
   end
 
+  #
+  # Create/Update the replace data. Replace data is used to silently replace mock responses with the replace strings that
+  # we supply when creating the replace data.
+  #
   post '/replace/create_update' do
     @title = 'Updated replace data'
 
@@ -266,6 +303,9 @@ class MockServerController < ApplicationController
     end
   end
 
+  #
+  # Display replace data for update. The replace data id is the internal database id passed from the search page.
+  #
   get '/replace/update/:id' do
     @title = "Replace string Update"
     replace_data = Replacedata.where(id: params[:id].to_i)
