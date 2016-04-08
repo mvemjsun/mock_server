@@ -22,7 +22,7 @@
         %div{class: 'form-group'}
             %div{class: 'col-md-10'}
                 %label{class: 'control-label', for: 'mock_request_url'} Request URL To mock
-                %input{type: 'text', class: 'form-control',id: 'mock_request_url', name: 'mock_request_url', placeholder: 'Request URL is required', onchange: 'urlChanged()', value: "#{mock_data.nil? ? nil : mock_data.mock_request_url }"}
+                %input{type: 'text', class: 'form-control',id: 'mock_request_url', name: 'mock_request_url', placeholder: 'Request URL is required', onchange: 'urlChanged()', value: "#{mock_data.nil? ? nil : mock_data.mock_request_url }", autocomplete: 'off'}
             %div{class: 'col-md-2'}
                 %label{class: 'control-label'} Clone Catalogue Data
                 %button{type: 'button', id: 'get_button' ,class: 'btn btn-primary', onclick: "getCloningData()"} GET
