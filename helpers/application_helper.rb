@@ -176,6 +176,7 @@ module ApplicationHelper
         data.mock_data_response= response.body
         data.mock_environment= params[:mock_test_environment]
         data.mock_content_type= 'application/json;charset=UTF8'
+        data.mock_http_verb='GET'
         data.save!
         state = :updated
 
@@ -201,6 +202,7 @@ module ApplicationHelper
         data.mock_environment= params[:mock_test_environment]
         data.mock_content_type= 'application/json;charset=UTF8'
         data.mock_state = true
+        data.mock_http_verb='GET'
         data.save!
         state = :created
       else
