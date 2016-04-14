@@ -58,6 +58,8 @@ batch clone option.
    * Visit the /mock/create page and clone an individual request into the mock database via the GET button (Menu - Home)
    * If you have a set of URL's to hand that return data then use them to clone in batch using the /mock/clone/batch (Menu - Clone Many). This
      option will clone the data into the database that you can then edit search followed by selecting a result and editing it.
+#### Images
+   Images can be served if they are placed in /public/img directory and then the urls point to it like `http://xx.xx.xx.xx/img/captcha.png` where `xx.xx.xx.xx` is the ip address of the mock server.
 ### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
 
