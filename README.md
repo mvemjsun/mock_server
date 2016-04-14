@@ -26,7 +26,7 @@ relevant db-adapter gem and update the database.yml config file with connect con
 4. Run `bundle install` to install all needed gems.
 5. Run Rake task to create DB table as `rake db:migrate` if you DONT want to use the db in the repo.
 6. Run server `RACK_ENV=production rackup > /dev/null 2>&1 &` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
-7. Visit http://localhost:9292/mock/create and get started.
+7. Visit `http://localhost:9293/mock/create` and get started.
 
 ### Features
 
