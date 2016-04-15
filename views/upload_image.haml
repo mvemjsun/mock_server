@@ -1,10 +1,10 @@
 :javascript
     $('li').removeClass('active');
-    $('#tab-upload').addClass('active');
+    $('#tab-upload-image').addClass('active');
 %div{class: 'page-header'}
     %h2 Mock Server - Upload Image
     %blockquote
-        %p{class: "lead text-info"} Images files can be uploaded and then served at /img/<img_name>
+        %p{class: "lead text-info"} Images files can be uploaded and then served back from /upload/&ltimg_name&gt or via a mocked URL.
 
 %form{action: '/mock/upload/image', method: 'post', enctype: 'multipart/form-data'}
 

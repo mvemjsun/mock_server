@@ -46,6 +46,8 @@
                 %option{id: 'app_json'} application/json;charset=UTF-8
                 %option{id: 'text_xml'} text/xml
                 %option{id: 'text_html'} text/html
+                %option{id: 'image_png'} image/png
+                %option{id: 'image_jpeg'} image/jpeg
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label',for: 'mock_data_response_headers'} Other Delimited (#{ENV['HEADER_DELIMITER']})Response Header(s)
             %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? 'X-mocked'+ENV['HEADER_DELIMITER']+'True' : mock_data.mock_data_response_headers}
@@ -81,6 +83,12 @@
                 break;
             case 'text/html':
                 slcType = document.getElementById('text_html');
+                break;
+            case 'image/png':
+                slcType = document.getElementById('image_png');
+                break;
+            case 'image/jpeg':
+                slcType = document.getElementById('image_jpeg');
                 break;
         }
         slcType.setAttribute("selected", "selected");
