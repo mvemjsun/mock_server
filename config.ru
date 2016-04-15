@@ -14,6 +14,7 @@ ENV['TEST_ENV']='integration'
 ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
 ENV['HEADER_DELIMITER'] = ":==:"
 ENV['REPLACE'] = "1"
+ENV['MAX_UPLOAD_SIZE'] = '500000'
 ActiveRecord::Base.logger = Logger.new('logs/app.log')
 ActiveRecord::Base.logger.level = Logger::DEBUG
 
