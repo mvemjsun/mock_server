@@ -54,13 +54,18 @@ batch clone option.
    Visit the /mock/create and create mock responses by entering response details manually
    
 #### Existing data available
-   This option could be used when minimal test data is available. We have two ways to mock here
+   This option could be used when minimal test data is available. We have two ways to mock here.
    * Visit the /mock/create page and clone an individual request into the mock database via the GET button (Menu - Home)
    * If you have a set of URL's to hand that return data then use them to clone in batch using the /mock/clone/batch (Menu - Clone Many). This
      option will clone the data into the database that you can then edit search followed by selecting a result and editing it.
 
 #### Images
-   Images can be served if they are placed in /public/img directory and then the urls point to it like `http://xx.xx.xx.xx/img/captcha.png` where `xx.xx.xx.xx` is the ip address of the mock server.
+   * Images can be served if they are placed in /public/img directory and then the urls point to it like `http://xx.xx.xx.xx/img/captcha.png` 
+     where `xx.xx.xx.xx` is the ip address of the mock server.
+   * To serve custom image URLs, first upload the image onto the mock server and then create a mock URL with correct content type (png or jpeg)
+     . The Image file name at the end of the url must match the uploaded image name (case sensitive). For example if you want to serve the URL
+     `get/me/a/cat.png` then upload the image with name `cat.png` while creating the mock URL. Note only urls that end with an image file name
+     can be served.
 
 ### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
