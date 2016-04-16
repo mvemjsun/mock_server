@@ -5,6 +5,10 @@ class MockServerController < ApplicationController
     haml :upload_image, locals: {upload_status: nil}
   end
 
+  #
+  # Process the uploaded files after it has been verified for its size , presence and type
+  # else issue error message.
+  #
   post '/upload/image' do
     @title = 'Upload Image'
     error = false
@@ -18,7 +22,7 @@ class MockServerController < ApplicationController
       actual_file_name_uploaded = upload_file_name.gsub(' ', '_')
 
       if upload_size.to_i > allowed_size.to_i
-        msg = 'File size is greater than max allowed file size. Upload failed.'
+        msg = "Size of #{upload_file_name} is greater than max allowed file size. Upload failed."
         error = true
       end
 
@@ -42,7 +46,14 @@ class MockServerController < ApplicationController
       msg = 'Filename must be supplied. Upload failed.'
       error = true
     end
-    haml :upload_image, locals: {upload_status: msg}
+
+
+    if error
+      session[:errors] = [msg]
+      haml :upload_image, locals: {upload_status: nil}
+    else
+      haml :upload_image, locals: {upload_status: "File #{actual_file_name_uploaded} uploaded successfully."}
+    end
   end
 
 end
