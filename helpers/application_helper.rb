@@ -13,7 +13,7 @@ module ApplicationHelper
   # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error]
   #
 
-  def process_url(url, method='GET',env=ENV['TEST_ENV'])
+  def process_url(url, method='GET', env=ENV['TEST_ENV'])
     return_data={}
     data = Mockdata.where(mock_request_url: url, mock_http_verb: method, mock_environment: env, mock_state: true)
     if data.any?
@@ -21,18 +21,24 @@ module ApplicationHelper
       return_data[:mock_http_status] = row[:mock_http_status]
       response_body = row[:mock_data_response]
 
-      if ENV['REPLACE']
-        return_data[:mock_data_response] = intelligent_response_replace(response_body)
+      if row[:mock_content_type].match(/^image\//)
+        return_data[:image_file] = url.split('/').last
+        return_data[:mock_data_response] = nil
       else
-        return_data[:mock_data_response] = row[:mock_data_response]
+        if ENV['REPLACE']
+          return_data[:mock_data_response] = intelligent_response_replace(response_body)
+        else
+          return_data[:mock_data_response] = row[:mock_data_response]
+        end
       end
+
       return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
 
       return_data[:mock_content_type] = row[:mock_content_type]
       row.mock_served_times = row.mock_served_times + 1
       row.save!
     else
-      return_data[:error] = "Not Found"
+      return_data[:error] = 'Not Found'
     end
     return return_data
   end
@@ -44,9 +50,9 @@ module ApplicationHelper
       # replaced_response ||= response_to_be_replaced.dup
       if row.is_regexp
         re = Regexp.new(row.replaced_string)
-        replaced_response.gsub!(re,row.replacing_string)
+        replaced_response.gsub!(re, row.replacing_string)
       else
-        replaced_response.gsub!(row.replaced_string,row.replacing_string)
+        replaced_response.gsub!(row.replaced_string, row.replacing_string)
       end
     end
     p replaced_response
@@ -288,7 +294,7 @@ module ApplicationHelper
 
   def process_http_verb
     url = request.fullpath.sub!(/^\//, '')
-    response = process_url(url,request.request_method, ENV['TEST_ENV'])
+    response = process_url(url, request.request_method, ENV['TEST_ENV'])
     if  response.has_key? :error
       log_missed_requests(request)
       content_type 'application/text'
@@ -298,7 +304,12 @@ module ApplicationHelper
       status response[:mock_http_status].to_i
       content_type response[:mock_content_type]
       headers response[:mock_data_response_headers]
-      body response[:mock_data_response]
+
+      if response[:mock_content_type].match(/^image\//)
+        send_file File.join('public/upload/',response[:image_file])
+      else
+        body response[:mock_data_response]
+      end
     end
   end
 

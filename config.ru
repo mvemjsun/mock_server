@@ -12,6 +12,7 @@ $logger = ::Logger.new(::File.new("logs/app.log","a+"))
 
 ENV['TEST_ENV']='integration'
 ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
+# Once the delimiter is set then it can only be changed if all mock db mock_data_response_headers are updated to use the new header
 ENV['HEADER_DELIMITER'] = ":==:"
 ENV['REPLACE'] = "1"
 ENV['MAX_UPLOAD_SIZE'] = '500000'
