@@ -232,7 +232,7 @@ module ApplicationHelper
     else
       url = url_path
     end
-    missed_request.url = url
+    missed_request.url = (url.nil? || url.size == 0) ? '/' : url
     missed_request.mock_environment = ENV['TEST_ENV']
     missed_request.mock_http_verb = request_object.request_method
     missed_request.save!
