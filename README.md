@@ -48,6 +48,12 @@ Edit an existing mock (search for it first).
 If you have a set of Rest URL's that require no client configuration. Then you can clone the URLs into the mock database using the 
 batch clone option.
 
+#### Replace Data
+Replace data can be created to look for 'replace strings' either by exect match or by regular expressions, there strings are matched and then replaced by their replacements silently in mock responses.
+
+#### Upload Images
+Images can be uploaded in case you want to mock url's that end with image names.
+
 ### Possible use cases
 
 #### No existing data available

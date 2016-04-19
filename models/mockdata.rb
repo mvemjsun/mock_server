@@ -14,6 +14,10 @@ class Mockdata < ActiveRecord::Base
     self.mock_name = self.mock_name.upcase
     self.mock_http_verb = self.mock_http_verb.upcase
     self.mock_served_times = 0 if self.mock_served_times.nil?
+    self.has_before_script = self.has_before_script.nil? ? nil : has_before_script
+    self.has_after_script = self.has_after_script.nil? ? nil : has_after_script
+    self.after_script = self.after_script.nil? ? '#' : after_script
+    self.before_script = self.before_script.nil? ? '#' : before_script
   end
 
  end

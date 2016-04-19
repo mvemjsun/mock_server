@@ -13,6 +13,10 @@ class CreateMockdata < ActiveRecord::Migration
       t.string :mock_environment
       t.string :mock_content_type
       t.integer :mock_served_times
+      t.boolean :has_before_script
+      t.text :before_script
+      t.boolean :has_after_script
+      t.text :after_script
       t.timestamps
     end
 
