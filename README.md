@@ -28,6 +28,8 @@ relevant db-adapter gem and update the database.yml config file with connect con
 6. Run server `RACK_ENV=production rackup > /dev/null 2>&1 &` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
 7. Visit `http://localhost:9293/mock/create` and get started.
 
+Note: To start the server on any other port apart from 9293, change the port number on the first line of the `config.ru` file.
+
 ### Features
 
 The tool can be used either as a standalone mock server on an individuals PC or setup as a team mock server. Its upto the team and user(s) to
