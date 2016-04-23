@@ -197,21 +197,26 @@ module ApplicationHelper
         # Ignore fatal URL responses
       end
 
-      if (response) &&
-          (response.code.to_s.match(/^[1,2,3]/))
-        data = Mockdata.new
-        data.mock_name= params[:name]
-        data.mock_request_url= url
-        data.mock_http_status= response.code
-        data.mock_data_response_headers= extract_clone_response(response, params[:url], params[:name]).mock_data_response_headers
-        data.mock_data_response= response.body
-        data.mock_environment= params[:mock_test_environment]
-        data.mock_content_type= 'application/json;charset=UTF8'
-        data.mock_state = true
-        data.mock_http_verb='GET'
-        data.save!
-        state = :created
-      else
+      begin
+        if (response) &&
+            (response.code.to_s.match(/^[1,2,3]/))
+          data = Mockdata.new
+          data.mock_name= params[:name]
+          data.mock_request_url= url
+          data.mock_http_status= response.code
+          data.mock_data_response_headers= extract_clone_response(response, params[:url], params[:name]).mock_data_response_headers
+          data.mock_data_response= response.body
+          data.mock_environment= params[:mock_test_environment]
+          data.mock_content_type= 'application/json;charset=UTF8'
+          data.mock_state = true
+          data.mock_http_verb='GET'
+          data.save!
+          state = :created
+        else
+          state = :error_creating
+        end
+      rescue => e
+        p e.message
         state = :error_creating
       end
     end
@@ -306,7 +311,7 @@ module ApplicationHelper
       headers response[:mock_data_response_headers]
 
       if response[:mock_content_type].match(/^image\//)
-        send_file File.join('public/upload/',response[:image_file])
+        send_file File.join('public/upload/', response[:image_file])
       else
         body response[:mock_data_response]
       end

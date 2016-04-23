@@ -165,7 +165,8 @@ class MockServerController < ApplicationController
     # Validate JSON
     #
     json_state = :valid
-    if params[:mock_content_type] == 'application/json;charset=UTF-8'
+    if (data.mock_http_status.match(/^[^4-5]/)) &&
+        (params[:mock_content_type] == 'application/json;charset=UTF-8')
       if valid_json?(params[:mock_data_response])
         json_state = :valid
       else

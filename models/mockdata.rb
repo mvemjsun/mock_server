@@ -6,7 +6,7 @@ class Mockdata < ActiveRecord::Base
   validates :mock_request_url,   presence: true
   validates :mock_http_verb,     presence: true
   validates :mock_data_response_headers,   presence: true
-  validates :mock_data_response,   presence: true
+  validate :mock_data_response_body
   validates :mock_content_type,   presence: true
   validates :mock_environment, presence: true
 
@@ -18,6 +18,12 @@ class Mockdata < ActiveRecord::Base
     self.has_after_script = self.has_after_script.nil? ? nil : has_after_script
     self.after_script = self.after_script.nil? ? '#' : after_script
     self.before_script = self.before_script.nil? ? '#' : before_script
+  end
+
+  def mock_data_response_body
+    if self.mock_http_status.match(/^[^4-5]/) && self.mock_data_response.size == 0
+      errors.add(:mock_data_response, "can't be blank.")
+    end
   end
 
  end

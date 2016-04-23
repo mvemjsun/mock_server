@@ -1,15 +1,19 @@
-## Mock Server
-> An easy way to setup mock responses by specifying mock URL, HTTP verb, Response headers and Response body.
+## Mocking Bird
+> An easy way to setup mock responses by specifying mock URL, HTTP verb, Response headers and Response body. 
 
 ### Summary
 
-The core idea behind this tool is having the ability to quickly and easily create mock responses for ReST URLs. This is 
-achieved by a easy user interface that allows the user to Specify a URL to mock, set the return HTTP status, headers and last 
-but not the least the response body. All this can be achieved relatively fast if the ReST APIs require minimal client 
-configuration (headers etc). The API's that require client configuration can still be mocked by manually entering the relevant details.
-This version does not have HTTPs support or serving any BLOB data. Images can be however served if they are placed in the `public` folder.
+The core idea behind this tool is having the ability to quickly and easily create mock responses for URLs that respond to HTTP verbs. This is 
+achieved by an easy to use user interface that allows a user to specify a URL to mock, set the return HTTP status, headers and last 
+but not the least the response body. All this can be achieved relatively quickly if the APIs require minimal client 
+configuration (headers etc). The API's that respond with special headers can still be mocked by manually entering the relevant details.
+Images can be served if they are placed in the `public` folder. To serve images from custom URLs, the images can be uploaded and the custom
+URLs mocked with ease.
 
-The Mocking framework is especially useful if the test data creation requires a lot of effort.
+The cloning feature can be used if there is existing data available that cab be retrieved via HTTP GET requests, this can be quickly cloned into
+the mock database and then modified according to the mocking needs.
+
+The Implementation has been experimented and tested on OSX 10.10 and 10.11. User interface has been driven using recent versions of Safari (9.1) and Chrome (49.0).
 
 ### Installation
 
@@ -22,13 +26,11 @@ relevant db-adapter gem and update the database.yml config file with connect con
 2. Install Sqlite  from [sqlite] (https://www.sqlite.org/download.html). Will help to manually browse the database if needed.
 3. Download sqlite browser from [browser] (http://sqlitebrowser.org)
 3. Clone git repository using `git clone https://github.com/mvemjsun/mock_server.git`
-4. Create database using the browser at `/db` and call it `mockserver.db` or you may continue to use the one in the repo.
-4. Run `bundle install` to install all needed gems.
-5. Run Rake task to create DB table as `rake db:migrate` if you DONT want to use the db in the repo.
-6. Run server `RACK_ENV=production rackup > /dev/null 2>&1 &` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
-7. Visit `http://localhost:9293/mock/create` and get started.
+4. Run `bundle install` from within the code root directory to install needed gems.
+5. Run `./start-mock.sh` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
+6. Visit `http://localhost:9293/mock/create` and get started.
 
-Note: To start the server on any other port apart from 9293, change the port number on the first line of the `config.ru` file.
+Note: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file.
 
 ### Features
 
@@ -75,6 +77,11 @@ Images can be uploaded in case you want to mock url's that end with image names.
      `get/me/a/cat.png` then upload the image with name `cat.png` while creating the mock URL. Note only urls that end with an image file name
      can be served.
 
+### TODO's
+    * Tests
+    * Scripting support
+    * Video mocking 
+    
 ### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
 
