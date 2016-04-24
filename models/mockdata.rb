@@ -2,10 +2,11 @@
 class Mockdata < ActiveRecord::Base
 
   validates :mock_name,   presence: true
-  validates :mock_http_status,   presence: true, numericality: true, length: { is: 3 }
+  validates :mock_http_status,   presence: true, format: { with: /\A[12345]\d{2}\z/,message: '.Please enter a valid HTTP code.' }
   validates :mock_request_url,   presence: true
   validates :mock_http_verb,     presence: true
   validates :mock_data_response_headers,   presence: true
+  validate :validate_headers
   validate :mock_data_response_body
   validates :mock_content_type,   presence: true
   validates :mock_environment, presence: true
@@ -23,6 +24,13 @@ class Mockdata < ActiveRecord::Base
   def mock_data_response_body
     if self.mock_http_status.match(/^[^4-5]/) && self.mock_data_response.size == 0
       errors.add(:mock_data_response, "can't be blank.")
+    end
+  end
+
+  def validate_headers
+    supplied_headers = self.mock_data_response_headers.split(/\r\n/)
+    supplied_headers.each do |header_data|
+      errors.add(mock_data_response_headers, " ** Header #{header_data} is not delimited correctly **") unless header_data.match(ENV['HEADER_DELIMITER'])
     end
   end
 
