@@ -1,0 +1,22 @@
+:javascript
+    $('li').removeClass('active');
+    $('#tab-ruby-script').addClass('active');
+%div{class: 'page-header'}
+    %h2 Mock Server - Create/Update Ruby Script
+    %blockquote
+        %p{class: "lead text-info"} Scripts can be used to process the incoming requests. The scripts are run just Before the request is received at the mock server or run After the default request processing has been done.
+
+%form{action: '/mock/create/script', method: 'post'}
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-3'}
+            %label{class: 'control-label',for: 'script_name'} Script name
+            %input{type: 'text', class: 'form-control', name: 'script_name', placeholder: 'Script name without spaces', value: "#{rubyscript.nil? ? nil : rubyscript.script_name }"}
+
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-12'}
+            %label{class: 'control-label',for: 'script_body'} Ruby Script
+            %textarea{id: 'script_body', class: 'form-control', name: 'ruby_script_name', placeholder: 'Ruby Script', rows: 30}#{rubyscript.nil? ? nil : rubyscript.script_name }
+    %div{class: 'row hidden'}
+        %input{type: 'text', name: 'id', value: "#{rubyscript.nil? ? nil : (rubyscript.id) }"}
+    %div{class: 'row col-md-3'}
+    %button(type="submit" class="btn btn-primary btn-lg btn-block")Create/Update Script

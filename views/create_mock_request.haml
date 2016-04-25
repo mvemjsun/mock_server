@@ -54,6 +54,29 @@
             %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? 'X-mocked'+ENV['HEADER_DELIMITER']+'True' : mock_data.mock_data_response_headers}
     %div{class: 'row'}
         %div{class: 'form-group col-md-12'}
+            %button{type: 'button', id: 'advanced_button' ,class: 'btn btn-primary', onclick: 'showHideAdvancedOptions()'} Show Advanced Options
+            %div{class: 'hidden', id: 'advanced_options'}
+                %div{class: 'form-group col-md-2'}
+                    %label{class: 'control-label',for: 'has_before_script'} Before Script Status
+                    %div{class: 'checkbox'}
+                        %label
+                            %input{type: 'checkbox', id: 'chk_has_before_script',name: 'has_before_script', value: "#{mock_data.nil? ? nil : (mock_data.has_before_script == true ? '1' : '0') }"}
+                            Enable/Disable Before Script
+                %div{class: 'form-group col-md-4'}
+                    %label{class: 'control-label', for: 'before_script_name'} @Before Script Name
+                    %input{type: 'text', class: 'form-control', name: 'before_script_name', placeholder: '', value: "#{mock_data.nil? ? nil : mock_data.before_script_name }"}
+                %div{class: 'form-group col-md-2'}
+                    %label{class: 'control-label',for: 'has_after_script'} After Script Status
+                    %div{class: 'checkbox'}
+                        %label
+                            %input{type: 'checkbox', id: 'chk_has_after_script',name: 'has_after_script', value: "#{mock_data.nil? ? nil : (mock_data.has_after_script == true ? '1' : '0') }"}
+                            Enable/Disable After Script
+                %div{class: 'form-group col-md-4'}
+                    %label{class: 'control-label', for: 'after_script_name'} @After Script Name
+                    %input{type: 'text', class: 'form-control', name: 'after_script_name', placeholder: '', value: "#{mock_data.nil? ? nil : mock_data.after_script_name }"}
+
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-12'}
             %label{class: 'control-label',for: 'mock_data_response'} Response Body
             %textarea{id: 'json_body', class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 30, onchange: 'validateJsonBody(this)'}#{mock_data.nil? ? nil : mock_data.mock_data_response }
     %div{class: 'row hidden'}

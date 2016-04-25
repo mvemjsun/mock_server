@@ -1,0 +1,39 @@
+:javascript
+    $('li').removeClass('active');
+    $('#tab-script-search').addClass('active');
+%div{class: 'page-header'}
+    %h2 Mock Server - Search scripts
+    %blockquote
+        %p{class: 'lead text-info'} Search ruby scripts
+
+%form{action: '/mock/script/search/results', method: 'get'}
+
+    %div{class: 'row'}
+        %div{class: 'form-group col-md-3'}
+            %label{class: 'control-label',for: 'script_name'} Script Name
+            %input{class: 'form-control', name: 'script_name', placeholder: 'Enter Part of Name'}
+    %div{class: 'row col-md-3'}
+    %button(type="submit" class="btn btn-primary btn-lg btn-block")Search
+    %br
+    %br
+
+-if search_data
+    %table{class: 'table table-striped'}
+        %thead
+            %tr
+                %th #
+                %th Script Name
+                %th Created At
+                %th Updated At
+            %tbody
+        - search_data.each do |row|
+            %tr{class: 'success'}
+                %td
+                    %span{class: "glyphicon glyphicon-edit"}
+                    %a{:href => "/mock/script/update/#{row.id}"}
+                        #{row.id}
+                %td #{row.script_name}
+                %td #{row.created_at}
+                %td #{row.updated_at}
+-else
+    %h2{class: 'bg-warning text-center'} #{search_message if search_message}
