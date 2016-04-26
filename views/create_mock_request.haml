@@ -46,6 +46,7 @@
             %select{class: 'form-control', id: 'id_mock_content_type',name: 'mock_content_type', value: "#{mock_data.nil? ? nil : mock_data.mock_content_type }"}
                 %option{id: 'app_json'} application/json;charset=UTF-8
                 %option{id: 'text_xml'} text/xml
+                %option{id: 'text_plain'} text/plain
                 %option{id: 'text_html'} text/html
                 %option{id: 'image_png'} image/png
                 %option{id: 'image_jpeg'} image/jpeg
@@ -81,6 +82,9 @@
                 break;
             case 'text/xml':
                 slcType = document.getElementById('text_xml');
+                break;
+            case 'text/plain':
+                slcType = document.getElementById('text_plain');
                 break;
             case 'text/html':
                 slcType = document.getElementById('text_html');
