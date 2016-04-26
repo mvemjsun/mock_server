@@ -5,6 +5,9 @@ class MockServerController < ApplicationController
     haml :create_ruby_script, locals: {rubyscript: nil}
   end
 
+  #
+  # ???????????
+  #
   post '/create/script' do
     @title = 'Script created'
     begin
@@ -15,15 +18,24 @@ class MockServerController < ApplicationController
         rubyScript.save!
       else
         rubyScript = Rubyscript.where(id: params[:id].to_i)
-        rubyScript.script_body = params[:script_body]
-        rubyScript.save!
+        if rubyScript.any?
+          rubyScript.first.script_body = params[:script_body]
+          rubyScript.first.save!
+        else
+        end
       end
     rescue ActiveRecord::RecordNotUnique => errors
       session[:errors] = ['Script name is not unique.']
     rescue ActiveRecord::ActiveRecordError => errors
       session[:errors] = [errors.message]
     end
-    haml :create_ruby_script, locals: {rubyscript: rubyScript}
+    p session[:errors] if session[:errors]
+
+    if rubyScript.any?
+      haml :create_ruby_script, locals: {rubyscript: rubyScript.first}
+    else
+      haml :create_ruby_script, locals: {rubyscript: nil}
+    end
   end
 
   get '/script/update/:id' do

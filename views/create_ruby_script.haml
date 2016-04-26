@@ -15,7 +15,7 @@
     %div{class: 'row'}
         %div{class: 'form-group col-md-12'}
             %label{class: 'control-label',for: 'script_body'} Ruby Script
-            %textarea{id: 'script_body', class: 'form-control', name: 'ruby_script_name', placeholder: 'Ruby Script', rows: 30}#{rubyscript.nil? ? nil : rubyscript.script_name }
+            %textarea{id: 'script_body', class: 'form-control', name: 'script_body', placeholder: 'Ruby Script', rows: 30}#{rubyscript.nil? ? nil : rubyscript.script_body }
     %div{class: 'row hidden'}
         %input{type: 'text', name: 'id', value: "#{rubyscript.nil? ? nil : (rubyscript.id) }"}
     %div{class: 'row col-md-3'}
