@@ -4,7 +4,10 @@
 %div{class: 'page-header'}
     %h2 Mock Server - Create/Update Ruby Script
     %blockquote
-        %p{class: "lead text-info"} Scripts can be used to process the incoming requests. The scripts are run just Before the request is received at the mock server or run After the default request processing has been done.
+        %p{class: "lead text-info"} Scripts can be used to process the incoming requests. The scripts are run just Before the request is received at the mock server or run After the default request processing has been done. Script names need to be valid ruby script_names ending in .rb .
+
+%div{class: "bg-success text text-center"}
+    %strong #{success_message.nil? ? '' : success_message}
 
 %form{action: '/mock/create/script', method: 'post'}
     %div{class: 'row'}
