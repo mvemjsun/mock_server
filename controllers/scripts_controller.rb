@@ -6,7 +6,7 @@ class MockServerController < ApplicationController
   end
 
   #
-  # Create or update a processing script
+  # Create or update a processing script, if the script is an existing script then update else create a new one
   #
   post '/create/script' do
     @title = 'Script created'
@@ -44,6 +44,9 @@ class MockServerController < ApplicationController
     end
   end
 
+  #
+  # Update a script, routed here via the search scripts list
+  #
   get '/script/update/:id' do
     @title = 'Update script'
     script_data = Rubyscript.where(id: params[:id].to_i)
