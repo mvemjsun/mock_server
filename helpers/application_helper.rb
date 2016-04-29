@@ -86,6 +86,18 @@ module ApplicationHelper
   end
 
   #
+  # Search the rubyscript table and return results
+  #
+  def search_script_data(options)
+    data = Rubyscript.where("script_name LIKE ?", "%#{options[:script_name]}%")
+    if data.any?
+      return data
+    else
+      return nil
+    end
+  end
+
+  #
   #
   #
   def flash_messages

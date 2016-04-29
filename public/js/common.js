@@ -1,3 +1,15 @@
+function showHideAdvancedOptions() {
+    advDiv = document.getElementById('advanced_options')
+    classname = advDiv.className
+    advButton = document.getElementById('advanced_button')
+    if (classname == 'hidden') {
+        advDiv.setAttribute('class','');
+        advButton.textContent = 'Hide Advanced Options';
+    } else {
+        advDiv.setAttribute('class','hidden');
+        advButton.textContent = 'Show Advanced Options';
+    }
+}
 function validateJsonBody(input_area) {
     var contentType = $("#id_mock_content_type").val();
 

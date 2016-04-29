@@ -14,9 +14,9 @@ class CreateMockdata < ActiveRecord::Migration
       t.string :mock_content_type
       t.integer :mock_served_times
       t.boolean :has_before_script
-      t.text :before_script
+      t.string :before_script_name
       t.boolean :has_after_script
-      t.text :after_script
+      t.string :after_script_name
       t.timestamps
     end
 
@@ -42,6 +42,12 @@ class CreateMockdata < ActiveRecord::Migration
       t.boolean :replace_state
     end
 
+    create_table :rubyscripts do |t|
+      t.string :script_name
+      t.text :script_body
+      t.timestamps
+    end
+
     execute <<-SQL
       CREATE UNIQUE INDEX "unique_replace_data"
       ON "REPLACEDATA" ("replaced_string", "mock_environment", "replace_state")
@@ -54,5 +60,6 @@ class CreateMockdata < ActiveRecord::Migration
     drop_table :mockdata
     drop_table :missed_requests
     drop_table :replacedata
+    drop_table :rubyscript
   end
 end
