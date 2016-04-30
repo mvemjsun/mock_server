@@ -1,3 +1,5 @@
+require_relative '../controllers/application_controller'
+
 class MockServerController < ApplicationController
 
   get '/create/script' do

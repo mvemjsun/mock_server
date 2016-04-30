@@ -38,8 +38,8 @@
         %div{class: 'form-group col-md-2'}
             %label{class: 'control-label',for: 'mock_environment'} Test Environment
             %select{class: 'form-control', id: 'sl_mock_environment',name: 'mock_environment', value: "#{mock_data.nil? ? nil : mock_data.mock_environment }"}
-                %option{id: 'integration'} integration
                 %option{id: 'production'} production
+                %option{id: 'integration'} integration
                 %option{id: 'quality'} quality
         %div{class: 'form-group col-md-2'}
             %label{class: 'control-label',for: 'mock_content_type'} Response Content Type
