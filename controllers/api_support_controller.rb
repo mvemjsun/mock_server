@@ -38,7 +38,7 @@ class MockServerController < ApplicationController
   # Deactivate a mock URL using id
   #
   post '/api/deactivate/:id' do
-    deactivate_mock_with_id
+    response = deactivate_mock_with_id
     status = response[:status]
     body = response[:body]
   end
