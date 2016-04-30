@@ -37,6 +37,17 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  post '/latency/:seconds' do
+    if params['seconds'].is_i?
+      ENV['LATENCY'] = params['seconds']
+      status 200
+      body "Latency set to #{params['seconds']} second(s)."
+    else
+      status 400
+      body 'Latency could not be set.'
+    end
+  end
+
   get '/bird' do
     @title = 'Mocking bird'
     haml :mocking_bird

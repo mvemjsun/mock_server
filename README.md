@@ -78,7 +78,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
      can be served.
 
 ### Initial API support
-   Mockdata in the database can be activated or deactivated using its id.
+   * Mockdata in the database can be activated or deactivated using its id.
    
    ```
       # To activate a mock url with Id = 1
@@ -88,6 +88,15 @@ Images can be uploaded in case you want to mock url's that end with image names.
       # http://localhost:9293/mock/api/deactivate/1
    ```
    Note that activating a url will deactivate any active form of that url in that test environment.
+   
+   * Latency of responses can be set using
+   ```
+   http://localhost:9293/latency/1 
+   OR
+   http://localhost:9293/latency/3
+   ```
+   This sets the global latency to 1 or 3 seconds for ALL mock responses. Please note that due to the blocking nature of the latency implementation
+   at the moment, all server processing will be blocked while the latency is processed.
    
 ### TODO's
     * Tests

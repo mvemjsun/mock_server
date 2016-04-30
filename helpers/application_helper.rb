@@ -312,6 +312,11 @@ module ApplicationHelper
   def process_http_verb
     url = request.fullpath.sub!(/^\//, '')
     response = process_url(url, request.request_method, ENV['TEST_ENV'])
+
+    if ENV['LATENCY']
+      sleep ENV['LATENCY'].to_i unless ENV['LATENCY'].to_i == 0
+    end
+
     if  response.has_key? :error
       log_missed_requests(request)
       content_type 'application/text'
