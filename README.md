@@ -77,6 +77,18 @@ Images can be uploaded in case you want to mock url's that end with image names.
      `get/me/a/cat.png` then upload the image with name `cat.png` while creating the mock URL. Note only urls that end with an image file name
      can be served.
 
+### Initial API support
+   Mockdata in the database can be activated or deactivated using its id.
+   
+   ```
+      # To activate a mock url with Id = 1
+      # http://localhost:9293/mock/api/activate/1
+      
+      # To deactivate a mock url with id = 1
+      # http://localhost:9293/mock/api/deactivate/1
+   ```
+   Note that activating a url will deactivate any active form of that url in that test environment.
+   
 ### TODO's
     * Tests
     * Scripting support
