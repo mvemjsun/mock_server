@@ -96,7 +96,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
    http://localhost:9293/latency/3
    ```
    This sets the global latency to 1 or 3 seconds for ALL mock responses. Please note that due to the blocking nature of the latency implementation
-   at the moment, all server processing will be blocked while the latency is processed.
+   at the moment, all server processing will be blocked while the latency is processed. The default latency is 0.
+   
+   To set the latency back to 0 issue the call `http://localhost:9293/latency/0`
    
 ### TODO's
     * Tests
