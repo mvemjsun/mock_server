@@ -30,7 +30,9 @@ relevant db-adapter gem and update the database.yml config file with connect con
 5. Run `./start-mock.sh` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
 6. Visit `http://localhost:9293/mock/create` and get started.
 
-Note: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file.
+Note: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file. 
+The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` to create an empty DB in the `/db` folder. Followed
+by `rake db:migrate` from the root project folder. This will create the required DB tables in sqlite.
 
 ### Features
 
