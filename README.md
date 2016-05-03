@@ -32,7 +32,7 @@ relevant db-adapter gem and update the database.yml config file with connect con
 
 Note: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file. 
 The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` to create an empty DB in the `/db` folder. Followed
-by `rake db:migrate` from the root project folder. This will create the required DB tables in sqlite.
+by `rake db:migrate` from the root project folder. This will create the required DB tables in sqlite. Please ensure that you BACK UP any exiting DB files is this command is issued multiple times.
 
 ### Features
 
