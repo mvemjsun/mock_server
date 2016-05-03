@@ -52,7 +52,7 @@
                 %option{id: 'image_jpeg'} image/jpeg
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label',for: 'mock_data_response_headers'} Other Delimited (#{ENV['HEADER_DELIMITER']})Response Header(s)
-            %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? 'X-mocked'+ENV['HEADER_DELIMITER']+'True' : mock_data.mock_data_response_headers}
+            %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? 'X-mocked'+ENV['HEADER_DELIMITER']+'True' + "\r\n"+'Cache-Control'+ENV['HEADER_DELIMITER']+'max-age=0, no-cache' : mock_data.mock_data_response_headers}
     %div{class: 'row'}
         %div{class: 'form-group col-md-12 hidden'}
             %button{type: 'button', id: 'advanced_button' ,class: 'btn btn-primary', onclick: 'showHideAdvancedOptions()'} Show Advanced Options
