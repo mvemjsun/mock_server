@@ -31,9 +31,31 @@ relevant db-adapter gem and update the database.yml config file with connect con
 6. Visit `http://localhost:9293/mock/create` and get started.
 
 Note: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file. 
-The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` to create an empty DB in the `/db` folder. Followed
-by `rake db:migrate` from the root project folder. This will create the required DB tables in sqlite. Please ensure that you BACK UP any exiting DB files is this command is issued multiple times.
+The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` followed by `.save mockserver.db` on the sqlite3 prompt to create an empty DB in the `/db` folder Then issue
+`rake db:migrate` from the root project folder. This will create the required DB tables in sqlite. Please ensure that you BACK UP any exiting DB files is this command is issued multiple times.
 
+```
+db mvemjsun$ sqlite3 mockserver.db
+SQLite version 3.11.1 2016-03-03 16:17:53
+Enter ".help" for usage hints.
+sqlite> .schema
+CREATE TABLE "schema_migrations" ("version" varchar NOT NULL);
+CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version");
+CREATE TABLE "mockdata" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mock_name" varchar, "mock_http_status" varchar, "mock_request_url" text, "mock_http_verb" text, "mock_data_response_headers" varchar, "mock_data_response" text(1000000), "mock_state" boolean, "mock_environment" varchar, "mock_content_type" varchar, "mock_served_times" integer, "has_before_script" boolean, "before_script_name" varchar, "has_after_script" boolean, "after_script_name" varchar, "profile_name" varchar, "created_at" datetime, "updated_at" datetime);
+CREATE UNIQUE INDEX "unique_mock_data"
+      ON "MOCKDATA" ("mock_request_url","mock_http_verb", "mock_environment", "mock_state")
+      WHERE "mock_state" = 't'
+;
+CREATE TABLE "missed_requests" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url" varchar, "mock_http_verb" varchar, "mock_environment" varchar, "created_at" datetime, "updated_at" datetime);
+CREATE TABLE "replacedata" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "replace_name" varchar, "replaced_string" varchar, "replacing_string" varchar, "is_regexp" boolean, "mock_environment" varchar, "replace_state" boolean);
+CREATE TABLE "rubyscripts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "script_name" varchar, "script_body" text, "created_at" datetime, "updated_at" datetime);
+CREATE UNIQUE INDEX "unique_replace_data"
+      ON "REPLACEDATA" ("replaced_string", "mock_environment", "replace_state")
+      WHERE "replace_state" = 't'
+;
+sqlite> .exit
+db mvemjsun$
+```
 ### Features
 
 The tool can be used either as a standalone mock server on an individuals PC or setup as a team mock server. Its upto the team and user(s) to
