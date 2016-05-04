@@ -12,13 +12,14 @@ class Mockdata < ActiveRecord::Base
   validates :mock_environment, presence: true
 
   before_save do
-    self.mock_name = self.mock_name.upcase
+    self.mock_name = self.mock_name.gsub(/\s+/,' ').strip.upcase
     self.mock_http_verb = self.mock_http_verb.upcase
     self.mock_served_times = 0 if self.mock_served_times.nil?
     self.has_before_script = self.has_before_script.nil? ? nil : has_before_script
     self.has_after_script = self.has_after_script.nil? ? nil : has_after_script
     self.after_script_name = self.after_script_name.nil? ? '#' : after_script_name
     self.before_script_name = self.before_script_name.nil? ? '#' : before_script_name
+    self.profile_name = self.profile_name.nil? ? '' : self.profile_name.gsub(/\s+/,' ').strip.upcase
   end
 
   def mock_data_response_body
