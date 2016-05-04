@@ -55,3 +55,7 @@
         if (replaceRegexp.value == '1') {
             document.getElementById('chk_is_regexp').checked = true;
         }
+
+        var slEnv = document.getElementById('sl_mock_environment').getAttribute('value');
+        var slOption = document.getElementById(slEnv);
+        slOption.setAttribute("selected", "selected");
