@@ -5,13 +5,12 @@
 
 The core idea behind this tool is having the ability to quickly and easily create mock responses for URLs that respond to HTTP verbs. This is 
 achieved by an easy to use user interface that allows a user to specify a URL to mock, set the return HTTP status, headers and last 
-but not the least the response body. All this can be achieved relatively quickly if the APIs require minimal client 
-configuration (headers etc). The API's that respond with special headers can still be mocked by manually entering the relevant details.
-Images can be served if they are placed in the `public` folder. To serve images from custom URLs, the images can be uploaded and the custom
-URLs mocked with ease.
+but not the least the response body. Images can be served using custom urls defined withing the mock server. Facility to upload the images is also
+provided. Mocking also becomes super easy if there are existing API endpoints that return data, this can be just cloned via the GET button on the home 
+page and then modified.
 
-The cloning feature can be used if there is existing data available that cab be retrieved via HTTP GET requests, this can be quickly cloned into
-the mock database and then modified according to the mocking needs.
+The cloning feature can be used if there is existing data available that can be retrieved via HTTP GET requests, this can be quickly cloned into
+the mock database and then modified.
 
 The Implementation has been experimented and tested on OSX 10.10 and 10.11. User interface has been driven using recent versions of Safari (9.1) and Chrome (49.0).
 
@@ -30,7 +29,7 @@ relevant db-adapter gem and update the database.yml config file with connect con
 5. Run `./start-mock.sh` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
 6. Visit `http://localhost:9293/mock/create` and get started.
 
-Note: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file. 
+Note 1: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file. 
 The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` followed by `.save mockserver.db` on the sqlite3 prompt to create an empty DB in the `/db` folder Then issue
 `rake db:migrate` from the root project folder. This will create the required DB tables in sqlite. Please ensure that you BACK UP any exiting DB files is this command is issued multiple times.
 
@@ -56,6 +55,9 @@ CREATE UNIQUE INDEX "unique_replace_data"
 sqlite> .exit
 db mvemjsun$
 ```
+
+Note2: To check if port 9293 is already being used already on osx, use command `lsof -i:9293`. On Windows you may use `netstat -a -b`.
+
 ### Features
 
 The tool can be used either as a standalone mock server on an individuals PC or setup as a team mock server. Its upto the team and user(s) to
