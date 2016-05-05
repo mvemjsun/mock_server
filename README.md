@@ -16,12 +16,12 @@ The Implementation has been experimented and tested on OSX 10.10 and 10.11. User
 
 ### Installation
 
-The main requirements of using the framework is the availability of `ruby` and sqllite on the users machine. The mock server 
+The main requirements of using the framework is the availability of `ruby` on the users machine. The mock server 
 can be setup to be used by a team or set up in a similar way for an individual user. The server has been tested on ruby version 
 2.2.3 & sqlite3 gem 1.3.11. The same framework can be used if a different database is used such as mySQL, update gemfile with the 
 relevant db-adapter gem and update the database.yml config file with connect connect parameters.
 
-1. Install RVM & Ruby if needed
+1. Install RVM & Ruby if needed. RVM is a good way to control ruby installations on your machine. [RVM] (https://rvm.io)
 2. Install Sqlite  from [sqlite] (https://www.sqlite.org/download.html). Will help to manually browse the database if needed.
 3. Download sqlite browser from [browser] (http://sqlitebrowser.org)
 3. Clone git repository using `git clone https://github.com/mvemjsun/mock_server.git`
@@ -79,7 +79,7 @@ If you have a set of Rest URL's that require no client configuration. Then you c
 batch clone option.
 
 #### Replace Data
-Replace data can be created to look for 'replace strings' either by exect match or by regular expressions, there strings are matched and then replaced by their replacements silently in mock responses.
+Replace data can be created to look for 'replace strings' either by exact match or by regular expressions, there strings are matched and then replaced by their replacements silently in mock responses.
 
 #### Upload Images
 Images can be uploaded in case you want to mock url's that end with image names.
