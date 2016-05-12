@@ -24,7 +24,8 @@ class MockServerController < ApplicationController
   #
   get '/search/result' do
     @title = 'Search Result(s)'
-    search_data = search_mock_data({mock_name: params[:search_mock_name].upcase})
+    search_data = search_mock_data({mock_name: params[:search_mock_name].upcase,
+                                    mock_request_url: params[:search_mock_request_url]})
 
     haml :search_results, locals: {search_data: search_data}
   end

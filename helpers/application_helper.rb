@@ -65,7 +65,12 @@ module ApplicationHelper
   #
   def search_mock_data(options)
     # data = Mockdata.where(mock_name: options[:mock_name])
-    data = Mockdata.where("mock_name LIKE ?", "%#{options[:mock_name]}%")
+    if options[:mock_request_url].length == 0
+      data = Mockdata.where("mock_name LIKE ?", "%#{options[:mock_name]}%")
+    else
+      data = Mockdata.where("mock_request_url LIKE ?", "%#{options[:mock_request_url]}%")
+    end
+
     if data.any?
       return data
     else
