@@ -75,7 +75,7 @@ class MockServerController < ApplicationController
   #
   # Display the mock create page for a user to create a new mock data for a URL.
   #
-  ['/create','/home'].each do |path|
+  ['/create', '/home'].each do |path|
     get path do
       @title = "Create mock response"
       haml :create_mock_request, locals: {mock_data: nil}
@@ -155,6 +155,12 @@ class MockServerController < ApplicationController
         data.mock_served_times= 0
         data.save!
         state = :created
+      end
+      # Refresh cache
+      if url.index('*')
+        $wild_routes = WildRoutes.get_wild_routes_if_any
+        p 'Cache refreshed'
+        p $wild_routes
       end
     rescue DuplicateNameAndURL => errors
       session[:errors] = [errors.message]

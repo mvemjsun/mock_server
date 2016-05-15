@@ -17,28 +17,34 @@ module ApplicationHelper
     return_data={}
     data = Mockdata.where(mock_request_url: url, mock_http_verb: method, mock_environment: env, mock_state: true)
     if data.any?
-      row = data.first
-      return_data[:mock_http_status] = row[:mock_http_status]
-      response_body = row[:mock_data_response]
-
-      if row[:mock_content_type].match(/^image\//)
-        return_data[:image_file] = url.split('/').last
-        return_data[:mock_data_response] = nil
-      else
-        if ENV['REPLACE']
-          return_data[:mock_data_response] = intelligent_response_replace(response_body)
-        else
-          return_data[:mock_data_response] = row[:mock_data_response]
-        end
-      end
-
-      return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
-
-      return_data[:mock_content_type] = row[:mock_content_type]
-      row.mock_served_times = row.mock_served_times + 1
-      row.save!
+      return_data = get_mock_data(data.first)
+      # row = data.first
+      # return_data[:mock_http_status] = row[:mock_http_status]
+      # response_body = row[:mock_data_response]
+      #
+      # if row[:mock_content_type].match(/^image\//)
+      #   return_data[:image_file] = url.split('/').last
+      #   return_data[:mock_data_response] = nil
+      # else
+      #   if ENV['REPLACE']
+      #     return_data[:mock_data_response] = intelligent_response_replace(response_body)
+      #   else
+      #     return_data[:mock_data_response] = row[:mock_data_response]
+      #   end
+      # end
+      #
+      # return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
+      #
+      # return_data[:mock_content_type] = row[:mock_content_type]
+      # row.mock_served_times = row.mock_served_times + 1
+      # row.save!
     else
-      return_data[:error] = 'Not Found'
+      wild_route_data = try_wildcard_route_mock_data(method, env)
+      if wild_route_data
+        return_data = wild_route_data
+      else
+        return_data[:error] = 'Not Found' unless return_data
+      end
     end
     return return_data
   end
@@ -338,6 +344,68 @@ module ApplicationHelper
         body response[:mock_data_response]
       end
     end
+  end
+
+  #---------
+  private
+  #---------
+
+  #
+  # If there is no exact route match then try to see if there is a wildcard route match and return its data
+  # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error]
+  #
+  def try_wildcard_route_mock_data(method,env)
+    wild_route_urls = $wild_routes.keys
+    url_path = URI::parse(request.url).path.sub(/^\//, '')
+    url_query = URI::parse(request.url).query
+    if url_query
+      url = url_path + '?' + url_query
+    else
+      url = url_path
+    end
+    matched_route = wild_route_urls.find { |route| Regexp.new(route).match url }
+    if matched_route
+      route_id = $wild_routes[matched_route]
+      p matched_route
+      p route_id
+      data = Mockdata.where(id: route_id,
+                            mock_environment: env,
+                            mock_state: true,
+                            mock_http_verb: method )
+      return get_mock_data(data.first)
+    else
+      p 'No wildcard match'
+      return nil
+    end
+  end
+
+  #
+  # Refactored into a common routine for returning the mock data hash
+  # @param [ActiveRecordData] row with mock data from the table
+  # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error]
+  #
+  def get_mock_data(row)
+    return_data = {}
+    return_data[:mock_http_status] = row[:mock_http_status]
+    response_body = row[:mock_data_response]
+
+    if row[:mock_content_type].match(/^image\//)
+      return_data[:image_file] = url.split('/').last
+      return_data[:mock_data_response] = nil
+    else
+      if ENV['REPLACE']
+        return_data[:mock_data_response] = intelligent_response_replace(response_body)
+      else
+        return_data[:mock_data_response] = row[:mock_data_response]
+      end
+    end
+
+    return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
+
+    return_data[:mock_content_type] = row[:mock_content_type]
+    row.mock_served_times = row.mock_served_times + 1
+    row.save!
+    return return_data
   end
 
 end

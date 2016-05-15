@@ -28,5 +28,11 @@ Dir.glob('./{helpers,controllers,models}/*.rb').each do |file|
   require file
 end
 
+#
+# Load any existing routes with wildcards
+#
+$wild_routes = {}
+$wild_routes = WildRoutes.get_wild_routes_if_any
+
 map('/') { run ApplicationController}
 map('/mock') { run MockServerController}
