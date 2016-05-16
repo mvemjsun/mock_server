@@ -149,6 +149,6 @@ Images can be uploaded in case you want to mock url's that end with image names.
 
 ## Copyright and License
 
-Copyright (c) 2014, mvemjsun.
+Copyright (c) 2016, mvemjsun.
 
 Mocking bird source code is licensed under the [MIT License](LICENSE.md).

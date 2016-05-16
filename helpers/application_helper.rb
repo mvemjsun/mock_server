@@ -61,7 +61,6 @@ module ApplicationHelper
         replaced_response.gsub!(row.replaced_string, row.replacing_string)
       end
     end
-    p replaced_response
     return replaced_response
   end
 
@@ -286,7 +285,6 @@ module ApplicationHelper
         replaceData.replace_state = params[:replace_state].nil? ? false : true
         replaceData.is_regexp = params[:is_regexp].nil? ? false : true
         replaceData.mock_environment = params[:mock_environment]
-        p replaceData
         replaceData.save!
       rescue ActiveRecord::RecordNotUnique => errors
         message = ["This replace is already ACTIVE with name '#{(data.first.replace_name).upcase}'."]
@@ -305,7 +303,6 @@ module ApplicationHelper
         replaceData.replace_state = params[:replace_state].nil? ? false : true
         replaceData.is_regexp = params[:is_regexp].nil? ? false : true
         replaceData.mock_environment = params[:mock_environment]
-        p replaceData
         replaceData.save!
       else
         error = true
@@ -316,7 +313,6 @@ module ApplicationHelper
     return_data[:error] = error
     return_data[:message] = message
     return_data[:replace_data] = replaceData
-    p return_data
     return return_data
   end
 
@@ -352,7 +348,7 @@ module ApplicationHelper
 
   #
   # If there is no exact route match then try to see if there is a wildcard route match and return its data
-  # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error]
+  # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error => 'Not Found']
   #
   def try_wildcard_route_mock_data(method,env)
     wild_route_urls = $wild_routes.keys
@@ -366,16 +362,13 @@ module ApplicationHelper
     matched_route = wild_route_urls.find { |route| Regexp.new(route).match url }
     if matched_route
       route_id = $wild_routes[matched_route]
-      p matched_route
-      p route_id
       data = Mockdata.where(id: route_id,
                             mock_environment: env,
                             mock_state: true,
                             mock_http_verb: method )
       return get_mock_data(data.first)
     else
-      p 'No wildcard match'
-      return nil
+      return {:error => 'Not Found'}
     end
   end
 
