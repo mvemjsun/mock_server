@@ -146,3 +146,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
 
 ### Replace Strings
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/replace_screen.png?raw=true)
+
+## Copyright and License
+
+Copyright (c) 2014, mvemjsun.
+
+Mocking bird source code is licensed under the [MIT License](LICENSE.md).
