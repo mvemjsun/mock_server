@@ -98,11 +98,18 @@ Images can be uploaded in case you want to mock url's that end with image names.
 #### Images
    * Images can be served if they are placed in /public/img directory and then the urls point to it like `http://xx.xx.xx.xx/img/captcha.png` 
      where `xx.xx.xx.xx` is the ip address of the mock server.
+     
    * To serve custom image URLs, first upload the image onto the mock server and then create a mock URL with correct content type (png or jpeg)
      . The Image file name at the end of the url must match the uploaded image name (case sensitive). For example if you want to serve the URL
      `get/me/a/cat.png` then upload the image with name `cat.png` while creating the mock URL. Note only urls that end with an image file name
      can be served.
 
+### Wildcard in routes (experimental)
+   * If a mock url is set up with a wildcard character `*` in it then the mock server will attempt to match against the "wild" route if no exact match is found. For example if a mock URL
+   is set up as `/say/*/to/*` then this will match `/say/hello/to/tom` or `/say/hola/to/rafael`.
+   
+   * Similarly if a mock URL is set up as `/get/me/item/*` will match `/get/me/item/2345`.
+    
 ### Initial API support
    * Mockdata in the database can be activated or deactivated using its id.
    
