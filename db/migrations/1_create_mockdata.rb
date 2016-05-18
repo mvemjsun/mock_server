@@ -18,6 +18,7 @@ class CreateMockdata < ActiveRecord::Migration
       t.boolean :has_after_script
       t.string :after_script_name
       t.string :profile_name
+      t.text   :mock_cookie
       t.timestamps
     end
 
