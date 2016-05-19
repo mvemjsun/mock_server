@@ -144,6 +144,8 @@ module ApplicationHelper
     mock_data.mock_content_type = ENV['DEFAULT_CONTENT_TYPE']
     mock_data.mock_request_url = url
     hdr_string = 'X-Mock'+ENV['HEADER_DELIMITER']+'True'
+    hdr_string = hdr_string + "\r\n" + 'Cache-Control' + ENV['HEADER_DELIMITER'] + 'max-age=0, no-cache'
+
     response.headers.each do |header, hdr_value|
       hdr_string = hdr_string + "\r\n" + header + ENV['HEADER_DELIMITER'] + hdr_value
     end
