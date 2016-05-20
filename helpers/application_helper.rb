@@ -18,26 +18,6 @@ module ApplicationHelper
     data = Mockdata.where(mock_request_url: url, mock_http_verb: method, mock_environment: env, mock_state: true)
     if data.any?
       return_data = get_mock_data(data.first)
-      # row = data.first
-      # return_data[:mock_http_status] = row[:mock_http_status]
-      # response_body = row[:mock_data_response]
-      #
-      # if row[:mock_content_type].match(/^image\//)
-      #   return_data[:image_file] = url.split('/').last
-      #   return_data[:mock_data_response] = nil
-      # else
-      #   if ENV['REPLACE']
-      #     return_data[:mock_data_response] = intelligent_response_replace(response_body)
-      #   else
-      #     return_data[:mock_data_response] = row[:mock_data_response]
-      #   end
-      # end
-      #
-      # return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
-      #
-      # return_data[:mock_content_type] = row[:mock_content_type]
-      # row.mock_served_times = row.mock_served_times + 1
-      # row.save!
     else
       wild_route_data = try_wildcard_route_mock_data(method, env)
       if wild_route_data

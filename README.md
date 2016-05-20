@@ -135,8 +135,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
 ### TODO's
     * Tests
-    * Scripting support
-    * Video mocking 
+    * Scripting support for adding custom logic at server
+    * Video mocking
+    * When cloning ,support for GET/POST with headers (currently limited to get with no headers) 
     
 ### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
