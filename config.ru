@@ -1,5 +1,6 @@
 #\ -p 9293 --host 0.0.0.0
 require 'sinatra/base'
+require "sinatra/cookies"
 require 'active_record'
 require 'sqlite3'
 require 'tilt/haml'

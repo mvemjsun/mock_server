@@ -315,6 +315,7 @@ module ApplicationHelper
       status response[:mock_http_status].to_i
       content_type response[:mock_content_type]
       headers response[:mock_data_response_headers]
+      cookies.merge! response[:mock_cookie]
 
       if response[:mock_content_type].match(/^image\//)
         send_file File.join('public/upload/', response[:image_file])
@@ -374,13 +375,43 @@ module ApplicationHelper
         return_data[:mock_data_response] = row[:mock_data_response]
       end
     end
-
+    return_data[:mock_cookie] = extract_cookies(row[:mock_cookie])
     return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
 
     return_data[:mock_content_type] = row[:mock_content_type]
     row.mock_served_times = row.mock_served_times + 1
     row.save!
     return return_data
+  end
+
+  #
+  # Extract the cookie name and value from the data, cookie name is followed by a space character followed by the
+  # value of the cookie
+  # @param [String] cookie_data
+  # @return [Hash] Cookie info hash keyed by cookie name
+  #
+  def extract_cookies(mock_cookie)
+    cookies = {}
+    if mock_cookie
+      cookie_data = mock_cookie.split(/\r\n/)
+      p 'No Cookie' unless cookie_data.size > 0
+      cookie_data.each do |cookie_line|
+        trimmed_line = cookie_line.gsub(/^\s*/, '')
+        if trimmed_line.size > 0
+          first_sp_index = trimmed_line.index("\s")
+          if first_sp_index
+            cookie_name = trimmed_line[0..first_sp_index-1]
+            cookie_value = trimmed_line[first_sp_index..trimmed_line.length]
+            cookies[cookie_name] = cookie_value
+          else
+            # Just name no value
+            cookie_name = trimmed_line.chomp
+            cookies[cookie_name] = ''
+          end
+        end
+      end
+    end
+    return cookies
   end
 
 end

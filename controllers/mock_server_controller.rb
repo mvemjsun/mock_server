@@ -2,6 +2,7 @@ require_relative '../controllers/application_controller'
 
 class MockServerController < ApplicationController
 
+  helpers Sinatra::Cookies
   #
   # Display the mock data search form for the user to enter the part of the mock name
   #
@@ -138,6 +139,7 @@ class MockServerController < ApplicationController
         data.mock_data_response= params[:mock_data_response]
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
+        data.mock_cookie = params[:mock_cookie]
         data.save!
         state = :updated
       else
@@ -152,6 +154,7 @@ class MockServerController < ApplicationController
         data.mock_data_response= params[:mock_data_response]
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
+        data.mock_cookie = params[:mock_cookie]
         data.mock_served_times= 0
         data.save!
         state = :created
