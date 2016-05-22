@@ -29,6 +29,9 @@ Dir.glob('./{helpers,controllers,models}/*.rb').each do |file|
   require file
 end
 
+# Needed for any API calls that may require authentication etc
+$user_id = ENV['MOCK_USERID'].nil? ? '' : ENV['MOCK_USERID']
+$user_password = ENV['MOCK_PASSWORD'].nil? ? '' : ENV['MOCK_PASSWORD']
 #
 # Load any existing routes with wildcards
 #
