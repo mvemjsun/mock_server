@@ -113,10 +113,10 @@ Images can be uploaded in case you want to mock url's that end with image names.
 ### Basic Cookie support
    * Mocks can be set up to return cookies. The cookie details should be entered ONE cookie in each line. The format is `cookieName cookieValue`.
    The cookie name should be followed by a space. If multiple cookies are required then enter each in its own line followed by a line-break.
-   ```
-   userId 987656789
-   token 7yser345abnjdlo12469sdfqws
-   ssd yef32lvcdds
+   ```ruby
+     userId 987656789
+     token 7yser345abnjdlo12469sdfqws
+     ssd yef32lvcdds
    ```
    The above will return 3 cookies with names userId, token & ssd with above values.
    
