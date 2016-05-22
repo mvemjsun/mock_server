@@ -111,8 +111,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
    * Similarly if a mock URL is set up as `/get/me/item/*` will match `/get/me/item/2345`.
     
 ### Basic Cookie support
-   * Mocks can be set up to return cookies. The cookie details should be entered ONE cookie in each line. The format is `cookieName cookieValue`.
+   Mocks can be set up to return cookies. The cookie details should be entered ONE cookie in each line. The format is `cookieName cookieValue`.
    The cookie name should be followed by a space. If multiple cookies are required then enter each in its own line followed by a line-break.
+   
    ```ruby
      userId 987656789
      token 7yser345abnjdlo12469sdfqws
