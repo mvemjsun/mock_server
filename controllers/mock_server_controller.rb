@@ -140,6 +140,11 @@ class MockServerController < ApplicationController
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
         data.mock_cookie = params[:mock_cookie]
+        data.has_before_script = params[:has_before_script].nil? ? false : true
+        data.before_script_name = params[:before_script_name].nil? ? nil : params[:before_script_name]
+        data.has_after_script = params[:has_after_script].nil? ? false : true
+        data.after_script_name = params[:after_script_name].nil? ? nil : params[:after_script_name]
+
         data.save!
         state = :updated
       else
@@ -155,6 +160,10 @@ class MockServerController < ApplicationController
         data.mock_environment= params[:mock_environment]
         data.mock_content_type= params[:mock_content_type]
         data.mock_cookie = params[:mock_cookie]
+        data.has_before_script = params[:has_before_script].nil? ? false : true
+        data.before_script_name = params[:before_script_name].nil? ? nil : params[:before_script_name]
+        data.has_after_script = params[:has_after_script].nil? ? false : true
+        data.after_script_name = params[:after_script_name].nil? ? nil : params[:after_script_name]
         data.mock_served_times= 0
         data.save!
         state = :created

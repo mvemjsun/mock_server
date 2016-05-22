@@ -110,6 +110,16 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    * Similarly if a mock URL is set up as `/get/me/item/*` will match `/get/me/item/2345`.
     
+### Basic Cookie support
+   * Mocks can be set up to return cookies. The cookie details should be entered ONE cookie in each line. The format is `cookieName cookieValue`.
+   The cookie name should be followed by a space. If multiple cookies are required then enter each in its own line followed by a line-break.
+   ```
+   userId 987656789
+   token 7yser345abnjdlo12469sdfqws
+   ssd yef32lvcdds
+   ```
+   The above will return 3 cookies with names userId, token & ssd with above values.
+   
 ### Initial API support
    * Mockdata in the database can be activated or deactivated using its id.
    
@@ -138,6 +148,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
     * Scripting support for adding custom logic at server
     * Video mocking
     * When cloning ,support for GET/POST with headers (currently limited to get with no headers) 
+
+### Caveat
+    * The API URLs have to be unique across hosts as the mock server maintains only the mock url and NOT the host.
     
 ### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)

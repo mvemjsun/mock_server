@@ -92,6 +92,16 @@
         if (mockStatuscheckbox.value == '1') {
             document.getElementById('chk_mock_state').checked = true;
         }
+
+        var mockBefScriptcheckbox = document.getElementById("chk_has_before_script");
+        if (mockBefScriptcheckbox.value == '1') {
+            document.getElementById('chk_has_before_script').checked = true;
+        }
+
+        var mockAftScriptcheckbox = document.getElementById("chk_has_after_script");
+        if (mockAftScriptcheckbox.value == '1') {
+            document.getElementById('chk_has_after_script').checked = true;
+        }
         var slVerb = document.getElementById('sl_mock_http_verb').getAttribute('value');
         var slVerbOption = document.getElementById(slVerb);
         slVerbOption.setAttribute("selected", "selected");
