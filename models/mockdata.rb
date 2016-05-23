@@ -54,14 +54,12 @@ class Mockdata < ActiveRecord::Base
 
   def validate_script_state
     if self.has_before_script == true
-      p 'Has before script'
       if (self.before_script_name.nil? || self.before_script_name.length == 0)
         errors.add(:before_script_name, '- Provide a before script name ending with .rb')
       end
     end
 
     if self.has_after_script == true
-      p 'Has before script'
       if (self.after_script_name.nil? || self.after_script_name.length == 0)
         errors.add(:after_script_name, '- Provide a after script name ending with .rb')
       end

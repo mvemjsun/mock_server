@@ -13,10 +13,13 @@ class ApplicationController < Sinatra::Base
     use Rack::CommonLogger, $logger
   end
 
+
   before do
+    process_before_script
   end
 
   after do
+    process_after_script
     ActiveRecord::Base.clear_active_connections!
   end
 

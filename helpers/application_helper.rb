@@ -358,7 +358,7 @@ module ApplicationHelper
   #
   # Refactored into a common routine for returning the mock data hash
   # @param [ActiveRecordData] row with mock data from the table
-  # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error]
+  # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response, :id [,:error]
   #
   def get_mock_data(row)
     return_data = {}
@@ -379,6 +379,7 @@ module ApplicationHelper
     return_data[:mock_data_response_headers] = build_headers row[:mock_data_response_headers]
 
     return_data[:mock_content_type] = row[:mock_content_type]
+    return_data[:id] = row[:id]
     row.mock_served_times = row.mock_served_times + 1
     row.save!
     return return_data
@@ -394,7 +395,6 @@ module ApplicationHelper
     cookies = {}
     if mock_cookie
       cookie_data = mock_cookie.split(/\r\n/)
-      p 'No Cookie' unless cookie_data.size > 0
       cookie_data.each do |cookie_line|
         trimmed_line = cookie_line.gsub(/^\s*/, '')
         if trimmed_line.size > 0
