@@ -13,8 +13,8 @@
             %h5{class: "alert alert-info"} Current test environment is #{ENV['TEST_ENV']}
             %label{class: 'control-label',for: 'mock_environment'} Set test Environment
             %select{class: 'form-control', name: 'mock_environment'}
-                %option integration
                 %option production
+                %option integration
                 %option quality
     %div{class: 'row col-md-3'}
     %button(type="submit" class="btn btn-primary btn-lg btn-block")Set Environment
