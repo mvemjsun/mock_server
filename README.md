@@ -3,7 +3,8 @@
 
 ### Summary
 
-The core idea behind this tool is having the ability to quickly and easily create mock responses for URLs that respond to HTTP verbs. This is 
+The core idea behind this tool is having the ability to quickly and easily create mock responses for URLs that respond to HTTP verbs. It can help to
+ test client devices against a mock server both manually and by using automated tests. All this is 
 achieved by an easy to use user interface that allows a user to specify a URL to mock, set the return HTTP status, headers and last 
 but not the least the response body. Images can be served using custom urls defined withing the mock server. Facility to upload the images is also
 provided. Mocking also becomes super easy if there are existing API endpoints that return data, this can be just cloned via the GET button on the home 
