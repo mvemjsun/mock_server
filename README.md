@@ -125,7 +125,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
    ```
    The above will return 3 cookies with names userId, token and ssd with above values.
 
-### Scripting Support
+### Scripting Support (Experimental)
    A mock url can optionally be set up with scripting support. The scripts have to be written in Ruby. The mock responses
     specify the name of the before and after scripts when they are being created/updated. These scripts should have been
     created using the scripts option from the menu.
@@ -147,7 +147,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
    ```
     
    This uses the Sinatra's functions `headers` and passes it a header hash. Similarly the `body` function is used to set
-    an altered body.
+    an altered body. The headers hash is merged with any existing header values.
 
 ### API support
    * Mockdata in the database can be activated or deactivated using its id.
