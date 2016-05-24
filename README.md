@@ -173,7 +173,6 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
 ### TODO's
     * Tests
-    * Scripting support for adding custom logic at server
     * Video mocking
     * When cloning ,support for GET/POST with headers (currently limited to get with no headers) 
 
