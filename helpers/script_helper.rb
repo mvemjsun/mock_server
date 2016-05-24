@@ -26,6 +26,11 @@ module ApplicationHelper
     end
   end
 
+  #
+  # Get the current requests mock data from the database.
+  # @param [None]
+  # @return [Activerecord::Record]
+  #
   def get_current_request_db_row
     if !defined? @current_request_db_data
       @current_request_db_data = nil
@@ -48,17 +53,22 @@ module ApplicationHelper
     return @current_request_db_data
   end
 
+  #
+  # Evaluate the before and after scripts
+  # @param [Symbol] :before or :after
+  # The scripts are evaluated using a simple ruby eval so its upto the user to know the risks
+  #
   def process_script(type)
     begin
       case type
         when :before
           p "Processed before script #{@current_request_db_data[:before_script_name]}"
           row = Rubyscript.where(script_name: @current_request_db_data[:before_script_name]).first
-          eval( row.script_body)
+          eval( row.script_body) unless row.blank?
         when :after
           p "Processed after script #{@current_request_db_data[:after_script_name]}"
           row = Rubyscript.where(script_name: @current_request_db_data[:after_script_name]).first
-          eval(row.script_body)
+          eval(row.script_body) unless row.blank?
       end
     rescue => error
       p '------ SCRIPT ERROR ----------'

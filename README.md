@@ -135,6 +135,18 @@ Images can be uploaded in case you want to mock url's that end with image names.
     manipulate the response body before its sent back to the client.
     
     A word of CAUTION - Scripts are evaluated using ruby `eval` statement without any checks, so use them with caution.
+    
+    The mock_response build from the mock database is available in the instance variable ```ruby @mock_response```. 
+    Example script that adds a custom header `X-AfterScript-Time` and sets the response body could be set as
+    
+    ```ruby
+    headers({"X-AfterScript-Time" => "#{Time.now}"})
+    @mock_response[:mock_data_response] = 'Hi Ya how are you'
+    body @mock_response[:mock_data_response]
+    ```
+    
+    This uses the Sinatra's functions `headers` and passes it a header hash. Similarly the `body` function is used to set
+    an altered body.
 
 ### API support
    * Mockdata in the database can be activated or deactivated using its id.
