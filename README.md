@@ -123,20 +123,21 @@ Images can be uploaded in case you want to mock url's that end with image names.
      token 7yser345abnjdlo12469sdfqws
      ssd yef32lvcdds
    ```
-   The above will return 3 cookies with names userId, token & ssd with above values.
+   The above will return 3 cookies with names userId, token and ssd with above values.
 
-### Scripting Support (experimental)
-    A mock url can optionally be set up with scripting support. The scripts have to be written in Ruby. The mock responses
+### Scripting Support
+   A mock url can optionally be set up with scripting support. The scripts have to be written in Ruby. The mock responses
     specify the name of the before and after scripts when they are being created/updated. These scripts should have been
     created using the scripts option from the menu.
     
-    The scripts are evaluated with the `before` and `after` Sinatra filters and are evaluated in the context of  Sinatra
+   The scripts are evaluated with the `before` and `after` Sinatra filters and are evaluated in the context of  Sinatra
     request and responses. The scripts can for example be used to set up headers that need to be generated at run time or
     manipulate the response body before its sent back to the client.
     
-    A word of CAUTION - Scripts are evaluated using ruby `eval` statement without any checks, so use them with caution.
+   A word of CAUTION - Scripts are evaluated using ruby `eval` statement without any checks, so use them with caution.
     
-    The mock_response build from the mock database is available in the instance variable ```ruby @mock_response```. 
+   The mock_response build from the mock database is available in the instance variable 
+    ```ruby @mock_response```. 
     Example script that adds a custom header `X-AfterScript-Time` and sets the response body could be set as
     
     ```ruby
@@ -145,7 +146,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
     body @mock_response[:mock_data_response]
     ```
     
-    This uses the Sinatra's functions `headers` and passes it a header hash. Similarly the `body` function is used to set
+   This uses the Sinatra's functions `headers` and passes it a header hash. Similarly the `body` function is used to set
     an altered body.
 
 ### API support
