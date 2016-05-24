@@ -193,9 +193,6 @@ Images can be uploaded in case you want to mock url's that end with image names.
 ### Search Results
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/search_results.png?raw=true)
 
-### Replace Strings
-![](https://github.com/mvemjsun/mock_server/blob/master/public/img/replace_screen.png?raw=true)
-
 ## Copyright and License
 
 Copyright (c) 2016, mvemjsun.
