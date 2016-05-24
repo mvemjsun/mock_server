@@ -123,10 +123,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
      token 7yser345abnjdlo12469sdfqws
      ssd yef32lvcdds
    ```
-   The above will return 3 cookies with names userId, token & ssd with above values.
+   The above will return 3 cookies with names userId, token and ssd with above values.
 
-### Scripting Support (experimental)
-
+### Scripting Support (Experimental)
    A mock url can optionally be set up with scripting support. The scripts have to be written in Ruby. The mock responses
     specify the name of the before and after scripts when they are being created/updated. These scripts should have been
     created using the scripts option from the menu.
@@ -137,6 +136,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
     
    A word of CAUTION - Scripts are evaluated using ruby `eval` statement without any checks, so use them with caution.
     
+<<<<<<< HEAD
    The mock_response build from the mock database is available in the instance variable `@mock_response`. 
     Example script that adds a custom header `X-AfterScript-Time` and sets the response body could be set as
     
@@ -148,6 +148,18 @@ Images can be uploaded in case you want to mock url's that end with image names.
     
    This uses the Sinatra's functions `headers` and passes it a header hash. Similarly the `body` function is used to set
     an altered body.
+   The mock_response build from the mock database is available in the instance variable 
+    `@mock_response`. 
+    Example script that adds a custom header `X-AfterScript-Time` and sets the response body could be set as
+    
+   ```ruby
+      headers({"X-AfterScript-Time" => "#{Time.now}"})
+      @mock_response[:mock_data_response] = 'Hi Ya how are you'
+      body @mock_response[:mock_data_response]
+   ```
+    
+   This uses the Sinatra's functions `headers` and passes it a header hash. Similarly the `body` function is used to set
+    an altered body. The headers hash is merged with any existing header values.
 
 ### API support
    * Mockdata in the database can be activated or deactivated using its id.
