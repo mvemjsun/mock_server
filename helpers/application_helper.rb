@@ -300,27 +300,28 @@ module ApplicationHelper
 
   def process_http_verb
     url = request.fullpath.sub!(/^\//, '')
-    response = process_url(url, request.request_method, ENV['TEST_ENV'])
+    @mock_response = process_url(url, request.request_method, ENV['TEST_ENV'])
 
     if ENV['LATENCY']
       sleep ENV['LATENCY'].to_i unless ENV['LATENCY'].to_i == 0
     end
 
-    if  response.has_key? :error
+    if  @mock_response.has_key? :error
       log_missed_requests(request)
       content_type 'application/text'
       status 404
       body 'Not Found'
     else
-      status response[:mock_http_status].to_i
-      content_type response[:mock_content_type]
-      headers response[:mock_data_response_headers]
-      cookies.merge! response[:mock_cookie]
+      status_code =  @mock_response[:mock_http_status].to_i
+      status status_code
+      content_type @mock_response[:mock_content_type]
+      headers @mock_response[:mock_data_response_headers]
+      cookies.merge! @mock_response[:mock_cookie]
 
-      if response[:mock_content_type].match(/^image\//)
-        send_file File.join('public/upload/', response[:image_file])
+      if @mock_response[:mock_content_type].match(/^image\//)
+        send_file File.join('public/upload/', @mock_response[:image_file])
       else
-        body response[:mock_data_response]
+        body @mock_response[:mock_data_response]
       end
     end
   end
