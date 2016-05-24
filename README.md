@@ -137,7 +137,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
    A word of CAUTION - Scripts are evaluated using ruby `eval` statement without any checks, so use them with caution.
     
    The mock_response build from the mock database is available in the instance variable 
-    ```ruby @mock_response```. 
+    `@mock_response`. 
     Example script that adds a custom header `X-AfterScript-Time` and sets the response body could be set as
     
    ```ruby
