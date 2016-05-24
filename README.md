@@ -141,9 +141,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
     Example script that adds a custom header `X-AfterScript-Time` and sets the response body could be set as
     
     ```ruby
-    headers({"X-AfterScript-Time" => "#{Time.now}"})
-    @mock_response[:mock_data_response] = 'Hi Ya how are you'
-    body @mock_response[:mock_data_response]
+      headers({"X-AfterScript-Time" => "#{Time.now}"})
+      @mock_response[:mock_data_response] = 'Hi Ya how are you'
+      body @mock_response[:mock_data_response]
     ```
     
    This uses the Sinatra's functions `headers` and passes it a header hash. Similarly the `body` function is used to set
