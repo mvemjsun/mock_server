@@ -128,7 +128,8 @@ Images can be uploaded in case you want to mock url's that end with image names.
 ### Scripting Support (Experimental)
    A mock url can optionally be set up with scripting support. The scripts have to be written in Ruby. The mock responses
     specify the name of the before and after scripts when they are being created/updated. These scripts should have been
-    created using the scripts option from the menu.
+    created using the scripts option from the menu. The script names should be one or more scripts names ending `.rb`
+    delimited by a `,` (comma) character.
     
    The scripts are evaluated with the `before` and `after` Sinatra filters and are evaluated in the context of  Sinatra
     request and responses. The scripts can for example be used to set up headers that need to be generated at run time or

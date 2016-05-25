@@ -38,16 +38,20 @@ class Mockdata < ActiveRecord::Base
 
   def validate_script_name
     if (!self.before_script_name.nil? && self.before_script_name.length > 0)
-      if self.before_script_name.match(/\A\w+\.rb\z/)
-      else
-        errors.add(:before_script_name, '- Script name should end with .rb')
+      scripts = self.before_script_name.split(/,/)
+      scripts.each do |script_name|
+        if !script_name.match(/^\s*\w+\.rb\s*$/)
+          errors.add(:before_script_name, "- Script name #{script_name} is invalid. ")
+        end
       end
     end
 
     if (!self.after_script_name.nil? && self.after_script_name.length > 0)
-      if self.after_script_name.match(/\A\w+\.rb\z/)
-      else
-        errors.add(:after_script_name, '- Script name should end with .rb')
+      scripts = self.after_script_name.split(/,/)
+      scripts.each do |script_name|
+        if !script_name.match(/^\s*\w+\.rb\s*$/)
+          errors.add(:after_script_name, "- Script name #{script_name} is invalid. ")
+        end
       end
     end
   end

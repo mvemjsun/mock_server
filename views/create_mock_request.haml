@@ -64,8 +64,8 @@
                             %input{type: 'checkbox', id: 'chk_has_before_script',name: 'has_before_script', value: "#{mock_data.nil? ? nil : (mock_data.has_before_script == true ? '1' : '0') }"}
                             Enable/Disable Before Script
                 %div{class: 'form-group col-md-4'}
-                    %label{class: 'control-label', for: 'before_script_name'} @Before Script Name
-                    %input{type: 'text', class: 'form-control', name: 'before_script_name', placeholder: '', value: "#{mock_data.nil? ? nil : mock_data.before_script_name }"}
+                    %label{class: 'control-label', for: 'before_script_name'} @Before Script Name(s) delimited by comma
+                    %input{type: 'text', class: 'form-control', name: 'before_script_name', placeholder: 'script1.rb[, script2.rb]', value: "#{mock_data.nil? ? nil : mock_data.before_script_name }"}
                 %div{class: 'form-group col-md-2'}
                     %label{class: 'control-label',for: 'has_after_script'} After Script Status
                     %div{class: 'checkbox'}
@@ -73,8 +73,8 @@
                             %input{type: 'checkbox', id: 'chk_has_after_script',name: 'has_after_script', value: "#{mock_data.nil? ? nil : (mock_data.has_after_script == true ? '1' : '0') }"}
                             Enable/Disable After Script
                 %div{class: 'form-group col-md-4'}
-                    %label{class: 'control-label', for: 'after_script_name'} @After Script Name
-                    %input{type: 'text', class: 'form-control', name: 'after_script_name', placeholder: '', value: "#{mock_data.nil? ? nil : mock_data.after_script_name }"}
+                    %label{class: 'control-label', for: 'after_script_name'} @After Script Name(s) delimited by comma
+                    %input{type: 'text', class: 'form-control', name: 'after_script_name', placeholder: 'script3.rb[, script4.rb]', value: "#{mock_data.nil? ? nil : mock_data.after_script_name }"}
                 %div{class: 'form-group col-md-6'}
                     %label{class: 'control-label',for: 'mock_cookie'} Cookie Data
                     %textarea{class: 'form-control', name: 'mock_cookie', rows: 4,placeholder: "<validCookieName> <valueString> (one in each line. Name followed by space.)"}#{mock_data.nil? ? '' : mock_data.mock_cookie}

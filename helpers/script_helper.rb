@@ -62,13 +62,19 @@ module ApplicationHelper
     begin
       case type
         when :before
-          p "Processed before script #{@current_request_db_data[:before_script_name]}"
-          row = Rubyscript.where(script_name: @current_request_db_data[:before_script_name]).first
-          eval( row.script_body) unless row.blank?
+          scripts = @current_request_db_data[:before_script_name].split(/,/)
+          scripts.each do |script_name|
+            row = Rubyscript.where(script_name: script_name.strip).first
+            eval(row.script_body) unless row.blank?
+            p "Processed BEFORE script #{script_name}"
+          end
         when :after
-          p "Processed after script #{@current_request_db_data[:after_script_name]}"
-          row = Rubyscript.where(script_name: @current_request_db_data[:after_script_name]).first
-          eval(row.script_body) unless row.blank?
+          scripts = @current_request_db_data[:after_script_name].split(/,/)
+          scripts.each do |script_name|
+            row = Rubyscript.where(script_name: script_name.strip).first
+            eval(row.script_body) unless row.blank?
+            p "Processed AFTER #{script_name}"
+          end
       end
     rescue => error
       p '------ SCRIPT ERROR ----------'
