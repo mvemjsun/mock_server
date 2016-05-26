@@ -312,7 +312,7 @@ module ApplicationHelper
       status 404
       body 'Not Found'
     else
-      status_code =  @mock_response[:mock_http_status].to_i
+      status_code = @mock_response[:mock_http_status].to_i
       status status_code
       content_type @mock_response[:mock_content_type]
       headers @mock_response[:mock_data_response_headers]
@@ -334,7 +334,7 @@ module ApplicationHelper
   # If there is no exact route match then try to see if there is a wildcard route match and return its data
   # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response [,:error => 'Not Found']
   #
-  def try_wildcard_route_mock_data(method,env)
+  def try_wildcard_route_mock_data(method, env)
     wild_route_urls = $wild_routes.keys
     url_path = URI::parse(request.url).path.sub(/^\//, '')
     url_query = URI::parse(request.url).query
@@ -349,7 +349,7 @@ module ApplicationHelper
       data = Mockdata.where(id: route_id,
                             mock_environment: env,
                             mock_state: true,
-                            mock_http_verb: method )
+                            mock_http_verb: method)
       return get_mock_data(data.first)
     else
       return {:error => 'Not Found'}
@@ -382,7 +382,13 @@ module ApplicationHelper
     return_data[:mock_content_type] = row[:mock_content_type]
     return_data[:id] = row[:id]
     row.mock_served_times = row.mock_served_times + 1
-    row.save!
+    p ">>> Updating url served times for - #{url} to #{row.mock_served_times}"
+    begin
+      row.save!
+    rescue => e
+      p ">>> Retrying to update served times for - #{url} to #{row.mock_served_times}"
+      row.save!
+    end
     return return_data
   end
 
