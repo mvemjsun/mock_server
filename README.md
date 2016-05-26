@@ -18,6 +18,9 @@ the mock database and then modified.
 
 The Implementation has been experimented and tested on OSX 10.10 and 10.11. User interface has been driven using recent versions of Safari (9.1) and Chrome (49.0).
 
+The tool has been kept lightweight so that it can be installed and run on a developers/testers machine easily and quickly without any major software
+or memory requirements.
+
 ### Installation
 
 The main requirements of using the framework is the availability of `ruby` on the users machine. The mock server 
@@ -179,6 +182,8 @@ Images can be uploaded in case you want to mock url's that end with image names.
 
 ### Caveat
     * The API URLs have to be unique across hosts as the mock server maintains only the mock url and NOT the host.
+    * The tool and framework has been setup to work against a single client and does not guarantee behaviour when used
+      concurrently by more than one user. 
     
 ### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
