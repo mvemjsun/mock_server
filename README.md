@@ -188,6 +188,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
 ### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
 
+### Advanced Options
+![](https://github.com/mvemjsun/mock_server/blob/master/public/img/advanced_options.png?raw=true)
+
 ### Replace Strings
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/replace_screen.png?raw=true)
 
