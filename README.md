@@ -184,20 +184,24 @@ Images can be uploaded in case you want to mock url's that end with image names.
     * The API URLs have to be unique across hosts as the mock server maintains only the mock url and NOT the host.
     * The tool and framework has been setup to work against a single client and does not guarantee behaviour when used
       concurrently by more than one user. 
-    
-### Home Screen
+
+### Web interface   
+ 
+ The tool/framework has an interface that lets you create and maintain mocking data.
+ 
+#### Home Screen
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/home_screen.png?raw=true)
 
-### Advanced Options
+#### Advanced Options
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/advanced_options.png?raw=true)
 
-### Replace Strings
+#### Replace Strings
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/replace_screen.png?raw=true)
 
-### Search 
+#### Search 
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/search_screen.png?raw=true)
 
-### Search Results
+#### Search Results
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/search_results.png?raw=true)
 
 ## Copyright and License
