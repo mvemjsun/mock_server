@@ -27,7 +27,6 @@ class MockServerController < ApplicationController
     @title = 'Search Result(s)'
     search_data = search_mock_data({mock_name: params[:search_mock_name].upcase,
                                     mock_request_url: params[:search_mock_request_url]})
-
     haml :search_results, locals: {search_data: search_data}
   end
 
@@ -93,8 +92,13 @@ class MockServerController < ApplicationController
     errors = nil
     begin
 
-      url_path = URI::parse(params[:mock_request_url].strip).path.sub(/^\//, '')
-      url_query = URI::parse(params[:mock_request_url].strip).query
+      if params[:mock_request_url].include? '*'
+        url_path = (params[:mock_request_url].strip).sub(/^\//, '')
+        url_query=nil
+      else
+        url_path = URI::parse(params[:mock_request_url].strip).path.sub(/^\//, '')
+        url_query = URI::parse(params[:mock_request_url].strip).query
+      end
 
       if url_query
         url = url_path + '?' + url_query
