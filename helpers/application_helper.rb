@@ -14,6 +14,7 @@ module ApplicationHelper
   #
 
   def process_url(url, method='GET', env=ENV['TEST_ENV'])
+    p "Processing URL #{url} / #{method} ..."
     return_data={}
     data = Mockdata.where(mock_request_url: url, mock_http_verb: method, mock_environment: env, mock_state: true)
     if data.any?
@@ -343,8 +344,24 @@ module ApplicationHelper
     else
       url = url_path
     end
-    matched_route = wild_route_urls.find { |route| Regexp.new(route).match url }
+    p "Trying to find a wild route for request - #{request.url}..."
+    matched_route = wild_route_urls.find do |route|
+      p "Trying to match #{route}"
+      begin
+        Timeout::timeout(1) do
+          Regexp.new(route).match url
+        end
+      rescue => e
+        p '*' * 80
+        p "WARNING - timeout when matching route #{route} "
+        p '*' * 80
+      end
+    end
+
     if matched_route
+      p '+' * 80
+      p "Wild match for #{matched_route}"
+      p '+' * 80
       route_id = $wild_routes[matched_route]
       data = Mockdata.where(id: route_id,
                             mock_environment: env,
