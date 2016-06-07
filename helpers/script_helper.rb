@@ -66,20 +66,20 @@ module ApplicationHelper
           scripts.each do |script_name|
             row = Rubyscript.where(script_name: script_name.strip).first
             eval(row.script_body) unless row.blank?
-            p "Processed BEFORE script #{script_name}"
+            $logger.debug "Processed BEFORE script #{script_name}"
           end
         when :after
           scripts = @current_request_db_data[:after_script_name].split(/,/)
           scripts.each do |script_name|
             row = Rubyscript.where(script_name: script_name.strip).first
             eval(row.script_body) unless row.blank?
-            p "Processed AFTER #{script_name}"
+            $logger.debug "Processed AFTER #{script_name}"
           end
       end
     rescue => error
-      p '------ SCRIPT ERROR ----------'
-      p error.message
-      p '------------------------------'
+      $logger.error '------ SCRIPT ERROR ----------'
+      $logger.error error.message
+      $logger.error '------------------------------'
 
     end
   end

@@ -11,6 +11,8 @@ require 'logger'
 Logger.class_eval { alias :write :'<<' }
 $logger = ::Logger.new(::File.new("logs/app.log","a+"))
 
+$logger.level = Logger::DEBUG
+
 ENV['TEST_ENV']='production'
 ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
 # Once the delimiter is set then it can only be changed if all mock db mock_data_response_headers are updated to use the new header

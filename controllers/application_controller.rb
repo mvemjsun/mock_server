@@ -15,6 +15,10 @@ class ApplicationController < Sinatra::Base
 
 
   before do
+    $logger.debug '@' * 80
+    $logger.debug "Starting to process #{request.url}"
+    $logger.debug '@' * 80
+
     process_before_script
   end
 
