@@ -344,24 +344,36 @@ module ApplicationHelper
     else
       url = url_path
     end
-    p "Trying to find a wild route for request - #{request.url}..."
+    $logger.info "Trying to find a wild route for request - #{request.url}..."
     matched_route = wild_route_urls.find do |route|
-      p "Trying to match #{route}"
+      $logger.info "Trying to match #{route}"
       begin
         Timeout::timeout(1) do
-          Regexp.new(route).match url
+          match_data = Regexp.new(route).match url
+          if match_data
+            id = $wild_routes[route]
+            if request.request_method.upcase == mock_row_http_verb(id)
+              p ">>> Id of matched route is #{id}"
+              true
+            end
+          end
         end
       rescue => e
-        p '*' * 80
-        p "WARNING - timeout when matching route #{route} "
-        p '*' * 80
+        $logger.error '*' * 80
+        $logger.error "WARNING - timeout when matching route #{route} "
+        $logger.error '*' * 80
+        false
       end
     end
 
-    if matched_route
-      p '+' * 80
-      p "Wild match for #{matched_route}"
-      p '+' * 80
+    p '%' * 80
+    p matched_route
+    p '%' * 80
+
+    if matched_route && matched_route.length > 0
+      $logger.info '+' * 80
+      $logger.info "Wild match for #{matched_route}"
+      $logger.info '+' * 80
       route_id = $wild_routes[matched_route]
       data = Mockdata.where(id: route_id,
                             mock_environment: env,
@@ -369,6 +381,9 @@ module ApplicationHelper
                             mock_http_verb: method)
       return get_mock_data(data.first)
     else
+      $logger.info '+' * 80
+      $logger.info "No wild match for #{url}"
+      $logger.info '+' * 80
       return {:error => 'Not Found'}
     end
   end
@@ -379,6 +394,8 @@ module ApplicationHelper
   # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response, :id [,:error]
   #
   def get_mock_data(row)
+    p 'In get_mock_data(row)'
+    p row
     return_data = {}
     return_data[:mock_http_status] = row[:mock_http_status]
     response_body = row[:mock_data_response]
@@ -436,6 +453,20 @@ module ApplicationHelper
       end
     end
     return cookies
+  end
+
+  #
+  # Returns the HTTP verb for the mock data row id
+  # @return [String] HTTP verb or nil
+  #
+  def mock_row_http_verb(id)
+    data = Mockdata.where(id: id)
+    if data.any?
+      row = data.first
+      return row[:mock_http_verb].upcase
+    else
+      return nil
+    end
   end
 
 end
