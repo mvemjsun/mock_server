@@ -353,7 +353,6 @@ module ApplicationHelper
           if match_data
             id = $wild_routes[route]
             if request.request_method.upcase == mock_row_http_verb(id)
-              p ">>> Id of matched route is #{id}"
               true
             end
           end
