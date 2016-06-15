@@ -11,7 +11,7 @@ non-programmers who have got a basic knowledge of HTTP structure (headers, statu
 
 Images can be served using custom urls defined withing the mock server. Facility to upload the images is also
 provided. Mocking can becomes super easy if there are existing API endpoints that return data, existing API responses be cloned via the GET button on the home 
-page and then modified (as of now if the API that require no client configuration are supported for cloning).
+page and then modified (currently only GET requests are supported).
 
 The cloning feature can be used if there is existing data available that can be retrieved via HTTP GET requests, this can be quickly cloned into
 the mock database and then modified.
@@ -178,7 +178,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
 ### TODO's
     * Tests
     * Video mocking
-    * When cloning ,support for GET/POST with headers (currently limited to get with no headers) 
+    * Support more verbs when cloning (currently limited to GET) 
 
 ### Caveat
     * The API URLs have to be unique across hosts as the mock server maintains only the mock url and NOT the host.
