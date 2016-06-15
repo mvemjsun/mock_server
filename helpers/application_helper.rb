@@ -455,6 +455,26 @@ module ApplicationHelper
   end
 
   #
+  # Extract the clone request headers and send back the hash
+  # @return [Hash]
+  #
+  def extract_clone_request_headers
+    return_hash = {}
+    if params[:clone_headers] && params[:clone_headers].length > 0
+      clone_request_headers = params[:clone_headers]
+      header_lines = clone_request_headers.split(/\r\n/)
+      header_lines.each do |header_row|
+        if header_row.match(ENV['HEADER_DELIMITER']) # Has a valid delimited row
+          x_hdr, x_val = header_row.split(ENV['HEADER_DELIMITER'])
+          return_hash[x_hdr] = x_val
+        end
+      end
+    end
+    p return_hash
+    return return_hash
+  end
+
+  #
   # Returns the HTTP verb for the mock data row id
   # @return [String] HTTP verb or nil
   #

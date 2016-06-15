@@ -10,6 +10,20 @@ function showHideAdvancedOptions() {
         advButton.textContent = 'Show Advanced Options';
     }
 }
+
+function showCloneHeaders() {
+    advDiv = document.getElementById('clone_headers_div')
+    classname = advDiv.className
+    advButton = document.getElementById('clone_headers_button')
+    if (classname == 'hidden') {
+        advDiv.setAttribute('class','');
+        advButton.textContent = 'Hide Clone headers';
+    } else {
+        advDiv.setAttribute('class','hidden');
+        advButton.textContent = 'Supply Clone headers';
+    }
+}
+
 function validateJsonBody(input_area) {
     var contentType = $("#id_mock_content_type").val();
 

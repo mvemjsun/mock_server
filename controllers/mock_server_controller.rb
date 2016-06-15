@@ -229,7 +229,8 @@ class MockServerController < ApplicationController
     msg = nil
     if params[:mock_request_url].length > 0
       begin
-        response = HTTParty.get(params[:mock_request_url])
+        clone_headers = extract_clone_request_headers
+        response = HTTParty.get(params[:mock_request_url], headers: clone_headers)
       rescue => e
         # Ignore fatal URL responses
         msg = e.message
