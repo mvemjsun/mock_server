@@ -393,8 +393,6 @@ module ApplicationHelper
   # @return [Hash] response hash with keys :mock_http_status, :mock_data_response_headers, :mock_data_response, :id [,:error]
   #
   def get_mock_data(row)
-    p 'In get_mock_data(row)'
-    p row
     return_data = {}
     return_data[:mock_http_status] = row[:mock_http_status]
     response_body = row[:mock_data_response]
