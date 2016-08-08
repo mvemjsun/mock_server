@@ -43,5 +43,21 @@ class MockServerController < ApplicationController
     body = response[:body]
   end
 
+  #
+  # Activate replace data
+  #
+
+  post '/api/replace_data/activate/:id' do
+    status = Replacedata.new.activate_replace_mock_data(params['id'])
+    content_type 'text/plain'
+    if status
+      status = 200
+      body = 'Activated successfully'
+    else
+      status = 404
+      body = 'Could not activate'
+    end
+  end
+
 
 end

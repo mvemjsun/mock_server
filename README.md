@@ -175,6 +175,13 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    To set the latency back to 0 issue the call `http://localhost:9293/latency/0`
    
+   * Replace data rows in the DB can be activated using the endpoint
+   
+   The below will activate the replace data row with an id of 1. Any other rows that have the same replace string will be deactivated
+   ```
+   http://localhost:9293/mock/api/replace_data/activate/1
+   ```
+   
 ### TODO's
     * Tests
     * Video mocking
