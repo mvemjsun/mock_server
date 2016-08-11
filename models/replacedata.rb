@@ -26,9 +26,9 @@ class Replacedata < ActiveRecord::Base
       if replace_data.any?
         string_to_be_replaced = replace_data.first.replaced_string
         st1 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE replaced_string = ?")
-        st1.execute('0', string_to_be_replaced)
+        st1.execute('f', string_to_be_replaced)
         st2 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE id = ?")
-        st2.execute('1',id)
+        st2.execute('t',id)
       else
         found = false
       end
