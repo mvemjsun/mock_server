@@ -366,7 +366,7 @@ module ApplicationHelper
     end
 
     p '%' * 80
-    p matched_route
+    p "Matched route #{matched_route}"
     p '%' * 80
 
     if matched_route && matched_route.length > 0
@@ -378,7 +378,11 @@ module ApplicationHelper
                             mock_environment: env,
                             mock_state: true,
                             mock_http_verb: method)
-      return get_mock_data(data.first)
+      if data.any?
+        return get_mock_data(data.first)
+      else
+        return {:error => 'Not Found. Are you trying to accessing a route that is not active ?'}
+      end
     else
       $logger.info '+' * 80
       $logger.info "No wild match for #{url}"

@@ -70,4 +70,22 @@ class Mockdata < ActiveRecord::Base
     end
   end
 
+  def activate_mock_data(id)
+    found = true
+    env = ENV['TEST_ENV']
+    Replacedata.transaction do
+      mock_data = Mockdata.where(id: id)
+      if mock_data.any?
+        mock_url = mock_data.first.mock_request_url
+        st1 = ActiveRecord::Base.connection.raw_connection.prepare('UPDATE MOCKDATA SET mock_state = ? WHERE mock_request_url = ? and mock_environment = ?')
+        st1.execute('f', mock_url,env)
+        st2 = ActiveRecord::Base.connection.raw_connection.prepare('UPDATE MOCKDATA SET mock_state = ? WHERE id = ?')
+        st2.execute('t',id)
+      else
+        found = false
+      end
+    end
+    return found
+  end
+
 end
