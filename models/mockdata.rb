@@ -81,6 +81,9 @@ class Mockdata < ActiveRecord::Base
         st1.execute('f', mock_url,env)
         st2 = ActiveRecord::Base.connection.raw_connection.prepare('UPDATE MOCKDATA SET mock_state = ? WHERE id = ?')
         st2.execute('t',id)
+        # Refresh wildcard cache
+        $wild_routes = WildRoutes.get_wild_routes_if_any if mock_url.index('*')
+        p $wild_routes
       else
         found = false
       end

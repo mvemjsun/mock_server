@@ -22,6 +22,8 @@ module ApplicationHelper
       if mockData.any?
         mockData.first.mock_state = false
         mockData.first.save
+        # Refresh wildcard cache
+        $wild_routes = WildRoutes.get_wild_routes_if_any
         return {status_code: 200, body: 'Deactivated successfully.'}
       end
     else
