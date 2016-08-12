@@ -96,6 +96,7 @@ class MockServerController < ApplicationController
         url_path = (params[:mock_request_url].strip).sub(/^\//, '')
         url_query=nil
       else
+        # TODO Validate URI before processing !!
         url_path = URI::parse(params[:mock_request_url].strip).path.sub(/^\//, '')
         url_query = URI::parse(params[:mock_request_url].strip).query
       end

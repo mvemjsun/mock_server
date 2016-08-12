@@ -91,4 +91,9 @@ class Mockdata < ActiveRecord::Base
     return found
   end
 
+  def reset_served_counts
+    st1 = ActiveRecord::Base.connection.raw_connection.prepare('UPDATE MOCKDATA SET mock_served_times = ?')
+    st1.execute(0)
+  end
+
 end

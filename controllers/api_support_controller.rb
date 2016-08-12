@@ -59,5 +59,12 @@ class MockServerController < ApplicationController
     end
   end
 
+  post '/api/reset' do
+    Mockdata.new.reset_served_counts
+    content_type 'text/plain'
+    status = 200
+    body = 'Served counts reset.'
+  end
+
 
 end

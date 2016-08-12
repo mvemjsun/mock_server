@@ -157,8 +157,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    ```
       # To activate a mock url with Id = 1
-      # http://localhost:9293/mock/api/activate/1
-      
+      # http://localhost:9293/mock/api/activate/1      
       # To deactivate a mock url with id = 1
       # http://localhost:9293/mock/api/deactivate/1
    ```
@@ -180,6 +179,12 @@ Images can be uploaded in case you want to mock url's that end with image names.
    The below will activate the replace data row with an id of 1. Any other rows that have the same replace string will be deactivated
    ```
    http://localhost:9293/mock/api/replace_data/activate/1
+   ```
+   
+   * Reset mock url's served count. The below url will set the served counts to 0 for all the mock urls in the database. This could be ideally be done at the start of a test.
+   
+   ```
+   http://localhost:9293/mock/api/reset
    ```
    
 ### TODO's
