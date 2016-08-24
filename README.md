@@ -40,6 +40,9 @@ Note 1: To start the server on any other port apart from `9293`, change the port
 The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` followed by `.save mockserver.db` on the sqlite3 prompt to create an empty DB in the `/db` folder Then issue
 `rake db:migrate` from the root project folder. This will create the required DB tables in sqlite. Please ensure that you BACK UP any exiting DB files is this command is issued multiple times.
 
+Note 2: The script `./start-mock.sh` kills a process that runs at port `9293` before attempting to start the server again. Change the script if you wish to run 
+the server at a different port in the `config.ru` file (line 1).
+
 ```
 db mvemjsun$ sqlite3 mockserver.db
 SQLite version 3.11.1 2016-03-03 16:17:53
