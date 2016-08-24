@@ -196,7 +196,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
     * Support more verbs when cloning (currently limited to GET) 
 
 ### Caveat
-    * The API URLs have to be unique across hosts as the mock server maintains only the mock url and NOT the host.
+    * The API URLs have to be unique across hosts as the mock server maintains only the mock url path and NOT the host part of the url.
     * The tool and framework has been setup to work against a single client and does not guarantee behaviour when used
       concurrently by more than one user. 
 
