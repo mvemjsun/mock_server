@@ -50,6 +50,15 @@ class CreateMockdata < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :httprequestlogs do |t|
+      t.string :request_http_verb
+      t.string :request_url
+      t.string :request_query_string
+      t.text :request_body, limit: 1000000
+      t.text :request_headers
+      t.string :request_environment
+    end
+
     execute <<-SQL
       CREATE UNIQUE INDEX "unique_replace_data"
       ON "REPLACEDATA" ("replaced_string", "mock_environment", "replace_state")
@@ -63,5 +72,6 @@ class CreateMockdata < ActiveRecord::Migration
     drop_table :missed_requests
     drop_table :replacedata
     drop_table :rubyscript
+    drop_table :httprequestlogs
   end
 end
