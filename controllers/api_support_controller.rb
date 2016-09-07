@@ -66,5 +66,12 @@ class MockServerController < ApplicationController
     body = 'Served counts reset.'
   end
 
+  post '/api/reset/requestlog' do
+    Httprequestlog.new.clear_request_log
+    content_type 'text/plain'
+    status = 200
+    body = 'Request log has been cleared.'
+  end
+
 
 end

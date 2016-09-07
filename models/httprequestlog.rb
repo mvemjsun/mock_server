@@ -31,6 +31,13 @@ class Httprequestlog < ActiveRecord::Base
     self.request_environment = ENV['TEST_ENV']
     self.request_http_verb = self.request_http_verb.upcase
   end
+
+  #
+  # Deletes all rows from the httprequestlogs table
+  #
+  def clear_request_log
+    ActiveRecord::Base.connection.raw_connection.execute('DELETE FROM HTTPREQUESTLOGS')
+  end
 end
 
 
