@@ -490,4 +490,25 @@ module ApplicationHelper
     end
   end
 
+  #
+  # Validate date time in yyyy-mm-dd hh:mm:ss format
+  # @param [String] date_time_string string in yyyy-mm-dd hh:mm:ss format
+  # @return [Boolean] true or false
+  #
+  def valid_datetime_string?(datetime_string)
+    regexp = /^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) ((([01]\d|2[0-3]):)([0-5]\d):)([0-5]\d)$/
+    valid_date = true
+
+    if regexp.match(datetime_string)
+      begin
+        Time.parse(datetime_string)
+      rescue ArgumentError
+        valid_date = false
+      end
+    else
+      valid_date = false
+    end
+    return valid_date
+  end
+
 end

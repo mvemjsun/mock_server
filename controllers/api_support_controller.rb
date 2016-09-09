@@ -11,7 +11,7 @@ class MockServerController < ApplicationController
                                :mock_request_url,
                                :mock_http_verb,
                                :mock_data_response_headers,
-                               :mock_state,:mock_environment,
+                               :mock_state, :mock_environment,
                                :mock_content_type,
                                :mock_served_times).where(id: params[:id])
     if (params[:id].to_i.is_a? Fixnum) && (mockData.any?)
@@ -77,17 +77,25 @@ class MockServerController < ApplicationController
   # Get request logs for a given time range
   #
   get '/api/requestlog/:from_datetime/:to_datetime' do
-    response =  Httprequestlog.get_request_log(params[:from_datetime],params[:to_datetime])
-    content_type 'text/json'
-    status = 200
-    body = response
+
+    if (valid_datetime_string?(params[:from_datetime]) && valid_datetime_string?(params[:to_datetime]))
+      response = Httprequestlog.get_request_log(params[:from_datetime], params[:to_datetime])
+      content_type 'text/json'
+      status = 200
+      body = response
+    else
+      content_type 'text/json'
+      status = 400
+      body = '{"message" : "Invalid dates supplied."}'
+    end
+
   end
 
   #
   # Get recent request logs
   #
   get '/api/requestlog/recent' do
-    response =  Httprequestlog.get_request_log
+    response = Httprequestlog.get_request_log
     content_type 'text/json'
     status = 200
     body = response
