@@ -67,10 +67,30 @@ class MockServerController < ApplicationController
   end
 
   post '/api/reset/requestlog' do
-    Httprequestlog.new.clear_request_log
+    Httprequestlog.clear_request_log
     content_type 'text/plain'
     status = 200
     body = 'Request log has been cleared.'
+  end
+
+  #
+  # Get request logs for a given time range
+  #
+  get '/api/requestlog/:from_datetime/:to_datetime' do
+    response =  Httprequestlog.get_request_log(params[:from_datetime],params[:to_datetime])
+    content_type 'text/json'
+    status = 200
+    body = response
+  end
+
+  #
+  # Get recent request logs
+  #
+  get '/api/requestlog/recent' do
+    response =  Httprequestlog.get_request_log
+    content_type 'text/json'
+    status = 200
+    body = response
   end
 
 

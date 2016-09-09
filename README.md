@@ -89,7 +89,7 @@ CREATE UNIQUE INDEX "unique_mock_data"
 
 
 ;
-CREATE TABLE "httprequestlogs" (
+CREATE TABLE `httprequestlogs` (
 	`request_http_verb`	TEXT,
 	`request_url`	TEXT,
 	`request_body`	TEXT,
@@ -225,6 +225,16 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    ```
    http://localhost:9293/mock/api/reset
+   ```
+   
+   * Retrieve recent data from `httpRequestLog` table
+   ```
+   http://localhost:9293/mock/api/requestlog/recent
+   ```
+   
+   * Retrieve `httpRequestLog` table data within a time range
+   ```
+   http://localhost:9293/mock/api/requestlog/2016-09-09 11:18:00/2016-09-09 11:20:23
    ```
    
    * Delete all data from the `httpRequestLog` table

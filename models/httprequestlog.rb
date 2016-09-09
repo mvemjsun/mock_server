@@ -30,13 +30,32 @@ class Httprequestlog < ActiveRecord::Base
     end
     self.request_environment = ENV['TEST_ENV']
     self.request_http_verb = self.request_http_verb.upcase
+    self.created_at = Time.new.strftime('%Y-%m-%d %H:%M:%S')
   end
 
   #
   # Deletes all rows from the httprequestlogs table
   #
-  def clear_request_log
+  def self.clear_request_log
     ActiveRecord::Base.connection.raw_connection.execute('DELETE FROM HTTPREQUESTLOGS')
+  end
+
+  #
+  # Get the request logs from a start date time to the end date time. If no end datetime is specified the current
+  # date time is assumed. If no start time is provided then time 10 minutes ago is taken.
+  # @param [String,[String]] start_datetime and end_datetime in format ('%Y-%m-%d %H:%M:%S', ...)
+  # @return [JSON] request log data in JSON format or empty JSON if no data
+  #
+  def self.get_request_log(start_datetime=(Time.now - (600)).strftime('%Y-%m-%d %H:%M:%S'),
+                           end_datetime=Time.new.strftime('%Y-%m-%d %H:%M:%S'))
+
+    data = where("created_at >= :start_datetime AND created_at <= :end_datetime",
+                      {start_datetime: start_datetime, end_datetime: end_datetime})
+    if data.any?
+      return data.to_json
+    else
+      return '{"message" : "No request logs found"}'
+    end
   end
 end
 
