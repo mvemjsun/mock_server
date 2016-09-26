@@ -234,7 +234,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    * Retrieve `httpRequestLog` table data within a time range
    ```
-   http://localhost:9293/mock/api/requestlog/2016-09-09 11:18:00/2016-09-09 11:20:23
+   http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11
    ```
    
    * Delete all data from the `httpRequestLog` table
