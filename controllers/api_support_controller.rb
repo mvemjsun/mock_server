@@ -75,18 +75,28 @@ class MockServerController < ApplicationController
 
   #
   # Get request logs for a given time range
+  # the rage is specified in the `from` and `to` query parameters
+  # @example /mock/api/requestlog/range?from=2016-09-26%2016:31:00&to=2016-09-26%2016:32:11
   #
-  get '/api/requestlog/:from_datetime/:to_datetime' do
+  get '/api/requestlog/range' do
 
-    if (valid_datetime_string?(params[:from_datetime]) && valid_datetime_string?(params[:to_datetime]))
-      response = Httprequestlog.get_request_log(params[:from_datetime], params[:to_datetime])
-      content_type 'text/json'
-      status = 200
-      body = response
+    if (params.has_key?('from') && params.has_key?('to'))
+      if (valid_datetime_string?(params['from']) && valid_datetime_string?(params['to']))
+        p params['from']
+        p params['to']
+        response = Httprequestlog.get_request_log(start_datetime=params['from'], end_datetime=params['to'])
+        content_type 'text/json'
+        status = 200
+        body = response
+      else
+        content_type 'text/json'
+        status = 400
+        body = '{"message" : "Invalid dates supplied."}'
+      end
     else
       content_type 'text/json'
       status = 400
-      body = '{"message" : "Invalid dates supplied."}'
+      body = '{"message" : "Both from and to date need to be supplied as query parameters."}'
     end
 
   end
