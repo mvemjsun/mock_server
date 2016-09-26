@@ -51,10 +51,10 @@ class MockServerController < ApplicationController
     status = Replacedata.new.activate_replace_mock_data(params['id'])
     content_type 'text/plain'
     if status
-      status = 200
+      status 200
       body = 'Activated successfully'
     else
-      status = 404
+      status 404
       body = 'Could not activate'
     end
   end
@@ -62,14 +62,14 @@ class MockServerController < ApplicationController
   post '/api/reset' do
     Mockdata.new.reset_served_counts
     content_type 'text/plain'
-    status = 200
+    status 200
     body = 'Served counts reset.'
   end
 
   post '/api/reset/requestlog' do
     Httprequestlog.clear_request_log
     content_type 'text/plain'
-    status = 200
+    status 200
     body = 'Request log has been cleared.'
   end
 
@@ -82,20 +82,29 @@ class MockServerController < ApplicationController
 
     if (params.has_key?('from') && params.has_key?('to'))
       if (valid_datetime_string?(params['from']) && valid_datetime_string?(params['to']))
-        p params['from']
-        p params['to']
-        response = Httprequestlog.get_request_log(start_datetime=params['from'], end_datetime=params['to'])
+        if params.has_key? 'matching'
+          matching_string = params['matching']
+        else
+          matching_string = nil
+        end
+        response = Httprequestlog.get_request_log(start_datetime=params['from'],
+                                                  end_datetime=params['to'],
+                                                  matching=matching_string)
         content_type 'text/json'
-        status = 200
+        if JSON.parse(response).first.has_key? 'message'
+          status 404
+        else
+          status 200
+        end
         body = response
       else
         content_type 'text/json'
-        status = 400
+        status 400
         body = '{"message" : "Invalid dates supplied."}'
       end
     else
       content_type 'text/json'
-      status = 400
+      status 400
       body = '{"message" : "Both from and to date need to be supplied as query parameters."}'
     end
 
@@ -107,7 +116,7 @@ class MockServerController < ApplicationController
   get '/api/requestlog/recent' do
     response = Httprequestlog.get_request_log
     content_type 'text/json'
-    status = 200
+    status 200
     body = response
   end
 

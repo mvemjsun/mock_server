@@ -234,8 +234,9 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    * Retrieve `httpRequestLog` table data within a time range
    ```
-   http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11
+   http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>]
    ```
+   matching query parameter is optional, could have a value like `matching=/account`
    
    * Delete all data from the `httpRequestLog` table
    ```

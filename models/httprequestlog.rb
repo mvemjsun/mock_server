@@ -17,7 +17,7 @@ class Httprequestlog < ActiveRecord::Base
     self.request_query_string = request.env['QUERY_STRING']
 
     output = ''
-    request.env.each do |k,v|
+    request.env.each do |k, v|
       output << "#{k} => #{v} \n" unless k.match(/[rack,sinatra]/)
     end
     self.request_headers = output
@@ -47,14 +47,22 @@ class Httprequestlog < ActiveRecord::Base
   # @return [JSON] request log data in JSON format or empty JSON if no data
   #
   def self.get_request_log(start_datetime=(Time.now - (600)).strftime('%Y-%m-%d %H:%M:%S'),
-                           end_datetime=Time.new.strftime('%Y-%m-%d %H:%M:%S'))
+      end_datetime=Time.new.strftime('%Y-%m-%d %H:%M:%S'),
+      matching=nil
+  )
+    if matching.nil?
+      data = where("created_at >= :start_datetime AND created_at <= :end_datetime",
+                   {start_datetime: start_datetime, end_datetime: end_datetime})
+    else
+      match_string = '%' + matching + '%'
+      data = where("(created_at >= :start_datetime AND created_at <= :end_datetime) AND request_url like :match_string",
+                   {start_datetime: start_datetime, end_datetime: end_datetime, match_string: match_string})
+    end
 
-    data = where("created_at >= :start_datetime AND created_at <= :end_datetime",
-                      {start_datetime: start_datetime, end_datetime: end_datetime})
     if data.any?
       return data.to_json
     else
-      return '{"message" : "No request logs found"}'
+      return '[{"message" : "No request logs found"}]'
     end
   end
 end
