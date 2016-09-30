@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'uri'
+
 class Httprequestlog < ActiveRecord::Base
 
   validates :request_http_verb, presence: true
@@ -24,7 +26,7 @@ class Httprequestlog < ActiveRecord::Base
 
     body_text = request.body.read
     if body_text && body_text.length > 0
-      self.request_body = body_text
+      self.request_body = URI.decode(body_text)
     else
       self.request_body = ''
     end
