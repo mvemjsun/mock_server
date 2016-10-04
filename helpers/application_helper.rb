@@ -300,6 +300,7 @@ module ApplicationHelper
   end
 
   def process_http_verb
+    log_incoming_request if ENV['REQUEST_LOGGING']
     url = request.fullpath.sub!(/^\//, '')
     @mock_response = process_url(url, request.request_method, ENV['TEST_ENV'])
 

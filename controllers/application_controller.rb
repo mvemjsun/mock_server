@@ -15,7 +15,6 @@ class ApplicationController < Sinatra::Base
 
 
   before do
-    log_incoming_request if ENV['REQUEST_LOGGING']
     process_before_script
   end
 

@@ -79,7 +79,6 @@ class MockServerController < ApplicationController
   # @example /mock/api/requestlog/range?from=2016-09-26%2016:31:00&to=2016-09-26%2016:32:11
   #
   get '/api/requestlog/range' do
-
     if (params.has_key?('from') && params.has_key?('to'))
       if (valid_datetime_string?(params['from']) && valid_datetime_string?(params['to']))
         if params.has_key? 'matching'

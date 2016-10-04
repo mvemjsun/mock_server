@@ -26,7 +26,12 @@ class Httprequestlog < ActiveRecord::Base
 
     body_text = request.body.read
     if body_text && body_text.length > 0
-      self.request_body = URI.decode(body_text)
+      begin
+        self.request_body = URI.decode(body_text)
+      rescue
+        # Hack for now to log body any way
+        self.request_body = body_text
+      end
     else
       self.request_body = ''
     end
