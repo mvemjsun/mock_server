@@ -19,4 +19,5 @@ then
   echo "Mock server started"
 else
   echo "Failed to start mock server"
+  exit 1
 fi
