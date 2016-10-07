@@ -13,11 +13,14 @@ fi
 echo "Starting mock server now"
 sleep 2
 rackup > /dev/null 2>&1 &
+sleep 5
 
-if [ $? == '0' ]
+PID=`lsof -i:9293 | grep ruby | grep -v grep | awk '{print $2}'`
+
+if [[ -z "$PID" ]]
 then
-  echo "Mock server started"
-else
   echo "Failed to start mock server"
   exit 1
+else
+  echo "Mock server started"
 fi
