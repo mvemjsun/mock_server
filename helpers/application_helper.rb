@@ -350,7 +350,7 @@ module ApplicationHelper
       $logger.info "Trying to match #{route}"
       begin
         Timeout::timeout(1) do
-          match_data = Regexp.new(route).match url
+          match_data = Regexp.new(route).match "#{request.request_method.upcase}#{ENV['HEADER_DELIMITER']}#{url}"
           if match_data
             id = $wild_routes[route]
             if request.request_method.upcase == mock_row_http_verb(id)
