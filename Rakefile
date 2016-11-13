@@ -4,15 +4,20 @@ require 'logger'
 require 'cucumber/rake/task'
 require 'sqlite3'
 
-namespace :db do
+if ENV.has_key? 'ENVIRONMENT'
+  ENV['ENVIRONMENT'] = 'test'
+else
+  ENV['ENVIRONMENT'] = 'development'
+end
 
+namespace :db do
   def create_my_database
     p "Create DB"
   end
 
   task :configure do
     p "Task Reading configuration ..."
-    @config = YAML.load_file('config/database.yml')['development']
+    @config = YAML.load_file('config/database.yml')[ENV['ENVIRONMENT']]
   end
 
   task :connect_to_db do

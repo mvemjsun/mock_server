@@ -7,11 +7,11 @@
     %div{class: 'row'}
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label', for: 'mock_name'} Mock Request Name
-            %input{type: 'text', class: 'form-control', id: 'autocomplete', name: 'mock_name', placeholder: 'Mock request name is required', value: "#{mock_data.nil? ? nil : mock_data.mock_name }", autocomplete: 'off'}
+            %input{type: 'text', class: 'form-control', id: 'mock_name', name: 'mock_name', placeholder: 'Mock request name is required', value: "#{mock_data.nil? ? nil : mock_data.mock_name }", autocomplete: 'off'}
             %label{class: 'control-label'}
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_http_status'} Response HTTP Status Code
-            %input{type: 'text', class: 'form-control', name: 'mock_http_status', placeholder: '1xx, 2xx, 3xx, 4xx or 5xx', value: "#{mock_data.nil? ? nil : mock_data.mock_http_status }"}
+            %input{type: 'text', class: 'form-control', id: 'mock_http_status', name: 'mock_http_status', placeholder: '1xx, 2xx, 3xx, 4xx or 5xx', value: "#{mock_data.nil? ? nil : mock_data.mock_http_status }"}
         %div{class: 'form-group col-md-3'}
             %label{class: 'control-label',for: 'mock_state'} Mock State
             %div{class: 'checkbox'}
@@ -34,7 +34,7 @@
         %div{class: 'row hidden' ,id: 'clone_headers_div'}
             %div{class: 'form-group col-md-3'}
                 %label{class: 'control-label',for: 'clone_headers'} Clone request Header(s) delimited by #{ENV['HEADER_DELIMITER']}
-                %textarea{class: 'form-control', name: 'clone_headers', rows: 4, placeholder: 'x-header :==: header_value (one in each line)'}
+                %textarea{class: 'form-control', id: 'clone_headers', name: 'clone_headers', rows: 4, placeholder: 'x-header :==: header_value (one in each line)'}
     %div{class: 'row'}
         %div{class: 'form-group col-md-2'}
             %label{class: 'control-label',for: 'mock_http_verb'} HTTP Verb
@@ -60,7 +60,7 @@
                 %option{id: 'image_jpeg'} image/jpeg
         %div{class: 'form-group col-md-6'}
             %label{class: 'control-label',for: 'mock_data_response_headers'} Other Delimited (#{ENV['HEADER_DELIMITER']})Response Header(s)
-            %textarea{class: 'form-control', name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? 'X-mocked'+ENV['HEADER_DELIMITER']+'True' + "\r\n"+'Cache-Control'+ENV['HEADER_DELIMITER']+'max-age=0, no-cache' : mock_data.mock_data_response_headers}
+            %textarea{class: 'form-control', id: 'mock_data_response_headers',name: 'mock_data_response_headers', rows: 8}#{mock_data.nil? ? 'X-mocked'+ENV['HEADER_DELIMITER']+'True' + "\r\n"+'Cache-Control'+ENV['HEADER_DELIMITER']+'max-age=0, no-cache' : mock_data.mock_data_response_headers}
     %div{class: 'row'}
         %div{class: 'form-group col-md-12'}
             %button{type: 'button', id: 'advanced_button' ,class: 'btn btn-primary', onclick: 'showHideAdvancedOptions()'} Show Advanced Options
@@ -73,7 +73,7 @@
                             Enable/Disable Before Script
                 %div{class: 'form-group col-md-4'}
                     %label{class: 'control-label', for: 'before_script_name'} @Before Script Name(s) delimited by comma
-                    %input{type: 'text', class: 'form-control', name: 'before_script_name', placeholder: 'script1.rb[, script2.rb]', value: "#{mock_data.nil? ? nil : mock_data.before_script_name }"}
+                    %input{type: 'text', class: 'form-control',id: 'before_script_name', name: 'before_script_name', placeholder: 'script1.rb[, script2.rb]', value: "#{mock_data.nil? ? nil : mock_data.before_script_name }"}
                 %div{class: 'form-group col-md-2'}
                     %label{class: 'control-label',for: 'has_after_script'} After Script Status
                     %div{class: 'checkbox'}
@@ -82,10 +82,10 @@
                             Enable/Disable After Script
                 %div{class: 'form-group col-md-4'}
                     %label{class: 'control-label', for: 'after_script_name'} @After Script Name(s) delimited by comma
-                    %input{type: 'text', class: 'form-control', name: 'after_script_name', placeholder: 'script3.rb[, script4.rb]', value: "#{mock_data.nil? ? nil : mock_data.after_script_name }"}
+                    %input{type: 'text', class: 'form-control',id: 'after_script_name', name: 'after_script_name', placeholder: 'script3.rb[, script4.rb]', value: "#{mock_data.nil? ? nil : mock_data.after_script_name }"}
                 %div{class: 'form-group col-md-6'}
                     %label{class: 'control-label',for: 'mock_cookie'} Cookie Data
-                    %textarea{class: 'form-control', name: 'mock_cookie', rows: 4,placeholder: "<validCookieName> <valueString> (one in each line. Name followed by space.)"}#{mock_data.nil? ? '' : mock_data.mock_cookie}
+                    %textarea{class: 'form-control', id: 'mock_cookie', name: 'mock_cookie', rows: 4,placeholder: "<validCookieName> <valueString> (one in each line. Name followed by space.)"}#{mock_data.nil? ? '' : mock_data.mock_cookie}
 
     %div{class: 'row'}
         %div{class: 'form-group col-md-12'}

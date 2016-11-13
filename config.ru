@@ -13,6 +13,7 @@ $logger = ::Logger.new(::File.new("logs/app.log","a+"))
 
 $logger.level = Logger::DEBUG
 
+ENV['ENVIRONMENT'] ||= 'development'
 ENV['REQUEST_LOGGING']="1"
 ENV['TEST_ENV']='production'
 ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
@@ -25,7 +26,7 @@ ENV['LATENCY'] = '0'
 ActiveRecord::Base.logger = Logger.new('logs/app.log')
 ActiveRecord::Base.logger.level = Logger::DEBUG
 
-db = YAML.load_file(File.expand_path('./config/database.yml'))['development']
+db = YAML.load_file(File.expand_path('./config/database.yml'))[ENV['ENVIRONMENT']]
 ActiveRecord::Base.establish_connection db
 
 Dir.glob('./{helpers,controllers,models}/*.rb').each do |file|

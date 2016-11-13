@@ -12,3 +12,9 @@ example_mysql:
   password: my_password
   host: 127.0.0.1
   port: 3306
+
+test:
+  adapter: sqlite3
+  database: db/mockserver_test.db
+  pool: 5
+  timeout: 5000

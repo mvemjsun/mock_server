@@ -7,3 +7,9 @@ gem 'activemodel'
 gem 'haml'
 gem 'httparty'
 gem 'sinatra-contrib'
+
+group :test do
+  gem 'rspec'
+  gem 'capybara'
+  gem 'capybara-webkit'
+end
