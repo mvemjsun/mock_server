@@ -1,5 +1,3 @@
-p 'Loading spec_helper'
-
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
