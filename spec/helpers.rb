@@ -51,4 +51,17 @@ module TestHelper
     data.merge! options
     Mockdata.create(data)
   end
+
+  def self.insert_row_into_replace_data(options={})
+    data = {
+        replace_name: 'Replace Data',
+        replaced_string: 'hello to me',
+        replacing_string: 'hola to me',
+        is_regexp: false,
+        replace_state: true,
+        mock_environment: 'production'
+    }
+    data.merge! options
+    Replacedata.create(data)
+  end
 end

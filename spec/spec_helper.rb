@@ -8,6 +8,7 @@ require 'active_record'
 require 'httparty'
 
 require_relative '../models/mockdata'
+require_relative '../models/replacedata'
 require_relative '../spec/helpers'
 
 Capybara.default_driver = :webkit

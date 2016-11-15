@@ -26,7 +26,6 @@ describe 'Mock server' do
     expect(HTTParty.get('http://localhost:9293/hello/world').headers["content-type"]).to eq('text/plain;charset=utf-8')
   end
 
-
   it 'should serve the correct application/json content-type header' do
     TestHelper.insert_mock_row_into_db({mock_name: 'A MOCK GET REQUEST', mock_request_url: 'hello/world', mock_data_response: '{}', mock_content_type: 'application/json;charset=utf-8'})
     expect(HTTParty.get('http://localhost:9293/hello/world').headers["content-type"]).to eq('application/json;charset=utf-8')
@@ -36,6 +35,13 @@ describe 'Mock server' do
   it 'should return http 404 when a url is disabled' do
     TestHelper.insert_mock_row_into_db({mock_name: 'A MOCK GET REQUEST', mock_request_url: 'hello/world',mock_state: false, mock_data_response: 'Hi'})
     expect(HTTParty.get('http://localhost:9293/hello/world').code).to eq(404)
+  end
+
+  it 'should correctly replace the response body with the replace data' do
+    TestHelper.insert_mock_row_into_db({mock_name: 'A MOCK GET REQUEST', mock_request_url: 'hello/world', mock_data_response: 'hello to me'})
+    TestHelper.insert_row_into_replace_data({replaced_string: 'hello to me',
+                                             replacing_string: 'hola to me',})
+    expect(HTTParty.get('http://localhost:9293/hello/world').body).to eq('hola to me')
   end
 
 end
