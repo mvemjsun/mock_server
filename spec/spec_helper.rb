@@ -5,6 +5,8 @@ require 'capybara-webkit'
 require 'database_cleaner'
 require 'yaml'
 require 'active_record'
+require 'httparty'
+
 require_relative '../models/mockdata'
 require_relative '../spec/helpers'
 

@@ -27,7 +27,7 @@ module TestHelper
             mock_http_status: 200,
             mock_enabled: true,
             mock_request_url: 'a/test/url',
-            mock_http_verb: 'POST',
+            mock_http_verb: 'GET',
             mock_test_environment: 'production',
             mock_content_type: 'text/plain',
             mock_http_body: 'mock body'
@@ -39,7 +39,7 @@ module TestHelper
         mock_name: 'Test mock 1',
         mock_http_status: 200,
         mock_request_url: 'a/test/url',
-        mock_http_verb: 'POST',
+        mock_http_verb: 'GET',
         mock_data_response_headers: 'x:==:y',
         mock_state: true,
         mock_environment: 'production',

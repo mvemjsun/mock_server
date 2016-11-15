@@ -57,6 +57,7 @@ class CreateMockdata < ActiveRecord::Migration
       t.text :request_body, limit: 1000000
       t.text :request_headers
       t.string :request_environment
+      t.timestamps
     end
 
     execute <<-SQL
