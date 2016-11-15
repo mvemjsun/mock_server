@@ -40,7 +40,7 @@ module TestHelper
         mock_http_status: 200,
         mock_request_url: 'a/test/url',
         mock_http_verb: 'GET',
-        mock_data_response_headers: 'x:==:y',
+        mock_data_response_headers: 'x:==:y', # Delimiter is :==:
         mock_state: true,
         mock_environment: 'production',
         mock_content_type: 'text/plain',
