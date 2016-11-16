@@ -242,9 +242,15 @@ Images can be uploaded in case you want to mock url's that end with image names.
    ```
    http://localhost:9293/mock/api/reset/requestlog
    ```
+### Tests 
+   
+   There is some coverage for the main features of the mock server around creating mocks and search. The tests are run using `RSpec` & `Capybara` webkit driver.
+   To run the tests ensure that you set the environment variale `ENVIRONMENT` and set it to `test`. Run the rake migration to create the test database using
+   the command `ENVIRONMENT='test' rake db:migrate`. Then start the mock server using `ENVIRONMENT='test' sh ./start-mock.sh` from the project root.
+   
+   The tests can then be run using the command `rspec` from the project root.
    
 ### TODO's
-    * Tests
     * Video mocking
     * Support more verbs when cloning (currently limited to GET) 
 
