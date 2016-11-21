@@ -6,7 +6,7 @@ describe 'The mock/create page' do
     visit('/mock/create')
   end
 
-  it 'allows user to create mock data without advanced options', :type => :feature, :js => true do
+  it 'allows user to create mock data without advanced options' do
     TestHelper.create_test_mock TestHelper.mockData
     TestHelper.submit_form_to_create_update_mock_data
     expect(page).to have_content('Mock Data - CREATED')
