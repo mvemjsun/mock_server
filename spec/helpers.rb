@@ -46,10 +46,16 @@ module TestHelper
         mock_content_type: 'text/plain',
         mock_data_response: 'test',
         mock_served_times: 0,
-        profile_name: ''
+        profile_name: '',
     }
     data.merge! options
-    Mockdata.create(data)
+    begin
+      Mockdata.create(data)
+    rescue => e
+      p e.message
+      raise 'Error creating mock data'
+    end
+
   end
 
   def self.insert_row_into_replace_data(options={})
@@ -62,6 +68,11 @@ module TestHelper
         mock_environment: 'production'
     }
     data.merge! options
-    Replacedata.create(data)
+    begin
+      Replacedata.create(data)
+    rescue => e
+      p e.message
+      raise 'Error creating replace data'
+    end
   end
 end
