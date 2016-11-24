@@ -90,7 +90,7 @@
     %div{class: 'row'}
         %div{class: 'form-group col-md-12'}
             %label{class: 'control-label',for: 'mock_data_response'} Response Body
-            %textarea{id: 'json_body', class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 30, onchange: 'validateJsonBody(this)'}#{mock_data.nil? ? nil : mock_data.mock_data_response }
+            %textarea{id: 'json_body', class: 'form-control', name: 'mock_data_response', placeholder: 'Response Body', rows: 30, onchange: 'validateJsonBody(this)'}#{mock_data.nil? ? nil : h(mock_data.mock_data_response) }
     %div{class: 'row hidden'}
         %input{type: 'text', name: 'id', value: "#{mock_data.nil? ? nil : (mock_data.id) }"}
     %button(type="submit" class="btn btn-primary btn-lg btn-block")Create/Update Mock Data
