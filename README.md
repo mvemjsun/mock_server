@@ -7,7 +7,7 @@ The core idea behind this tool is having the ability to quickly and easily creat
  test client devices against a mock server both manually and by using automated tests. All this is 
 achieved by an easy to use user interface that allows a user to specify a URL to mock, set the return HTTP status, headers and last 
 but not the least the response body. Mocking bird is slightly different from conventional mocking frameworks in that most of its features can be used even by
-non-programmers who have got a basic knowledge of HTTP structure (headers, status codes & body). 
+non-programmers who have got a basic knowledge of HTTP structure (headers, status codes & body); **also mocks need not be programmed into a language specific implementation.** 
 
 The requests to the mock server can also be logged into the mock database if the environment variable `REQUEST_LOGGING` has been defined. 
 The logs can also be cleared using an api call (see API support section below)
@@ -155,7 +155,10 @@ Images can be uploaded in case you want to mock url's that end with image names.
    * If a mock url is set up with a wildcard character `*` in it then the mock server will attempt to match against the "wild" route if no exact match is found. For example if a mock URL
    is set up as `/say/*/to/*` then this will match `/say/hello/to/tom` or `/say/hola/to/rafael`.
    
-   * Similarly if a mock URL is set up as `/get/me/item/*` will match `/get/me/item/2345`.
+   * Similarly if a mock URL is set up as `/get/me/item/*` will match `/get/me/item/2345`. 
+   
+   When specifying wildcard in routes please ensure that any characters in the url that have a special meaning to the regex engine are escaped.
+   For example if the url is `/get/me/a/book?id=98765` then you could have a wildcard route as `/get/me/a/book\?id=(.*)`.
     
 ### Basic Cookie support
    Mocks can be set up to return cookies. The cookie details should be entered ONE cookie in each line. The format is `cookieName cookieValue`.
