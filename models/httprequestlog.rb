@@ -53,7 +53,7 @@ class Httprequestlog < ActiveRecord::Base
   # @param [String,[String]] start_datetime and end_datetime in format ('%Y-%m-%d %H:%M:%S', ...)
   # @return [JSON] request log data in JSON format or empty JSON if no data
   #
-  def self.get_request_log(start_datetime=(Time.now - (600)).strftime('%Y-%m-%d %H:%M:%S'),
+  def self.get_request_log(start_datetime=(Time.now - (ENV['RECENT_LOG_DURATION'].to_i)).strftime('%Y-%m-%d %H:%M:%S'),
       end_datetime=Time.new.strftime('%Y-%m-%d %H:%M:%S'),
       matching=nil
   )

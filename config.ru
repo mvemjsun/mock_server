@@ -21,8 +21,10 @@ ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'
 ENV['HEADER_DELIMITER'] = ":==:"
 ENV['REPLACE'] = "1"
 ENV['MAX_UPLOAD_SIZE'] = '500000'
+# Duration in seconds of how far to get the logs from the /mock/api/requestlog/recent
+ENV['RECENT_LOG_DURATION'] ||= '1800'
 # Integer setting the latency of responses, Global setting
-ENV['LATENCY'] = '0'
+ENV['LATENCY'] ||= '0'
 ActiveRecord::Base.logger = Logger.new('logs/app.log')
 ActiveRecord::Base.logger.level = Logger::DEBUG
 
