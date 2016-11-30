@@ -77,8 +77,9 @@ class Mockdata < ActiveRecord::Base
       mock_data = Mockdata.where(id: id)
       if mock_data.any?
         mock_url = mock_data.first.mock_request_url
-        st1 = ActiveRecord::Base.connection.raw_connection.prepare('UPDATE MOCKDATA SET mock_state = ? WHERE mock_request_url = ? and mock_environment = ?')
-        st1.execute('f', mock_url,env)
+        mock_verb = mock_data.first.mock_http_verb
+        st1 = ActiveRecord::Base.connection.raw_connection.prepare('UPDATE MOCKDATA SET mock_state = ? WHERE mock_request_url = ? and mock_environment = ? and mock_http_verb=?')
+        st1.execute('f', mock_url,env,mock_verb)
         st2 = ActiveRecord::Base.connection.raw_connection.prepare('UPDATE MOCKDATA SET mock_state = ? WHERE id = ?')
         st2.execute('t',id)
         # Refresh wildcard cache
