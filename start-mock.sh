@@ -13,7 +13,7 @@ fi
 echo "Starting mock server now"
 sleep 2
 rackup > /dev/null 2>&1 &
-sleep 5
+sleep 15
 
 PID=`lsof -i:9293 | grep ruby | grep -v grep | awk '{print $2}'`
 
