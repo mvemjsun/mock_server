@@ -28,7 +28,26 @@ class Replacedata < ActiveRecord::Base
         st1 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE replaced_string = ?")
         st1.execute('f', string_to_be_replaced)
         st2 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE id = ?")
-        st2.execute('t',id)
+        st2.execute('t', id)
+      else
+        found = false
+      end
+    end
+    return found
+  end
+
+  #
+  # Set a Replace data mock status to OFF
+  # @param [Fixnum] if of the replace mock data
+  # @return [Boolean] True of False depending on if the mock id was found and updated
+  #
+  def deactivate_replace_mock_data(id)
+    found = true
+    Replacedata.transaction do
+      replace_data = Replacedata.where(id: id)
+      if replace_data.any?
+        st2 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE id = ?")
+        st2.execute('f', id)
       else
         found = false
       end

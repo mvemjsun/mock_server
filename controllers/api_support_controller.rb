@@ -59,6 +59,21 @@ class MockServerController < ApplicationController
     end
   end
 
+  #
+  # Deactivate mock replace data
+  #
+  post '/api/replace_data/deactivate/:id' do
+    status = Replacedata.new.deactivate_replace_mock_data(params['id'])
+    content_type 'text/plain'
+    if status
+      status 200
+      body = 'De-activated successfully'
+    else
+      status 404
+      body = 'Could not De-activate'
+    end
+  end
+
   post '/api/reset' do
     Mockdata.new.reset_served_counts
     content_type 'text/plain'

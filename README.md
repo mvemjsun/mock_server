@@ -219,9 +219,10 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    * Replace data rows in the DB can be activated using the endpoint
    
-   The below will activate the replace data row with an id of 1. Any other rows that have the same replace string will be deactivated
+   The below will activate & decativate the replace data row with an id of 1. Any other rows that have the same replace string will be deactivated
    ```
    http://localhost:9293/mock/api/replace_data/activate/1
+   http://localhost:9293/mock/api/replace_data/deactivate/1
    ```
    
    * Reset mock url's served count. The below url will set the served counts to 0 for all the mock urls in the database. This could be ideally be done at the start of a test.
