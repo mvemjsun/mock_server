@@ -54,4 +54,18 @@ class Replacedata < ActiveRecord::Base
     end
     return found
   end
+
+  #
+  # Update the column replacing_string with the string supplied
+  # @param [String] matching - String to be matched
+  # @param [String] with - Replacement String
+  # @example update_replace_string("127.0.0.1","196.2.34.67") will scan through all rows and replace any occurance of
+  #         the matching string "127.0.0.1" with "196.2.34.67"
+  #
+  def self.update_replace_string(matching,with)
+    Replacedata.find_each do |replace_data|
+      replace_data.replacing_string = replace_data.replacing_string.gsub(matching,with)
+      replace_data.save!
+    end
+  end
 end

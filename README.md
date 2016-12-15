@@ -246,6 +246,12 @@ Images can be uploaded in case you want to mock url's that end with image names.
    ```
    http://localhost:9293/mock/api/reset/requestlog
    ```
+   
+   * Update all rows in the Replacedata table 
+   ```
+   http://localhost:9293/mock/api/update/replacedata?string=xxx&with=yyy
+   ```
+   
 ### Tests 
    
    There is some coverage for the main features of the mock server around creating mocks and search. The tests are run using `RSpec` & `Capybara` webkit driver.

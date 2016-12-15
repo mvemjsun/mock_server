@@ -134,5 +134,21 @@ class MockServerController < ApplicationController
     body = response
   end
 
+  #
+  # Update the replace data replacing string
+  #
+  post '/api/update/replacedata' do
+    if (params.has_key?('string') && params.has_key?('with'))
+      Replacedata.update_replace_string(params['string'],params['with'])
+      content_type 'text/plain'
+      status 200
+      body = 'Replace data updated'
+    else
+      content_type 'text/plain'
+      status 402
+      body = 'Please supply query parameters ?string=xxx&with=yyy'
+    end
+  end
+
 
 end
