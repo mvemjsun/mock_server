@@ -1,13 +1,16 @@
 ## Mocking Bird
 > An easy way to setup mock responses by specifying mock URL, HTTP verb, Response headers and Response body. 
 
+![](https://github.com/mvemjsun/mock_server/blob/master/public/img/architecture.png?raw=true)
+
 ### Summary
 
 The core idea behind this tool is having the ability to quickly and easily create mock responses for URLs that respond to HTTP verbs. It can help to
  test client devices against a mock server both manually and by using automated tests. All this is 
 achieved by an easy to use user interface that allows a user to specify a URL to mock, set the return HTTP status, headers and last 
 but not the least the response body. Mocking bird is slightly different from conventional mocking frameworks in that most of its features can be used even by
-non-programmers who have got a basic knowledge of HTTP structure (headers, status codes & body); **also mocks need not be programmed into a language specific implementation.** 
+non-programmers who have got a basic knowledge of HTTP structure (headers, status codes & body); **also mocks need not be programmed into a language specific implementation. 
+Set up once and use across multiple clients that use differing technologies.** 
 
 The requests to the mock server can also be logged into the mock database if the environment variable `REQUEST_LOGGING` has been defined. 
 The logs can also be cleared using an api call (see API support section below)
@@ -126,7 +129,21 @@ If you have a set of Rest URL's that require no client configuration. Then you c
 batch clone option.
 
 #### Replace Data
-Replace data can be created to look for 'replace strings' either by exact match or by regular expressions, there strings are matched and then replaced by their replacements silently in mock responses.
+Replace data can be created to look for 'replace strings' either by exact match or by regular expressions. This is a final
+point in the request response time-line where the mock response that have been setup can still be modified before the
+response is sent back to the client. Replace data can be applied only to the response body. For example there could be
+a mock that has been set up to return the personal details of the user as
+
+```
+{
+    "name" : "John",
+    "middleName" : "Smith",
+    "dob" : "1975-09-11",
+    "postCode" : "TF12 6TR"
+}
+```
+
+We could set up a replace data(s) so that the string `"dob" : "1975-09-11"` is replaced by `"dob" : "1955-01-11"`.
 
 #### Upload Images
 Images can be uploaded in case you want to mock url's that end with image names.
