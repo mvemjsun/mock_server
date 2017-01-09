@@ -7,9 +7,9 @@
 1. git clone `https://github.com/mvemjsun/mock_server.git`
 2. run `bundle install`
 3. navigate to `/db` folder and delete the supplied sqlite db.
-4. Run `rake db:migrate` to create a fresh mock database.
+4. Run `rake db:migrate` from the project root to create a fresh mock database.
 5. Run `sh ./start-mock.sh` from the project root which starts the server on port 9293.
-6. Visit `http://localhost:9293/mock/create`
+6. Visit `http://localhost:9293/mock/create` and get started.
 
 ### Summary
 
