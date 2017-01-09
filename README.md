@@ -3,6 +3,14 @@
 
 ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/architecture.png?raw=true)
 
+### Quick Start
+1. git clone `https://github.com/mvemjsun/mock_server.git`
+2. run `bundle install`
+3. navigate to `/db` folder and delete the supplied sqlite db.
+4. Run `rake db:migrate` to create a fresh mock database.
+5. Run `sh ./start-mock.sh` from the project root which starts the server on port 9293.
+6. Visit `http://localhost:9293/mock/create`
+
 ### Summary
 
 The core idea behind this tool is having the ability to quickly and easily create mock responses for URLs that respond to HTTP verbs. It can help to
