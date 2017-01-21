@@ -15,6 +15,14 @@ textarea {
     color: #D2691E;
 }
 
+#log_rows {
+    background-color: #ffffff;
+    font-family: Courier;
+    font-size: 70%;
+    color: #D2691E;
+    white-space: pre;
+}
+
 #script_body {
     background-color: #ffffff;
     font-family: Courier;

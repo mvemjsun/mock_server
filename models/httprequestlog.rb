@@ -59,11 +59,11 @@ class Httprequestlog < ActiveRecord::Base
   )
     if matching.nil?
       data = where("created_at >= :start_datetime AND created_at <= :end_datetime",
-                   {start_datetime: start_datetime, end_datetime: end_datetime})
+                   {start_datetime: start_datetime, end_datetime: end_datetime}).order('created_at DESC')
     else
       match_string = '%' + matching + '%'
       data = where("(created_at >= :start_datetime AND created_at <= :end_datetime) AND request_url like :match_string",
-                   {start_datetime: start_datetime, end_datetime: end_datetime, match_string: match_string})
+                   {start_datetime: start_datetime, end_datetime: end_datetime, match_string: match_string}).order('created_at DESC')
     end
 
     if data.any?
@@ -72,7 +72,18 @@ class Httprequestlog < ActiveRecord::Base
       return '[{"message" : "No request logs found"}]'
     end
   end
+
+  #
+  # Get the details of the logged HTTP request
+  # @param [Fixnum] log_row_id Id of the database row for the logged http request
+  # @return [Hash] The logged request row in JSON format
+  #
+  def self.get_log_details(log_row_id)
+    data = where(id: log_row_id)
+    if data.any?
+      return data.first
+    else
+      return '{"message" : "Log does not exist."}'
+    end
+  end
 end
-
-
-

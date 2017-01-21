@@ -1,0 +1,27 @@
+:javascript
+    $('li').removeClass('active');
+    $('#tab-liveLogs').addClass('active');
+%div{class: 'page-header'}
+    %h2 Mock Server - Request Log Details
+%div{class: 'col-md-8'}
+    %table{class: "table table-striped"}
+        %thead
+            %tr
+                %th Request Attribute
+                %th Value
+            %tbody
+                %tr
+                    %td HTTP Verb
+                    %td{id: 'log_rows'} #{h(request_details.request_http_verb)}
+                %tr
+                    %td HTTP URL
+                    %td{id: 'log_rows'} #{h(request_details.request_url)}
+                %tr
+                    %td Request Body
+                    %td{id: 'log_rows'} #{h(request_details.request_body)}
+                %tr
+                    %td Headers
+                    %td{id: 'log_rows'} #{(request_details.request_headers)}
+                %tr
+                    %td Query
+                    %td{id: 'log_rows'} #{h(request_details.request_query_string)}

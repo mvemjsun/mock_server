@@ -1,0 +1,37 @@
+%script{src: 'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js'}
+%script{src: '/js/liveLogs.js'}
+:javascript
+    $('li').removeClass('active');
+    $('#tab-liveLogs').addClass('active');
+
+
+%div{class: 'page-header'}
+    %h2 Mock Server - Live requests
+
+%div{"ng-app" => 'liveLogs',  "ng-controller" => 'liveLogsController as main'}
+    %p{class: 'bg-info'}
+        {{ main.message }}
+    %table{class: "table table-striped table-condensed "}
+        %thead
+            %tr
+                %td #
+                %td Method
+                %td URL
+                %td Query String
+                %td Body
+                %td Time
+        %tbody
+            %tr{id: 'log_rows', "ng-repeat" => "log in main.liveLogs"}
+                %td
+                    %a{href: "/mock/livelogs/detail/{{ log.id }}"}
+                        {{ log.serial_number }}
+                %td
+                    {{ log.request_http_verb }}
+                %td
+                    {{ log.request_url }}
+                %td
+                    {{ log.request_query_string }}
+                %td
+                    {{ log.request_body }}
+                %td
+                    {{ log.created_at }}
