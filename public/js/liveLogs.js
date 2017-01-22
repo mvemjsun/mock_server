@@ -20,7 +20,7 @@ angular.module('liveLogs', [])
                 advButton.setAttribute('name','stop_refresh');
                 advButton.value = 'Pause';
             }
-        }
+        };
 
         vm.setRefreshInterval = function changeInterval() {
             if (!isNaN(vm.refreshInterval) && vm.refreshInterval >= 5) {
