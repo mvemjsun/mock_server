@@ -4,7 +4,7 @@ angular.module('liveLogs', [])
         var vm = this;
         vm.liveLogs = [];
         vm.i = 0;
-        vm.message = "";
+        vm.message = "Waiting to get logs.";
         function logs() {
             vm.liveLogs = [];
             $http.get('/mock/api/requestlog/recent')

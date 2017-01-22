@@ -4,7 +4,7 @@
 %div{class: 'page-header'}
     %h2 Mock Server - Request Log Details
 %div{class: 'col-md-8'}
-    %table{class: "table table-condensed"}
+    %table{class: "table table-bordered"}
         %thead
             %tr
                 %th Request Attribute
@@ -18,10 +18,10 @@
                     %td{id: 'log_rows'} #{h(request_details.request_url)}
                 %tr
                     %td Request Body
-                    %td{id: 'log_rows'} #{h(request_details.request_body)}
+                    %td{class: 'pre_formatted', id: 'log_rows'} #{h(request_details.request_body)}
                 %tr
                     %td Headers
-                    %td{id: 'log_rows'} #{(request_details.request_headers)}
+                    %td{class: 'pre_formatted', id: 'log_rows'} #{(request_details.request_headers)}
                 %tr
                     %td Query
                     %td{id: 'log_rows'} #{h(request_details.request_query_string)}

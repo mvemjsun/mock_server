@@ -22,6 +22,10 @@ textarea {
     color: #D2691E;
 }
 
+.pre_formatted {
+    white-space: pre;
+}
+
 #script_body {
     background-color: #ffffff;
     font-family: Courier;
