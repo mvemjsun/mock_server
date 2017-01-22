@@ -277,6 +277,10 @@ Images can be uploaded in case you want to mock url's that end with image names.
    http://localhost:9293/mock/api/update/replacedata?string=xxx&with=yyy
    ```
    
+### Request log console
+   The `Live Requests` tab on the web interface shows the requests being served by the mock server.
+   ![](https://github.com/mvemjsun/mock_server/blob/master/public/img/request_logs.png?raw=true)
+   
 ### Tests 
    
    There is some coverage for the main features of the mock server around creating mocks and search. The tests are run using `RSpec` & `Capybara` webkit driver.
