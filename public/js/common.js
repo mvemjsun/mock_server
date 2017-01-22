@@ -1,7 +1,7 @@
 function showHideAdvancedOptions() {
-    advDiv = document.getElementById('advanced_options')
-    classname = advDiv.className
-    advButton = document.getElementById('advanced_button')
+    advDiv = document.getElementById('advanced_options');
+    classname = advDiv.className;
+    advButton = document.getElementById('advanced_button');
     if (classname == 'hidden') {
         advDiv.setAttribute('class','');
         advButton.textContent = 'Hide Advanced Options';
@@ -12,9 +12,9 @@ function showHideAdvancedOptions() {
 }
 
 function showCloneHeaders() {
-    advDiv = document.getElementById('clone_headers_div')
-    classname = advDiv.className
-    advButton = document.getElementById('clone_headers_button')
+    advDiv = document.getElementById('clone_headers_div');
+    classname = advDiv.className;
+    advButton = document.getElementById('clone_headers_button');
     if (classname == 'hidden') {
         advDiv.setAttribute('class','');
         advButton.textContent = 'Hide Clone headers';
@@ -40,7 +40,7 @@ function validateJsonBody(input_area) {
                 'onError': function (error) {
                     jsonInput.parent().addClass('has-error');
                     xx = input_area.selectionStart;
-                    yy = input_area.selectionEnd = xx + 100
+                    yy = input_area.selectionEnd = xx + 100;
                     jsonInput.selectRange(xx, yy);
                 }
             });

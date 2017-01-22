@@ -11,6 +11,15 @@
 %div{"ng-app" => 'liveLogs',  "ng-controller" => 'liveLogsController as main'}
     %p{class: 'bg-info text-center'}
         {{ main.message }}
+
+    %form{class: 'form-inline'}
+        %div{class: 'form-group'}
+            %label{for: 'refreshTextBox'} Refresh Interval (min 5 sec).
+            %input{type: "text", class: "form-control", placeholder: "5" , "ng-model"=> "main.refreshInterval", "ng-blur"=> "main.setRefreshInterval()", value:"{{ main.refreshInterval}}" }
+        %input{class: "btn btn-primary" , type: "button", value: "Refresh", "ng-click" => "main.setRefreshInterval()"}
+        %input{name: 'stop_refresh', class: "btn btn-primary stop_refresh" , type: "button", value: "Pause", "ng-click" => "main.stopLogs()", id: 'log_refresh_start_stop', onclick: 'startStopLogRefresh()'}
+
+    %br
     %table{class: "table table-striped table-bordered "}
         %thead
             %tr

@@ -5,6 +5,30 @@ angular.module('liveLogs', [])
         vm.liveLogs = [];
         vm.i = 0;
         vm.message = "Waiting to get logs.";
+        vm.refreshInterval = 5;
+
+        vm.stopLogs = function stopRefresh() {
+            advButton = document.getElementById('log_refresh_start_stop');
+            classname = advButton.getAttribute('name');
+            if (classname == 'stop_refresh') {
+                clearInterval(vm.listener);
+                advButton.setAttribute('name','start_refresh');
+                advButton.value = 'Resume';
+            } else {
+                clearInterval(vm.listener);
+                vm.listener = setInterval(logs, vm.refreshInterval * 1000);
+                advButton.setAttribute('name','stop_refresh');
+                advButton.value = 'Pause';
+            }
+        }
+
+        vm.setRefreshInterval = function changeInterval() {
+            if (!isNaN(vm.refreshInterval) && vm.refreshInterval >= 5) {
+                clearInterval(vm.listener);
+                vm.listener = setInterval(logs, vm.refreshInterval * 1000);
+            }
+        };
+
         function logs() {
             vm.liveLogs = [];
             $http.get('/mock/api/requestlog/recent')
@@ -15,7 +39,6 @@ angular.module('liveLogs', [])
                         vm.message = "";
                         vm.i = 0;
                         response.data.forEach(function(array_item){
-                            console.log(array_item.request_url);
                             vm.liveLogs.push(
                                 {
                                     serial_number: ++vm.i,
@@ -33,5 +56,6 @@ angular.module('liveLogs', [])
                     }
                 });
         }
-        var listener = setInterval(logs,5000);
+
+        vm.listener = setInterval(logs,vm.refreshInterval * 1000);
     });
