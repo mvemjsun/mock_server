@@ -153,7 +153,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
 
 ### Wildcard in routes (experimental)
    * If a mock url is set up with a wildcard character `*` in it then the mock server will attempt to match against the "wild" route if no exact match is found. For example if a mock URL
-   is set up as `/say/*/to/*` then this will match `/say/hello/to/tom` or `/say/hola/to/rafael`.
+   is set up as `/say/(.*)/to/(.*)` then this will match `/say/hello/to/tom` or `/say/hola/to/rafael`.
    
    * Similarly if a mock URL is set up as `/get/me/item/*` will match `/get/me/item/2345`. 
    
