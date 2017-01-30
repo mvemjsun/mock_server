@@ -61,60 +61,32 @@ Note 2: The script `./start-mock.sh` kills a process that runs at port `9293` be
 the server at a different port in the `config.ru` file (line 1).
 
 ```
-SQLite version 3.11.1 2016-03-03 16:17:53
-Enter ".help" for usage hints.
-Connected to a transient in-memory database.
-Use ".open FILENAME" to reopen on a persistent database.
-sqlite> .open mockserver.db
-sqlite> .schema
-CREATE TABLE "schema_migrations" ("version" varchar NOT NULL);
-CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version");
-CREATE TABLE "missed_requests" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "url" varchar, "mock_http_verb" varchar, "mock_environment" varchar, "created_at" datetime, "updated_at" datetime);
-CREATE TABLE "replacedata" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "replace_name" varchar, "replaced_string" varchar, "replacing_string" varchar, "is_regexp" boolean, "mock_environment" varchar, "replace_state" boolean);
-CREATE TABLE "rubyscripts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "script_name" varchar, "script_body" text, "created_at" datetime, "updated_at" datetime);
-CREATE UNIQUE INDEX "unique_replace_data"
-      ON "REPLACEDATA" ("replaced_string", "mock_environment", "replace_state")
-      WHERE "replace_state" = 't'
-;
-CREATE TABLE "mockdata" (
-	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	`mock_name`	varchar,
-	`mock_http_status`	varchar,
-	`mock_request_url`	text,
-	`mock_http_verb`	text,
-	`mock_data_response_headers`	varchar,
-	`mock_data_response`	text(1000000),
-	`mock_state`	boolean,
-	`mock_environment`	varchar,
-	`mock_content_type`	varchar,
-	`mock_served_times`	integer,
-	`has_before_script`	boolean,
-	`before_script_name`	varchar,
-	`has_after_script`	boolean,
-	`after_script_name`	varchar,
-	`profile_name`	varchar,
-	`created_at`	datetime,
-	`updated_at`	datetime,
-	`mock_cookie`	TEXT
-);
-CREATE UNIQUE INDEX "unique_mock_data"
-      ON "MOCKDATA" ("mock_request_url","mock_http_verb", "mock_environment", "mock_state")
-      WHERE "mock_state" = 't'
+"Task Reading configuration ..."
+"Task Establishing connection ..."
+"Task Migrate ..."
+"Migration version 1"
 
+== 1 CreateMockdata: migrating ================================================
+-- create_table(:mockdata, {})
+   -> 0.0015s
+-- execute("      CREATE UNIQUE INDEX \"unique_mock_data\"\n      
+                  ON \"MOCKDATA\" (\"mock_request_url\",\"mock_http_verb\", \"mock_environment\", \"mock_state\")\n      
+                  WHERE \"mock_state\" = 't'\n")
+   -> 0.0004s
+-- create_table(:missed_requests, {})
+   -> 0.0006s
+-- create_table(:replacedata, {})
+   -> 0.0004s
+-- create_table(:rubyscripts, {})
+   -> 0.0003s
+-- create_table(:httprequestlogs, {})
+   -> 0.0006s
+-- execute("      CREATE UNIQUE INDEX \"unique_replace_data\"\n      
+                  ON \"REPLACEDATA\" (\"replaced_string\", \"mock_environment\", \"replace_state\")\n      
+                  WHERE \"replace_state\" = 't'\n")
+   -> 0.0002s
+== 1 CreateMockdata: migrated (0.0047s) =======================================
 
-;
-CREATE TABLE `httprequestlogs` (
-	`request_http_verb`	TEXT,
-	`request_url`	TEXT,
-	`request_body`	TEXT,
-	`request_headers`	TEXT,
-	`request_environment`	TEXT,
-	`created_at`	datetime,
-	`request_query_string`	TEXT
-);
-sqlite> 
-sqlite> .exit
-db mvemjsun$
 ```
 
 Note2: To check if port 9293 is already being used already on osx, use command `lsof -i:9293`. On Windows you may use `netstat -a -b`.
