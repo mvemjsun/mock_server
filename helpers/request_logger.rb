@@ -4,7 +4,18 @@ module ApplicationHelper
     if !request.env['PATH_INFO'].match(/^\/api\/requestlog/)
       httprequestslog = Httprequestlog.new
       httprequestslog.save_http_request(request)
-      httprequestslog.save!
+      begin
+        sleep 0.5
+        httprequestslog.save!
+      rescue ActiveRecord::StatementInvalid
+        sleep 0.5
+        httprequestslog.save! #Retry
+        p 'Successfully retried Statement Invalid'
+      rescue Exception
+        sleep 0.5
+        httprequestslog.save! #Retry
+        p 'Successfully retried Exception'
+      end
     end
   end
 end

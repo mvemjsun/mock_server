@@ -423,6 +423,7 @@ module ApplicationHelper
       row.save!
     rescue => e
       p ">>> Retrying to update served times for - #{url} to #{row.mock_served_times}"
+      sleep 0.5
       row.save!
     end
     return return_data
