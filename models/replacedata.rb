@@ -25,10 +25,8 @@ class Replacedata < ActiveRecord::Base
       replace_data = Replacedata.where(id: id)
       if replace_data.any?
         string_to_be_replaced = replace_data.first.replaced_string
-        st1 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE replaced_string = ?")
-        st1.execute('f', string_to_be_replaced)
-        st2 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE id = ?")
-        st2.execute('t', id)
+        Replacedata.where('replaced_string = ?', string_to_be_replaced).update_all(replace_state: 'f')
+        Replacedata.where('id = ?', id).update_all(replace_state: 't')
       else
         found = false
       end
@@ -46,8 +44,7 @@ class Replacedata < ActiveRecord::Base
     Replacedata.transaction do
       replace_data = Replacedata.where(id: id)
       if replace_data.any?
-        st2 = ActiveRecord::Base.connection.raw_connection.prepare("UPDATE REPLACEDATA SET replace_state = ? WHERE id = ?")
-        st2.execute('f', id)
+        Replacedata.where('id = ?', id).update_all(replace_state: 'f')
       else
         found = false
       end

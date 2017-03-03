@@ -73,15 +73,13 @@ class Mockdata < ActiveRecord::Base
   def activate_mock_data(id)
     found = true
     env = ENV['TEST_ENV']
-    Replacedata.transaction do
+    Mockdata.transaction do
       mock_data = Mockdata.where(id: id)
       if mock_data.any?
         mock_url = mock_data.first.mock_request_url
         mock_verb = mock_data.first.mock_http_verb
-        st1 = ActiveRecord::Base.connection.raw_connection.prepare('activate_mock1','UPDATE MOCKDATA SET mock_state = $1 WHERE mock_request_url = $2 and mock_environment = $3 and mock_http_verb=$4')
-        st1.execute('f', mock_url,env,mock_verb)
-        st2 = ActiveRecord::Base.connection.raw_connection.prepare('activate_mock2','UPDATE MOCKDATA SET mock_state = $1 WHERE id = $2')
-        st2.execute('t',id)
+        Mockdata.where('mock_request_url = ? and mock_environment = ? and mock_http_verb= ?', mock_url,env,mock_verb).update_all(mock_state: 'f')
+        Mockdata.where('id = ?', id).update_all(mock_state: 't')
         # Refresh wildcard cache
         $wild_routes = WildRoutes.get_wild_routes_if_any if mock_url.index('*')
         p $wild_routes
@@ -93,8 +91,7 @@ class Mockdata < ActiveRecord::Base
   end
 
   def reset_served_counts
-    st1 = ActiveRecord::Base.connection.raw_connection.prepare('served_times','UPDATE MOCKDATA SET mock_served_times = $1')
-    st1.execute(0)
+    Mockdata.where('id > 0').update_all(mock_served_times: 0)
   end
 
 end

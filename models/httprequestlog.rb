@@ -44,7 +44,7 @@ class Httprequestlog < ActiveRecord::Base
   # Deletes all rows from the httprequestlogs table
   #
   def self.clear_request_log
-    ActiveRecord::Base.connection.raw_connection.execute('DELETE FROM HTTPREQUESTLOGS')
+    Httprequestlog.delete_all
   end
 
   #
