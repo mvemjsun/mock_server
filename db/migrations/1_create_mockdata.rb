@@ -24,7 +24,7 @@ class CreateMockdata < ActiveRecord::Migration
 
     execute <<-SQL
       CREATE UNIQUE INDEX "unique_mock_data"
-      ON "MOCKDATA" ("mock_request_url","mock_http_verb", "mock_environment", "mock_state")
+      ON "mockdata" ("mock_request_url","mock_http_verb", "mock_environment", "mock_state")
       WHERE "mock_state" = 't'
     SQL
 
@@ -62,7 +62,7 @@ class CreateMockdata < ActiveRecord::Migration
 
     execute <<-SQL
       CREATE UNIQUE INDEX "unique_replace_data"
-      ON "REPLACEDATA" ("replaced_string", "mock_environment", "replace_state")
+      ON "replacedata" ("replaced_string", "mock_environment", "replace_state")
       WHERE "replace_state" = 't'
     SQL
 

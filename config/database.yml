@@ -4,6 +4,12 @@ development:
   pool: 5
   timeout: 5000
 
+migration:
+  adapter: sqlite3
+  database: ../mockserver.db
+  pool: 5
+  timeout: 5000
+
 example_mysql:
   adapter: mysql2
   encoding: utf8
@@ -18,3 +24,12 @@ test:
   database: db/mockserver_test.db
   pool: 5
   timeout: 5000
+
+development_pg:
+  adapter: postgresql
+  encoding: unicode
+  database: postgres
+  pool: 5
+  username: postgres
+  password: postgres
+  host: localhost

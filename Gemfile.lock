@@ -44,6 +44,7 @@ GEM
     multi_xml (0.5.5)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    pg (0.19.0)
     public_suffix (2.0.4)
     rack (1.6.5)
     rack-protection (1.5.3)
@@ -94,10 +95,11 @@ DEPENDENCIES
   database_cleaner
   haml
   httparty
+  pg
   rspec
   sinatra
   sinatra-contrib
   sqlite3
 
 BUNDLED WITH
-   1.10.6
+   1.13.7
