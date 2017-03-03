@@ -68,7 +68,7 @@ module ApplicationHelper
   # Search the replace data table and return results
   #
   def search_replace_data(options)
-    data = Replacedata.where("replace_name LIKE ?", "%#{options[:replace_name]}%")
+    data = Replacedata.where("replace_name LIKE ?", "%#{options[:replace_name]}%").order(:id)
     if data.any?
       return data
     else
@@ -80,7 +80,7 @@ module ApplicationHelper
   # Search the rubyscript table and return results
   #
   def search_script_data(options)
-    data = Rubyscript.where("script_name LIKE ?", "%#{options[:script_name]}%")
+    data = Rubyscript.where("script_name LIKE ?", "%#{options[:script_name]}%").order(:id)
     if data.any?
       return data
     else
