@@ -13,8 +13,8 @@ $logger = ::Logger.new(::File.new("logs/app.log","a+"))
 
 $logger.level = Logger::DEBUG
 
-# ENV['ENVIRONMENT'] ||= 'development'
-ENV['ENVIRONMENT'] ||= 'development_pg'
+ENV['ENVIRONMENT'] ||= 'development'
+# ENV['ENVIRONMENT'] ||= 'development_pg'
 ENV['REQUEST_LOGGING']="1"
 ENV['TEST_ENV']='production'
 ENV['DEFAULT_CONTENT_TYPE'] = 'application/json;charset=UTF-8'

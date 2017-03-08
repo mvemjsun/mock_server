@@ -259,10 +259,33 @@ Images can be uploaded in case you want to mock url's that end with image names.
 ### Tests 
    
    There is some coverage for the main features of the mock server around creating mocks and search. The tests are run using `RSpec` & `Capybara` webkit driver.
-   To run the tests ensure that you set the environment variale `ENVIRONMENT` and set it to `test`. Run the rake migration to create the test database using
+   To run the tests ensure that you set the environment variable `ENVIRONMENT` and set it to `test`. Run the rake migration to create the test database using
    the command `ENVIRONMENT='test' rake db:migrate`. Then start the mock server using `ENVIRONMENT='test' sh ./start-mock.sh` from the project root.
    
    The tests can then be run using the command `rspec` from the project root.
+
+### Data migration
+   You could potentially experiment using the mock server using sqlite and if there is a need you could migrate data 
+   from sqlite to another RDBMS such as Postgres. To do this you need to have the new DB already installed. 
+   The `database.yml` should contain the setup info for it such as
+   
+   ```
+   development_pg:
+     adapter: postgresql
+     encoding: unicode
+     database: postgres
+     pool: 5
+     username: postgres
+     password: postgres
+     host: localhost
+   ```
+     
+   Which points to a database named `postgres`. Run the rake task `rake db:migrate` with environment variable `ENVIRONMENT`
+   set to `development_pg` (your name might be different) i.e `ENVIRONMENT=DEVELOPMENT_PG rake db:migrate`. This will create the database tables
+   needed. Following this we need to migrate the individual table data. Which is 3 main tables; `mockdata`, `replacedata` & `rubyscripts`. We do this
+   by running the 3 migration scripts one by one from the `db/datamigration` directory. Ensure that the scripts have the correct old and new
+   environment names from the `database.yml` file. Once the data has been migrated successfully change the `Rakefile` or
+   the environment variable `ENVIRONMENT` to point to the correct db from the `database.yml` file.
    
 ### TODO's
     * Video mocking

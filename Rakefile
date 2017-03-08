@@ -7,7 +7,7 @@ require 'sqlite3'
 if ENV.has_key? 'ENVIRONMENT'
   ENV['ENVIRONMENT'] = 'test'
 else
-  ENV['ENVIRONMENT'] = 'development_pg'
+  ENV['ENVIRONMENT'] = 'development'
 end
 
 namespace :db do
