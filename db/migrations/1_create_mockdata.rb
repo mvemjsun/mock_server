@@ -72,7 +72,7 @@ class CreateMockdata < ActiveRecord::Migration
     drop_table :mockdata
     drop_table :missed_requests
     drop_table :replacedata
-    drop_table :rubyscript
+    drop_table :rubyscripts
     drop_table :httprequestlogs
   end
 end
