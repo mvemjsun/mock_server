@@ -261,7 +261,7 @@ Images can be uploaded in case you want to mock url's that end with image names.
    | http://localhost:9293/latency/2  | POST | Set latency of response to 2 seconds |
    | http://localhost:9293/mock/api/replace_data/activate/1 | POST | Set replace data mock 1 to active |
    | http://localhost:9293/mock/api/replace_data/deactivate/1 | POST | Set replace data mock 1 to Inactive |
-   | http://localhost:9293/mock/api/reset | POST | Reset served counts for the URL |
+   | http://localhost:9293/mock/api/reset | POST | Reset served counts for all the URLs to 0 |
    | http://localhost:9293/mock/api/requestlog/recent | GET | Return the recent logged requests |
    | http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>] | GET | Get recent log for a time range|
    | http://localhost:9293/mock/api/reset/requestlog | POST | Delete the request logs |
