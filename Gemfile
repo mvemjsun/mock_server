@@ -7,7 +7,10 @@ gem 'activemodel'
 gem 'haml'
 gem 'httparty'
 gem 'sinatra-contrib'
-gem 'pg'
+
+group :pg do
+  gem 'pg'
+end
 
 group :test do
   gem 'rspec'

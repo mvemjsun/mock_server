@@ -8,7 +8,7 @@
 Ensure ruby and `bundler` are installed. RVM is a good way to manage rubies on your machine.
 
 1. git clone `https://github.com/mvemjsun/mock_server.git`
-2. Run `bundle install --without=test`
+2. Run `bundle install --without=test --without=pg`
 3. Navigate to `/db` folder and delete the supplied sqlite db (`mockserver.db` file).
 4. Run `rake db:migrate` from the project root to create a fresh mock database.
 5. Run `sh ./start-mock.sh` from the project root which starts the server on port 9293.
