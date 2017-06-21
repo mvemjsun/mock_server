@@ -218,6 +218,11 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    To set the latency back to 0 issue the call `http://localhost:9293/latency/0`
    
+   To set latency for individual url's you will have to use the 'Advanced options' and mention the name of a ruby script 
+   with a sleep statement in it. So for example
+   you could have `sleep1.rb` to `sleep5.rb` with `sleep n` statements in them (where `n` is from 1 to 5) to cause an
+   artificial delay in the response.
+   
    * Replace data rows in the DB can be activated using the endpoint
    
    The below will activate & decativate the replace data row with an id of 1. Any other rows that have the same replace string will be deactivated
