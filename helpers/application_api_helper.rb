@@ -5,7 +5,7 @@ module ApplicationHelper
   #
   def activate_mock_with_id
     if params.has_key? 'id'
-      if Mockdata.new.activate_mock_data(params['id'])
+      if Mockdata.activate_mock_data(params['id'])
         return {status_code: 200, body: 'Activated successfully.'}
       else
         return {status_code: 404, body: 'Not Found.'}

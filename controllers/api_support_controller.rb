@@ -6,14 +6,7 @@ class MockServerController < ApplicationController
   # Gets the mock record details for the client. Does not return mock body to optimize response.
   #
   get '/api/:id' do
-    mockData = Mockdata.select(:id,
-                               :mock_name,
-                               :mock_request_url,
-                               :mock_http_verb,
-                               :mock_data_response_headers,
-                               :mock_state, :mock_environment,
-                               :mock_content_type,
-                               :mock_served_times).where(id: params[:id])
+    mockData = Mockdata.get_mock_data(params[:id])
     if (params[:id].to_i.is_a? Fixnum) && (mockData.any?)
       content_type 'application/json'
       status 200
@@ -48,7 +41,7 @@ class MockServerController < ApplicationController
   #
 
   post '/api/replace_data/activate/:id' do
-    status = Replacedata.new.activate_replace_mock_data(params['id'])
+    status = Replacedata.activate_replace_mock_data(params['id'])
     content_type 'text/plain'
     if status
       status 200
@@ -63,7 +56,7 @@ class MockServerController < ApplicationController
   # Deactivate mock replace data
   #
   post '/api/replace_data/deactivate/:id' do
-    status = Replacedata.new.deactivate_replace_mock_data(params['id'])
+    status = Replacedata.deactivate_replace_mock_data(params['id'])
     content_type 'text/plain'
     if status
       status 200

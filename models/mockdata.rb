@@ -70,16 +70,16 @@ class Mockdata < ActiveRecord::Base
     end
   end
 
-  def activate_mock_data(id)
+  def self.activate_mock_data(id)
     found = true
     env = ENV['TEST_ENV']
-    Mockdata.transaction do
+    transaction do
       mock_data = Mockdata.where(id: id)
       if mock_data.any?
         mock_url = mock_data.first.mock_request_url
         mock_verb = mock_data.first.mock_http_verb
-        Mockdata.where('mock_request_url = ? and mock_environment = ? and mock_http_verb= ?', mock_url,env,mock_verb).update_all(mock_state: 'f')
-        Mockdata.where('id = ?', id).update_all(mock_state: 't')
+        where('mock_request_url = ? and mock_environment = ? and mock_http_verb= ?', mock_url, env, mock_verb).update_all(mock_state: 'f')
+        where('id = ?', id).update_all(mock_state: 't')
         # Refresh wildcard cache
         $wild_routes = WildRoutes.get_wild_routes_if_any if mock_url.index('*')
         p $wild_routes
@@ -92,6 +92,18 @@ class Mockdata < ActiveRecord::Base
 
   def reset_served_counts
     Mockdata.where('id > 0').update_all(mock_served_times: 0)
+  end
+
+  def self.get_mock_data(id)
+    select(:id,
+           :mock_name,
+           :mock_request_url,
+           :mock_http_verb,
+           :mock_data_response_headers,
+           :mock_state,
+           :mock_environment,
+           :mock_content_type,
+           :mock_served_times).where(id: id)
   end
 
 end

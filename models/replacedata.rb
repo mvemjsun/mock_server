@@ -19,14 +19,14 @@ class Replacedata < ActiveRecord::Base
   # @param [Fixnum] id Id of the replace data row
   # @return [Boolean] true or false
   #
-  def activate_replace_mock_data(id)
+  def self.activate_replace_mock_data(id)
     found = true
-    Replacedata.transaction do
-      replace_data = Replacedata.where(id: id)
+    transaction do
+      replace_data = where(id: id)
       if replace_data.any?
         string_to_be_replaced = replace_data.first.replaced_string
-        Replacedata.where('replaced_string = ?', string_to_be_replaced).update_all(replace_state: 'f')
-        Replacedata.where('id = ?', id).update_all(replace_state: 't')
+        where('replaced_string = ?', string_to_be_replaced).update_all(replace_state: 'f')
+        where('id = ?', id).update_all(replace_state: 't')
       else
         found = false
       end
@@ -39,12 +39,12 @@ class Replacedata < ActiveRecord::Base
   # @param [Fixnum] if of the replace mock data
   # @return [Boolean] True of False depending on if the mock id was found and updated
   #
-  def deactivate_replace_mock_data(id)
+  def self.deactivate_replace_mock_data(id)
     found = true
-    Replacedata.transaction do
-      replace_data = Replacedata.where(id: id)
+    transaction do
+      replace_data = where(id: id)
       if replace_data.any?
-        Replacedata.where('id = ?', id).update_all(replace_state: 'f')
+        where('id = ?', id).update_all(replace_state: 'f')
       else
         found = false
       end
@@ -60,7 +60,7 @@ class Replacedata < ActiveRecord::Base
   #         the matching string "127.0.0.1" with "196.2.34.67"
   #
   def self.update_replace_string(matching,with)
-    Replacedata.find_each do |replace_data|
+    find_each do |replace_data|
       replace_data.replacing_string = replace_data.replacing_string.gsub(matching,with)
       replace_data.save!
     end
