@@ -2,3 +2,7 @@
 public/upload/*
 db/mockserver.*
 logs/*
+.DS_Store
+.bundle
+.irb-history
+public/.DS_Store
