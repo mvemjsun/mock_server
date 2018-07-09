@@ -81,5 +81,11 @@ class ApplicationController < Sinatra::Base
     # Process the URL
     process_http_verb
   end
+
+  options "/*" do
+    @title = 'Mock OPTIONS'
+    # Process the URL
+    process_http_verb
+  end
 end
 
