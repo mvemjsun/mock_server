@@ -2,3 +2,6 @@
 public/upload/*
 db/mockserver.*
 logs/*
+.DS_Store
+.irb-history
+config
