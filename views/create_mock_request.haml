@@ -38,7 +38,7 @@
     %div{class: 'row'}
         %div{class: 'form-group col-md-2'}
             %label{class: 'control-label',for: 'mock_http_verb'} HTTP Verb
-            %select{class: 'form-control', id: 'sl_mock_http_verb',name: 'mock_http_verb', value: "#{mock_data.nil? ? nil : mock_data.mock_http_verb }"}
+            %select{class: 'form-control', id: 'sl_mock_http_verb',name: 'mock_http_verb', onchange: 'enableDisableResponseBody()', value: "#{mock_data.nil? ? nil : mock_data.mock_http_verb }"}
                 %option{id: 'GET'} GET
                 %option{id: 'POST'} POST
                 %option{id: 'PUT'} PUT

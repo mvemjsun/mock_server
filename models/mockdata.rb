@@ -24,8 +24,10 @@ class Mockdata < ActiveRecord::Base
   end
 
   def mock_data_response_body
-    if self.mock_http_status.match(/^[^4-5]/) && self.mock_data_response.size == 0
-      errors.add(:mock_data_response, "can't be blank.")
+    if self.mock_http_status.match(/^[^4-5]/) &&
+        self.mock_http_verb.upcase != 'OPTIONS' &&
+        self.mock_data_response.size == 0
+          errors.add(:mock_data_response, "can't be blank.")
     end
   end
 

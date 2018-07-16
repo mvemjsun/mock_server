@@ -219,3 +219,16 @@ function cloneRowOnSubmit(row) {
         alert("Please supply all data. Mock Name and URL are required.");
     }
 }
+
+function enableDisableResponseBody() {
+    var selectList = document.getElementById("sl_mock_http_verb");
+    var selectedHTTPVerb = selectList.options[selectList.selectedIndex].value;
+    var responseTextArea = document.getElementById("json_body");
+
+    if (selectedHTTPVerb === 'OPTIONS') {
+        responseTextArea.disabled = true;
+        responseTextArea.value = '';
+    } else {
+        responseTextArea.disabled = false;
+    }
+}
