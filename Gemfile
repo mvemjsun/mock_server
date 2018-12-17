@@ -7,6 +7,7 @@ gem 'activemodel'
 gem 'haml'
 gem 'httparty'
 gem 'sinatra-contrib'
+gem 'cucumber'
 
 group :pg do
   gem 'pg'
