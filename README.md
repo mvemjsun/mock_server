@@ -92,6 +92,34 @@ the server at a different port in the `config.ru` file (line 1).
 
 Note2: To check if port 9293 is already being used already on osx, use command `lsof -i:9293`. On Windows you may use `netstat -a -b`.
 
+### Using Docker containers
+
+To simplify the process of building and running the containers, we have included a `Makefile` to encapsulate the commands into very simple `make` sections such as (`build` for building the container, `run` to run the container, `shell` to access the container in case you want to have a shell to the container)
+
+#### Building the container
+
+To build the container you will have to do one of the following commands:
+
+- `make build`
+
+or
+
+- `docker build -t mock_server .`
+
+This will create a new container tagged as `mock_server`.
+
+#### Running the container
+
+To run the container you can simply execute one of these commands:
+
+- `make run`
+
+or
+
+- `docker run -p 9293:9293 -t mock_server`
+
+The `make` command shares the volume with the container (the same for build), but if you want to share the content you will have to add the `-v $(pwd):/app`
+
 ### Features
 
 The tool can be used either as a standalone mock server on an individuals PC or setup as a team mock server. Its upto the team and user(s) to
