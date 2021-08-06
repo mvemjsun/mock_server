@@ -1,0 +1,32 @@
+---
+version: '3'
+networks:
+  internal_net:
+    driver: bridge
+services:
+  mock_server:
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    environment:
+      - ENVIRONMENT=development_docker
+    ports:
+      - 9293:9293
+    volumes:
+      - ".:/app"
+    env_file:
+      - ".env"
+    networks:
+      - internal_net
+    depends_on:
+      - pg_database
+  pg_database:
+    image: postgres:13.3
+    env_file:
+      - ".env"
+    volumes:
+      - "./pg_volume/data/:/var/lib/postgresql/data/"
+    env_file:
+      - .env
+    networks:
+      - internal_net

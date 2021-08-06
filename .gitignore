@@ -5,3 +5,5 @@ logs/*
 .DS_Store
 .irb-history
 config
+.env
+pg_volume/

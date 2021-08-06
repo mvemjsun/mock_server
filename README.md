@@ -92,6 +92,58 @@ the server at a different port in the `config.ru` file (line 1).
 
 Note2: To check if port 9293 is already being used already on osx, use command `lsof -i:9293`. On Windows you may use `netstat -a -b`.
 
+### Using Docker containers
+
+To simplify the process of building and running the containers, we have included a `Makefile` to encapsulate the commands into very simple `make` sections such as (`build` for building the container, `run` to run the container, `shell` to access the container in case you want to have a shell to the container)
+
+#### Building the container
+
+To build the container you will have to do one of the following commands:
+
+- `make build`
+
+or
+
+- `docker build -t mock_server .`
+
+This will create a new container tagged as `mock_server`.
+
+#### Running the container
+
+To run the container you can simply execute one of these commands:
+
+- `make run`
+
+or
+
+- `docker run -p 9293:9293 -t mock_server`
+
+The `make` command shares the volume with the container (the same for build), but if you want to share the content you will have to add the `-v $(pwd):/app`
+
+### Using `docker-compose` for PostgreSQL usage
+
+We have added also the possibility to run this by using `docker-compose` to run both the `mock_server` and the `postgresql` containers.
+
+For that you have to do THREE steps in this particular order:
+
+1. **Copy the `.env.sample` file into the `.env`**
+
+The `.env` file works out of the box, however you can set whatever values you want, and the `PostgreSQL` container will take that and create the container with those variables. So when creating the contianer for the first time, those values are going to be used to set the database name, user name and password.
+
+2. **Create the data directory for PostgreSQL data**
+
+``` sh
+mkdir pg_volume/data
+```
+
+3. **Run the migration**
+
+``` sh
+docker-compose run mock_server rake db:migrate
+```
+
+And THAT'S ALL! then you can do `docker-compose up` to run the service
+
 ### Features
 
 The tool can be used either as a standalone mock server on an individuals PC or setup as a team mock server. Its upto the team and user(s) to

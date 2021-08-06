@@ -3,33 +3,31 @@ require 'yaml'
 require 'logger'
 require 'cucumber/rake/task'
 require 'sqlite3'
+require 'zlib'
 
-if ENV.has_key? 'ENVIRONMENT'
-  ENV['ENVIRONMENT'] = 'test'
-else
-  ENV['ENVIRONMENT'] = 'development'
-end
+ENV['ENVIRONMENT'] ||= 'development'
 
 namespace :db do
   def create_my_database
-    p "Create DB"
+    p 'Create DB'
   end
 
   task :configure do
-    p "Task Reading configuration ..."
+    p 'Task Reading configuration ...'
     @config = YAML.load_file('config/database.yml')[ENV['ENVIRONMENT']]
   end
 
   task :connect_to_db do
-    p "Task Establishing connection ..."
+    p 'Task Establishing connection ...'
+    p @config.inspect
     ActiveRecord::Base.establish_connection @config
     ActiveRecord::Base.logger = Logger.new(File.open('logs/migrations.log', 'a'))
   end
 
   task :migrate => [:configure, :connect_to_db] do
-    p "Task Migrate ..."
+    p 'Task Migrate ...'
     ActiveRecord::Migration.verbose = true
-    x=ENV['VERSION'] || '1';
+    x = ENV['VERSION'] || '1'
     p "Migration version #{x}"
     ActiveRecord::Migrator.migrate './db/migrations', ENV['VERSION'] ? ENV['VERSION'].to_i : nil
   end
@@ -45,5 +43,4 @@ namespace :db do
     p 'Populating initial data.'
     # make_users
   end
-
 end

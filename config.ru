@@ -5,7 +5,7 @@ require 'active_record'
 require 'sqlite3'
 require 'tilt/haml'
 require 'uri'
-require 'HTTParty'
+require 'httparty'
 
 require 'logger'
 Logger.class_eval { alias :write :'<<' }
