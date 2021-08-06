@@ -124,21 +124,25 @@ The `make` command shares the volume with the container (the same for build), bu
 
 We have added also the possibility to run this by using `docker-compose` to run both the `mock_server` and the `postgresql` containers.
 
-For that you have to do TWO steps in this particular order:
+For that you have to do THREE steps in this particular order:
 
-1. **Create the data directory for PostgreSQL data**
+1. **Copy the `.env.sample` file into the `.env`**
+
+The `.env` file works out of the box, however you can set whatever values you want, and the `PostgreSQL` container will take that and create the container with those variables. So when creating the contianer for the first time, those values are going to be used to set the database name, user name and password.
+
+2. **Create the data directory for PostgreSQL data**
 
 ``` sh
 mkdir pg_volume/data
 ```
 
-2. **Run the migration**
+3. **Run the migration**
 
 ``` sh
 docker-compose run mock_server rake db:migrate
 ```
 
-And THAT'S ALL!
+And THAT'S ALL! then you can do `docker-compose up` to run the service
 
 ### Features
 
