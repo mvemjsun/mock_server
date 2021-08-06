@@ -120,6 +120,26 @@ or
 
 The `make` command shares the volume with the container (the same for build), but if you want to share the content you will have to add the `-v $(pwd):/app`
 
+### Using `docker-compose` for PostgreSQL usage
+
+We have added also the possibility to run this by using `docker-compose` to run both the `mock_server` and the `postgresql` containers.
+
+For that you have to do TWO steps in this particular order:
+
+1. **Create the data directory for PostgreSQL data**
+
+``` sh
+mkdir pg_volume/data
+```
+
+2. **Run the migration**
+
+``` sh
+docker-compose run mock_server rake db:migrate
+```
+
+And THAT'S ALL!
+
 ### Features
 
 The tool can be used either as a standalone mock server on an individuals PC or setup as a team mock server. Its upto the team and user(s) to

@@ -33,3 +33,12 @@ development_pg:
   username: postgres
   password: postgres
   host: localhost
+
+development_docker:
+  adapter: postgresql
+  encoding: unicode
+  database: postgres
+  pool: 5
+  username: postgres
+  password: postgres
+  host: pg_database
