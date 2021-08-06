@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'uri'
+
 module ApplicationHelper
 
   def h(text)
@@ -301,7 +305,7 @@ module ApplicationHelper
 
   def process_http_verb
     log_incoming_request if ENV['REQUEST_LOGGING']
-    url = request.fullpath.sub!(/^\//, '')
+    url = URI.parse(request.fullpath).path.sub(%r{^/}, '')
     @mock_response = process_url(url, request.request_method, ENV['TEST_ENV'])
 
     if ENV['LATENCY']
