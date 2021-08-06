@@ -34,7 +34,7 @@ module ApplicationHelper
   def get_current_request_db_row
     if !defined? @current_request_db_data
       @current_request_db_data = nil
-      url = request.fullpath.sub!(/^\//, '')
+      url = URI.parse(request.fullpath).path.sub!(/^\//, '')
       query = Mockdata.where(mock_request_url: url,
                              mock_http_verb: request.request_method,
                              mock_environment: ENV['TEST_ENV'],
