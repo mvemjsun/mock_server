@@ -24,23 +24,11 @@ namespace :db do
     ActiveRecord::Base.logger = Logger.new(File.open('logs/migrations.log', 'a'))
   end
 
-  task :migrate => [:configure, :connect_to_db] do
+  task :migrate_new => [:configure, :connect_to_db] do
     p 'Task Migrate ...'
     ActiveRecord::Migration.verbose = true
-    x = ENV['VERSION'] || '1'
-    p "Migration version #{x}"
-    ActiveRecord::Migrator.migrate './db/migrations', ENV['VERSION'] ? ENV['VERSION'].to_i : nil
-  end
-
-  task :rollback => [:configure, :connect_to_db] do
-    # Default rollback to 1 step if STEP not specified in rake command
-    rollback_steps = ENV['STEPS'] ? ENV['STEPS'].to_i : 1
-    p "Rollback by #{rollback_steps} step(s)"
-    ActiveRecord::Migrator.rollback './db/migrations', rollback_steps
-  end
-
-  task :prepare => [:configure, :connect_to_db] do
-    p 'Populating initial data.'
-    # make_users
+    env_migration_version = ENV['VERSION'] || '1'
+    p "Migration version #{env_migration_version}"
+    ActiveRecord::MigrationContext.new("./db/migrations").migrate(env_migration_version.to_i)
   end
 end
