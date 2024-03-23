@@ -9,14 +9,16 @@ Ensure ruby and `bundler` are installed. RVM is a good way to manage rubies on y
 
 - git clone `https://github.com/mvemjsun/mock_server.git`
 - Run `bundle install --without=test pg`
-- There is an empty sqllite db in the `/db` folder you can use it or start new.
-- The sameple db has one mocked url for `/ping`
-- To create a new dbnNavigate to `/db` folder and delete the supplied sqlite db (`mockserver.db` file).
-- Run `rake db:migrate` from the project root to create a fresh mock database.
+- There is an starter mock database inside the `/db` folder, you can use it to get started.
+- The sample db has one mocked url that serves a test url `/ping`.
 - Run `sh ./start-mock.sh` from the project root which starts the server on port 9292.
-- Visit `http://localhost:9292/mock/search` and hit search. To see the available mocks.
+- Visit `http://localhost:9292/mock/search` and search. To see the available mocks.
 - Visit `http://localhost:9292/mock/create` and create your mocks.
 - Direct your API requests to the mock server and have them served.
+
+Note: 
+- To create a new mock db navigate to `/db` folder and delete the supplied sqlite db (`mockserver.db` file).
+- Run `rake db:migrate` from the project root. This will create an emty database file with no mocks.
 
 ### Summary
 

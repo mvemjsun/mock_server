@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Trying to stop mock server ..."
 
-PID=`lsof -i:9293 | grep ruby | grep -v grep | awk '{print $2}'`
+PID=`lsof -i:9292 | grep ruby | grep -v grep | awk '{print $2}'`
 
 if [[ -z "$PID" ]]
 then
@@ -13,7 +13,7 @@ fi
 
 sleep 3
 
-PID=`lsof -i:9293 | grep ruby | grep -v grep | awk '{print $2}'`
+PID=`lsof -i:9292 | grep ruby | grep -v grep | awk '{print $2}'`
 if [[ -z "$PID" ]]
 then
   echo "Mock server stopped."
