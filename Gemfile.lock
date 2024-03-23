@@ -53,7 +53,7 @@ GEM
       cucumber-gherkin (>= 27, < 28)
       cucumber-messages (>= 20, < 23)
       cucumber-tag-expressions (> 5, < 7)
-    cucumber-cucumber-expressions (17.0.2)
+    cucumber-cucumber-expressions (17.1.0)
       bigdecimal
     cucumber-gherkin (27.0.0)
       cucumber-messages (>= 19.1.4, < 23)
@@ -89,7 +89,7 @@ GEM
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     mutex_m (0.2.0)
-    nokogiri (1.16.3)
+    nokogiri (1.16.3-arm64-darwin)
       racc (~> 1.4)
     pg (1.5.6)
     public_suffix (5.0.4)
@@ -129,7 +129,7 @@ GEM
       rack-protection (= 4.0.0)
       sinatra (= 4.0.0)
       tilt (~> 2.0)
-    sqlite3 (1.7.3)
+    sqlite3 (1.7.3-arm64-darwin)
     sys-uname (1.2.3)
       ffi (~> 1.1)
     temple (0.10.3)
@@ -142,7 +142,7 @@ GEM
       nokogiri (~> 1.8)
 
 PLATFORMS
-  ruby
+  arm64-darwin-22
 
 DEPENDENCIES
   activemodel
@@ -155,10 +155,11 @@ DEPENDENCIES
   haml
   httparty
   pg
+  rack
   rspec
   sinatra
   sinatra-contrib
   sqlite3
 
 BUNDLED WITH
-   1.13.7
+   2.3.26
