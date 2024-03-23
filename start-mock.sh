@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Trying to start stop mock server ..."
 
-PID=`lsof -i:9293 | grep ruby | grep -v grep | awk '{print $2}'`
+PID=`lsof -i:9292 | grep ruby | grep -v grep | awk '{print $2}'`
 
 if [[ -z "$PID" ]]
 then
@@ -12,10 +12,11 @@ else
 fi
 echo "Starting mock server now"
 sleep 2
-rackup > /dev/null 2>&1 &
-sleep 15
+rackup 
+# > /dev/null 2>&1 &
+sleep 5
 
-PID=`lsof -i:9293 | grep ruby | grep -v grep | awk '{print $2}'`
+PID=`lsof -i:9292 | grep ruby | grep -v grep | awk '{print $2}'`
 
 if [[ -z "$PID" ]]
 then
