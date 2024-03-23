@@ -13,9 +13,9 @@ Ensure ruby and `bundler` are installed. RVM is a good way to manage rubies on y
 - The sameple db has one mocked url for `/ping`
 - To create a new dbnNavigate to `/db` folder and delete the supplied sqlite db (`mockserver.db` file).
 - Run `rake db:migrate` from the project root to create a fresh mock database.
-- Run `sh ./start-mock.sh` from the project root which starts the server on port 9293.
-- Visit `http://localhost:9293/mock/search` and hit search. To see the available mocks.
-- Visit `http://localhost:9293/mock/create` and create your mocks.
+- Run `sh ./start-mock.sh` from the project root which starts the server on port 9292.
+- Visit `http://localhost:9292/mock/search` and hit search. To see the available mocks.
+- Visit `http://localhost:9292/mock/create` and create your mocks.
 - Direct your API requests to the mock server and have them served.
 
 ### Summary
