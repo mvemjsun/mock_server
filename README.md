@@ -7,13 +7,16 @@
 
 Ensure ruby and `bundler` are installed. RVM is a good way to manage rubies on your machine.
 
-1. git clone `https://github.com/mvemjsun/mock_server.git`
-2. Run `bundle install --without=test pg`
-3. Navigate to `/db` folder and delete the supplied sqlite db (`mockserver.db` file).
-4. Run `rake db:migrate` from the project root to create a fresh mock database.
-5. Run `sh ./start-mock.sh` from the project root which starts the server on port 9293.
-6. Visit `http://localhost:9293/mock/create` and create your mocks.
-7. Direct your API requests to the mock server and have them served.
+- git clone `https://github.com/mvemjsun/mock_server.git`
+- Run `bundle install --without=test pg`
+- There is an empty sqllite db in the `/db` folder you can use it or start new.
+- The sameple db has one mocked url for `/ping`
+- To create a new dbnNavigate to `/db` folder and delete the supplied sqlite db (`mockserver.db` file).
+- Run `rake db:migrate` from the project root to create a fresh mock database.
+- Run `sh ./start-mock.sh` from the project root which starts the server on port 9292.
+- Visit `http://localhost:9292/mock/search` and hit search. To see the available mocks.
+- Visit `http://localhost:9292/mock/create` and create your mocks.
+- Direct your API requests to the mock server and have them served.
 
 ### Summary
 
@@ -39,110 +42,6 @@ The Implementation has been experimented and tested on OSX 10.10 and 10.11. User
 The tool has been kept lightweight so that it can be installed and run on a developers/testers machine easily and quickly without any major software
 or memory requirements.
 
-### Installation
-
-The main requirements of using the framework is the availability of `ruby` on the users machine. The mock server 
-can be setup to be used by a team or set up in a similar way for an individual user. The server has been tested on ruby version 
-2.2.3 & sqlite3 gem 1.3.11. The same framework can be used if a different database is used such as mySQL, update gemfile with the 
-relevant db-adapter gem and update the database.yml config file with connect connect parameters.
-
-1. Install RVM & Ruby if needed. RVM is a good way to control ruby installations on your machine. [RVM] (https://rvm.io)
-2. Install Sqlite  from [sqlite] (https://www.sqlite.org/download.html). Will help to manually browse the database if needed.
-3. Download sqlite browser from [browser] (http://sqlitebrowser.org)
-3. Clone git repository using `git clone https://github.com/mvemjsun/mock_server.git`
-4. Run `bundle install` from within the code root directory to install needed gems.
-5. Run `./start-mock.sh` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
-6. Visit `http://localhost:9293/mock/create` and get started.
-
-Note 1: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file. 
-The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` followed by `.save mockserver.db` on the sqlite3 prompt to create an empty DB in the `/db` folder Then issue
-`rake db:migrate` from the root project folder. This will create the required DB tables in sqlite. Please ensure that you BACK UP any exiting DB files is this command is issued multiple times.
-
-Note 2: The script `./start-mock.sh` kills a process that runs at port `9293` before attempting to start the server again. Change the script if you wish to run 
-the server at a different port in the `config.ru` file (line 1).
-
-```
-"Task Reading configuration ..."
-"Task Establishing connection ..."
-"Task Migrate ..."
-"Migration version 1"
-
-== 1 CreateMockdata: migrating ================================================
--- create_table(:mockdata, {})
-   -> 0.0015s
--- execute("      CREATE UNIQUE INDEX \"unique_mock_data\"\n      
-                  ON \"MOCKDATA\" (\"mock_request_url\",\"mock_http_verb\", \"mock_environment\", \"mock_state\")\n      
-                  WHERE \"mock_state\" = 't'\n")
-   -> 0.0004s
--- create_table(:missed_requests, {})
-   -> 0.0006s
--- create_table(:replacedata, {})
-   -> 0.0004s
--- create_table(:rubyscripts, {})
-   -> 0.0003s
--- create_table(:httprequestlogs, {})
-   -> 0.0006s
--- execute("      CREATE UNIQUE INDEX \"unique_replace_data\"\n      
-                  ON \"REPLACEDATA\" (\"replaced_string\", \"mock_environment\", \"replace_state\")\n      
-                  WHERE \"replace_state\" = 't'\n")
-   -> 0.0002s
-== 1 CreateMockdata: migrated (0.0047s) =======================================
-
-```
-
-Note2: To check if port 9293 is already being used already on osx, use command `lsof -i:9293`. On Windows you may use `netstat -a -b`.
-
-### Using Docker containers
-
-To simplify the process of building and running the containers, we have included a `Makefile` to encapsulate the commands into very simple `make` sections such as (`build` for building the container, `run` to run the container, `shell` to access the container in case you want to have a shell to the container)
-
-#### Building the container
-
-To build the container you will have to do one of the following commands:
-
-- `make build`
-
-or
-
-- `docker build -t mock_server .`
-
-This will create a new container tagged as `mock_server`.
-
-#### Running the container
-
-To run the container you can simply execute one of these commands:
-
-- `make run`
-
-or
-
-- `docker run -p 9293:9293 -t mock_server`
-
-The `make` command shares the volume with the container (the same for build), but if you want to share the content you will have to add the `-v $(pwd):/app`
-
-### Using `docker-compose` for PostgreSQL usage
-
-We have added also the possibility to run this by using `docker-compose` to run both the `mock_server` and the `postgresql` containers.
-
-For that you have to do THREE steps in this particular order:
-
-1. **Copy the `.env.sample` file into the `.env`**
-
-The `.env` file works out of the box, however you can set whatever values you want, and the `PostgreSQL` container will take that and create the container with those variables. So when creating the contianer for the first time, those values are going to be used to set the database name, user name and password.
-
-2. **Create the data directory for PostgreSQL data**
-
-``` sh
-mkdir pg_volume/data
-```
-
-3. **Run the migration**
-
-``` sh
-docker-compose run mock_server rake db:migrate
-```
-
-And THAT'S ALL! then you can do `docker-compose up` to run the service
 
 ### Features
 
@@ -253,22 +152,22 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    ```
       # To activate a mock url with Id = 1
-      # http://localhost:9293/mock/api/activate/1      
+      # http://localhost:9292/mock/api/activate/1      
       # To deactivate a mock url with id = 1
-      # http://localhost:9293/mock/api/deactivate/1
+      # http://localhost:9292/mock/api/deactivate/1
    ```
    Note that activating a url will deactivate any active form of that url in that test environment.
    
    * Latency of responses can be set using
    ```
-   http://localhost:9293/latency/1 
+   http://localhost:9292/latency/1 
    OR
-   http://localhost:9293/latency/3
+   http://localhost:9292/latency/3
    ```
    This sets the global latency to 1 or 3 seconds for ALL mock responses. Please note that due to the blocking nature of the latency implementation
    at the moment, all server processing will be blocked while the latency is processed. The default latency is 0.
    
-   To set the latency back to 0 issue the call `http://localhost:9293/latency/0`
+   To set the latency back to 0 issue the call `http://localhost:9292/latency/0`
    
    To set latency for individual url's you will have to use the 'Advanced options' and mention the name of a ruby script 
    with a sleep statement in it. So for example
@@ -279,50 +178,50 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    The below will activate & decativate the replace data row with an id of 1. Any other rows that have the same replace string will be deactivated
    ```
-   http://localhost:9293/mock/api/replace_data/activate/1
-   http://localhost:9293/mock/api/replace_data/deactivate/1
+   http://localhost:9292/mock/api/replace_data/activate/1
+   http://localhost:9292/mock/api/replace_data/deactivate/1
    ```
    
    * Reset mock url's served count. The below url will set the served counts to 0 for all the mock urls in the database. This could be ideally be done at the start of a test.
    
    ```
-   http://localhost:9293/mock/api/reset
+   http://localhost:9292/mock/api/reset
    ```
    
    * Retrieve recent data from `httpRequestLog` table
    ```
-   http://localhost:9293/mock/api/requestlog/recent
+   http://localhost:9292/mock/api/requestlog/recent
    ```
    
    * Retrieve `httpRequestLog` table data within a time range
    ```
-   http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>]
+   http://localhost:9292/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>]
    ```
    matching query parameter is optional, could have a value like `matching=/account`
    
    * Delete all data from the `httpRequestLog` table
    ```
-   http://localhost:9293/mock/api/reset/requestlog
+   http://localhost:9292/mock/api/reset/requestlog
    ```
    
    * Update all rows in the Replacedata table 
    ```
-   http://localhost:9293/mock/api/update/replacedata?string=xxx&with=yyy
+   http://localhost:9292/mock/api/update/replacedata?string=xxx&with=yyy
    ```
    
    | API | Type |Description |
    | --- | --- | --- |
-   | http://localhost:9293/mock/api/activate/1 | POST | Activate mock with id 1 |
-   | http://localhost:9293/mock/api/deactivate/1  | POST | Deactivate mock with id 1 |
-   | http://localhost:9293/latency/1  | POST | Set latency of response to 1 second |
-   | http://localhost:9293/latency/2  | POST | Set latency of response to 2 seconds |
-   | http://localhost:9293/mock/api/replace_data/activate/1 | POST | Set replace data mock 1 to active |
-   | http://localhost:9293/mock/api/replace_data/deactivate/1 | POST | Set replace data mock 1 to Inactive |
-   | http://localhost:9293/mock/api/reset | POST | Reset served counts for all the URLs to 0 |
-   | http://localhost:9293/mock/api/requestlog/recent | GET | Return the recent logged requests |
-   | http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>] | GET | Get recent log for a time range|
-   | http://localhost:9293/mock/api/reset/requestlog | POST | Delete the request logs |
-   | http://localhost:9293/mock/api/update/replacedata?string=xxx&with=yyy | POST | Update the replace data string to be replaced |
+   | http://localhost:9292/mock/api/activate/1 | POST | Activate mock with id 1 |
+   | http://localhost:9292/mock/api/deactivate/1  | POST | Deactivate mock with id 1 |
+   | http://localhost:9292/latency/1  | POST | Set latency of response to 1 second |
+   | http://localhost:9292/latency/2  | POST | Set latency of response to 2 seconds |
+   | http://localhost:9292/mock/api/replace_data/activate/1 | POST | Set replace data mock 1 to active |
+   | http://localhost:9292/mock/api/replace_data/deactivate/1 | POST | Set replace data mock 1 to Inactive |
+   | http://localhost:9292/mock/api/reset | POST | Reset served counts for all the URLs to 0 |
+   | http://localhost:9292/mock/api/requestlog/recent | GET | Return the recent logged requests |
+   | http://localhost:9292/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>] | GET | Get recent log for a time range|
+   | http://localhost:9292/mock/api/reset/requestlog | POST | Delete the request logs |
+   | http://localhost:9292/mock/api/update/replacedata?string=xxx&with=yyy | POST | Update the replace data string to be replaced |
    
 ### Request log console
    The `Live Requests` tab on the web interface shows the requests being served by the mock server.

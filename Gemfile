@@ -8,6 +8,7 @@ gem 'haml'
 gem 'httparty'
 gem 'sinatra-contrib'
 gem 'cucumber'
+gem 'rack'
 
 group :pg do
   gem 'pg'

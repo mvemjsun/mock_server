@@ -1,3 +1,7 @@
+require "sinatra/base"
+require "sinatra/cookies"
+require 'haml'
+
 class ApplicationController < Sinatra::Base
   helpers ApplicationHelper
   helpers Sinatra::Cookies
@@ -5,6 +9,7 @@ class ApplicationController < Sinatra::Base
   set :views, File.expand_path('../../views', __FILE__)
   set :public_folder, File.expand_path('../../public', __FILE__)
   set :bind, '0.0.0.0'
+  Haml::Template.options[:escape_html] = false
 
   configure :production, :development do
     # enable :logging
