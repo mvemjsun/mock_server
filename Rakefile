@@ -24,7 +24,7 @@ namespace :db do
     ActiveRecord::Base.logger = Logger.new(File.open('logs/migrations.log', 'a'))
   end
 
-  task :migrate_new => [:configure, :connect_to_db] do
+  task :migrate => [:configure, :connect_to_db] do
     p 'Task Migrate ...'
     ActiveRecord::Migration.verbose = true
     env_migration_version = ENV['VERSION'] || '1'
