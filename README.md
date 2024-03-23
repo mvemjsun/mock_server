@@ -11,8 +11,8 @@ Ensure ruby and `bundler` are installed. RVM is a good way to manage rubies on y
 2. Run `bundle install --without=test pg`
 3. Navigate to `/db` folder and delete the supplied sqlite db (`mockserver.db` file).
 4. Run `rake db:migrate` from the project root to create a fresh mock database.
-5. Run `sh ./start-mock.sh` from the project root which starts the server on port 9293.
-6. Visit `http://localhost:9293/mock/create` and create your mocks.
+5. Run `sh ./start-mock.sh` from the project root which starts the server on port 9292.
+6. Visit `http://localhost:9292/mock/create` and create your mocks.
 7. Direct your API requests to the mock server and have them served.
 
 ### Summary
@@ -51,14 +51,14 @@ relevant db-adapter gem and update the database.yml config file with connect con
 3. Download sqlite browser from [browser] (http://sqlitebrowser.org)
 3. Clone git repository using `git clone https://github.com/mvemjsun/mock_server.git`
 4. Run `bundle install` from within the code root directory to install needed gems.
-5. Run `./start-mock.sh` which will start the service on port `9293`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9293>`.
-6. Visit `http://localhost:9293/mock/create` and get started.
+5. Run `./start-mock.sh` which will start the service on port `9292`. You can now change your API endpoints to point to the mockserver. Just change the host part of the url to `<mock_server_ip:9292>`.
+6. Visit `http://localhost:9292/mock/create` and get started.
 
-Note 1: To start the server on any other port apart from `9293`, change the port number on the first line of the `config.ru` file. 
+Note 1: To start the server on any other port apart from `9292`, change the port number on the first line of the `config.ru` file. 
 The sample DB is from a mac machine , on other OS please delete the sample db and issue `sqlite3 mockserver.db` followed by `.save mockserver.db` on the sqlite3 prompt to create an empty DB in the `/db` folder Then issue
 `rake db:migrate` from the root project folder. This will create the required DB tables in sqlite. Please ensure that you BACK UP any exiting DB files is this command is issued multiple times.
 
-Note 2: The script `./start-mock.sh` kills a process that runs at port `9293` before attempting to start the server again. Change the script if you wish to run 
+Note 2: The script `./start-mock.sh` kills a process that runs at port `9292` before attempting to start the server again. Change the script if you wish to run 
 the server at a different port in the `config.ru` file (line 1).
 
 ```
@@ -90,7 +90,7 @@ the server at a different port in the `config.ru` file (line 1).
 
 ```
 
-Note2: To check if port 9293 is already being used already on osx, use command `lsof -i:9293`. On Windows you may use `netstat -a -b`.
+Note2: To check if port 9292 is already being used already on osx, use command `lsof -i:9292`. On Windows you may use `netstat -a -b`.
 
 ### Using Docker containers
 
@@ -116,7 +116,7 @@ To run the container you can simply execute one of these commands:
 
 or
 
-- `docker run -p 9293:9293 -t mock_server`
+- `docker run -p 9292:9292 -t mock_server`
 
 The `make` command shares the volume with the container (the same for build), but if you want to share the content you will have to add the `-v $(pwd):/app`
 
@@ -253,22 +253,22 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    ```
       # To activate a mock url with Id = 1
-      # http://localhost:9293/mock/api/activate/1      
+      # http://localhost:9292/mock/api/activate/1      
       # To deactivate a mock url with id = 1
-      # http://localhost:9293/mock/api/deactivate/1
+      # http://localhost:9292/mock/api/deactivate/1
    ```
    Note that activating a url will deactivate any active form of that url in that test environment.
    
    * Latency of responses can be set using
    ```
-   http://localhost:9293/latency/1 
+   http://localhost:9292/latency/1 
    OR
-   http://localhost:9293/latency/3
+   http://localhost:9292/latency/3
    ```
    This sets the global latency to 1 or 3 seconds for ALL mock responses. Please note that due to the blocking nature of the latency implementation
    at the moment, all server processing will be blocked while the latency is processed. The default latency is 0.
    
-   To set the latency back to 0 issue the call `http://localhost:9293/latency/0`
+   To set the latency back to 0 issue the call `http://localhost:9292/latency/0`
    
    To set latency for individual url's you will have to use the 'Advanced options' and mention the name of a ruby script 
    with a sleep statement in it. So for example
@@ -279,50 +279,50 @@ Images can be uploaded in case you want to mock url's that end with image names.
    
    The below will activate & decativate the replace data row with an id of 1. Any other rows that have the same replace string will be deactivated
    ```
-   http://localhost:9293/mock/api/replace_data/activate/1
-   http://localhost:9293/mock/api/replace_data/deactivate/1
+   http://localhost:9292/mock/api/replace_data/activate/1
+   http://localhost:9292/mock/api/replace_data/deactivate/1
    ```
    
    * Reset mock url's served count. The below url will set the served counts to 0 for all the mock urls in the database. This could be ideally be done at the start of a test.
    
    ```
-   http://localhost:9293/mock/api/reset
+   http://localhost:9292/mock/api/reset
    ```
    
    * Retrieve recent data from `httpRequestLog` table
    ```
-   http://localhost:9293/mock/api/requestlog/recent
+   http://localhost:9292/mock/api/requestlog/recent
    ```
    
    * Retrieve `httpRequestLog` table data within a time range
    ```
-   http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>]
+   http://localhost:9292/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>]
    ```
    matching query parameter is optional, could have a value like `matching=/account`
    
    * Delete all data from the `httpRequestLog` table
    ```
-   http://localhost:9293/mock/api/reset/requestlog
+   http://localhost:9292/mock/api/reset/requestlog
    ```
    
    * Update all rows in the Replacedata table 
    ```
-   http://localhost:9293/mock/api/update/replacedata?string=xxx&with=yyy
+   http://localhost:9292/mock/api/update/replacedata?string=xxx&with=yyy
    ```
    
    | API | Type |Description |
    | --- | --- | --- |
-   | http://localhost:9293/mock/api/activate/1 | POST | Activate mock with id 1 |
-   | http://localhost:9293/mock/api/deactivate/1  | POST | Deactivate mock with id 1 |
-   | http://localhost:9293/latency/1  | POST | Set latency of response to 1 second |
-   | http://localhost:9293/latency/2  | POST | Set latency of response to 2 seconds |
-   | http://localhost:9293/mock/api/replace_data/activate/1 | POST | Set replace data mock 1 to active |
-   | http://localhost:9293/mock/api/replace_data/deactivate/1 | POST | Set replace data mock 1 to Inactive |
-   | http://localhost:9293/mock/api/reset | POST | Reset served counts for all the URLs to 0 |
-   | http://localhost:9293/mock/api/requestlog/recent | GET | Return the recent logged requests |
-   | http://localhost:9293/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>] | GET | Get recent log for a time range|
-   | http://localhost:9293/mock/api/reset/requestlog | POST | Delete the request logs |
-   | http://localhost:9293/mock/api/update/replacedata?string=xxx&with=yyy | POST | Update the replace data string to be replaced |
+   | http://localhost:9292/mock/api/activate/1 | POST | Activate mock with id 1 |
+   | http://localhost:9292/mock/api/deactivate/1  | POST | Deactivate mock with id 1 |
+   | http://localhost:9292/latency/1  | POST | Set latency of response to 1 second |
+   | http://localhost:9292/latency/2  | POST | Set latency of response to 2 seconds |
+   | http://localhost:9292/mock/api/replace_data/activate/1 | POST | Set replace data mock 1 to active |
+   | http://localhost:9292/mock/api/replace_data/deactivate/1 | POST | Set replace data mock 1 to Inactive |
+   | http://localhost:9292/mock/api/reset | POST | Reset served counts for all the URLs to 0 |
+   | http://localhost:9292/mock/api/requestlog/recent | GET | Return the recent logged requests |
+   | http://localhost:9292/mock/api/requestlog/range?from=2016-09-11 16:31:00&to=2016-09-11 16:32:11[&matching=<matchingString>] | GET | Get recent log for a time range|
+   | http://localhost:9292/mock/api/reset/requestlog | POST | Delete the request logs |
+   | http://localhost:9292/mock/api/update/replacedata?string=xxx&with=yyy | POST | Update the replace data string to be replaced |
    
 ### Request log console
    The `Live Requests` tab on the web interface shows the requests being served by the mock server.
